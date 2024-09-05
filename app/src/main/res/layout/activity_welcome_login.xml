@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".welcome_page.WelcomeLoginActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".1"
+        android:id="@+id/start_gl"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".9"
+        android:id="@+id/end_gl"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".9"
+        android:id="@+id/bottom_gl"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".2"
+        android:id="@+id/top_gl"/>
+
+    <LinearLayout
+        android:id="@+id/ll"
+        app:layout_constraintStart_toEndOf="@id/start_gl"
+        app:layout_constraintEnd_toStartOf="@id/end_gl"
+        app:layout_constraintTop_toBottomOf="@id/top_gl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:contentDescription="@string/app_name"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_login"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="22sp"
+            android:textColor="@color/g3"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_login_desc"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="16sp"
+            android:textColor="@color/_dark"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        app:layout_constraintStart_toEndOf="@id/start_gl"
+        app:layout_constraintEnd_toStartOf="@id/end_gl"
+        app:layout_constraintBottom_toTopOf="@id/bottom_gl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_text"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="18sp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            app:cornerRadius="5dp"
+            android:backgroundTint="@color/g1"
+            android:id="@+id/btn_login"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_account_text"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="18sp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            app:cornerRadius="5dp"
+            android:textColor="@color/g3"
+            app:strokeColor="@color/g3"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:id="@+id/btn_create"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

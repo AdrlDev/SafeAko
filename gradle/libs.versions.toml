@@ -1,0 +1,60 @@
+[versions]
+agp = "8.4.2"
+circleimageview = "3.1.0"
+converterGson = "2.9.0"
+easypermissions = "3.0.0"
+firebaseBom = "33.1.0"
+githubImagepicker = "2.1"
+imagepicker = "2.3.22"
+imagepickerSupport = "1.7.1"
+kotlin = "1.9.0"
+coreKtx = "1.10.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.7.0"
+loggingInterceptor = "4.9.1"
+material = "1.12.0"
+activity = "1.9.0"
+constraintlayout = "2.1.4"
+googleGmsGoogleServices = "4.4.2"
+mpandroidchart = "v3.1.0"
+picasso = "2.71828"
+retrofit = "2.11.0"
+firebaseMessaging = "24.0.0"
+ucrop = "2.2.8"
+uiDesktop = "1.6.8"
+firebaseStorage = "21.0.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+easypermissions = { module = "pub.devrel:easypermissions", version.ref = "easypermissions" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+github-imagepicker = { module = "com.github.dhaval2404:imagepicker", version.ref = "githubImagepicker" }
+imagepicker = { module = "com.github.Drjacky:ImagePicker", version.ref = "imagepicker" }
+imagepicker-support = { module = "com.github.dhaval2404:imagepicker-support", version.ref = "imagepickerSupport" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    //text gradient color
+    <color name="g1">#01554F</color>
+    <color name="g2">#FFFFFFFF</color>
+    <color name="g3">#1C7867</color>
+
+    //text color
+    <color name="dark_text">#7C7C7C</color>
+    <color name="_dark">#211D1D</color>
+    <color name="_red">#FE6B39</color>
+</resources>

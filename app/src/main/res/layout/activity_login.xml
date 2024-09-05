@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".authentication.login.LoginActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".05"
+        android:id="@+id/start_gl"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".95"
+        android:id="@+id/end_gl"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".9"
+        android:id="@+id/bottom_gl"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".1"
+        android:id="@+id/top_gl"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".03"
+        android:id="@+id/top_nav_gl"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintTop_toBottomOf="@id/top_nav_gl"
+        app:layout_constraintStart_toEndOf="@id/start_gl"
+        android:id="@+id/btn_back"
+        app:tint="@color/_dark"
+        android:contentDescription="@string/app_name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_text"
+        android:textSize="18sp"
+        android:fontFamily="@font/modern_antiqua"
+        app:layout_constraintStart_toEndOf="@id/start_gl"
+        app:layout_constraintEnd_toStartOf="@id/end_gl"
+        app:layout_constraintTop_toBottomOf="@id/top_nav_gl"
+        android:textColor="@color/_dark"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/top_gl"
+        app:layout_constraintStart_toEndOf="@id/start_gl"
+        app:layout_constraintEnd_toStartOf="@id/end_gl"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            app:tint="@color/g3"
+            android:contentDescription="@string/app_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="22sp"
+            android:fontFamily="@font/modern_antiqua"
+            android:textColor="@color/g3"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+            android:hint="@string/phone_number"
+            app:endIconMode="clear_text"
+            app:boxStrokeColor="@color/g3"
+            app:hintAnimationEnabled="true"
+            app:helperText="Note: Phone number will start with +63"
+            app:helperTextTextColor="@color/dark_text"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="phone"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="16sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+            android:hint="@string/password"
+            app:endIconMode="password_toggle"
+            app:boxStrokeColor="@color/g3"
+            app:hintAnimationEnabled="true"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="16sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/remember_me"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="14sp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/_dark"
+            android:id="@+id/remember_cb"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        app:layout_constraintBottom_toTopOf="@id/bottom_gl"
+        app:layout_constraintStart_toEndOf="@id/start_gl"
+        app:layout_constraintEnd_toStartOf="@id/end_gl"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/login_text"
+        android:fontFamily="@font/modern_antiqua"
+        android:textSize="18sp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        app:cornerRadius="5dp"
+        android:backgroundTint="@color/g1"
+        android:id="@+id/btn_login"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
