@@ -21,3 +21,4 @@
 #-renamesourcefileattribute SourceFile
 -keep class com.github.mikephil.charting.** { *; }
 -keep interface com.github.mikephil.charting.** { *; }
+#-keep class com.google.api.services.** { *; }

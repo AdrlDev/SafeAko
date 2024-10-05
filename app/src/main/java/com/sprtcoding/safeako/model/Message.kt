@@ -9,8 +9,8 @@ data class Message(
     var receiverName: String? = null,
     var senderName: String? = null,
     var message: String? = null,
-    var receivedOn: Date? = null
+    var receivedOn: Date? = null,
+    var sentOn: Date? = null
 ) {
-    // No-argument constructor for Firestore
-    constructor() : this(null, null, null, null, null, null, null)
+    constructor() : this(null, null, null, null, null, null, null, null)
 }

@@ -116,14 +116,14 @@
                 android:textColor="@color/_dark"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/avatar"
+                android:src="@drawable/avatar_man"
                 android:id="@+id/avatar"/>
 
             <com.google.android.material.button.MaterialButton
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/bottom_gl"
@@ -131,7 +131,7 @@
                 app:layout_constraintEnd_toEndOf="@id/end_gl"
                 app:icon="@drawable/camera_18"
                 app:iconGravity="textStart"
-                android:text="@string/open_camera"
+                android:text="@string/select"
                 android:textStyle="bold"
                 android:fontFamily="@font/modern_antiqua"
                 android:letterSpacing=".1"
@@ -141,6 +141,28 @@
                 android:backgroundTint="@color/g3"
                 android:paddingBottom="15dp"
                 android:id="@+id/btn_open_camera"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="@string/municipality"
+                app:endIconMode="clear_text"
+                app:helperText="Required*"
+                app:helperTextTextColor="@color/_red"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_municipality"
+                    android:fontFamily="@font/modern_antiqua"
+                    android:textColor="@color/_dark"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

@@ -76,43 +76,50 @@
         android:gravity="center">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/light_logo"
             app:tint="@color/g3"
             android:contentDescription="@string/app_name"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textSize="22sp"
-            android:fontFamily="@font/modern_antiqua"
-            android:textColor="@color/g3"/>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_marginTop="20dp"
+            android:background="@drawable/et_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
-            android:hint="@string/phone_number"
-            app:endIconMode="clear_text"
-            app:boxStrokeColor="@color/g3"
-            app:hintAnimationEnabled="true"
-            app:helperText="Note: Phone number will start with +63"
-            app:helperTextTextColor="@color/dark_text"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginHorizontal="17dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_phone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="phone"
+            <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="15dp"
+                android:layout_height="wrap_content"
+                app:ccp_hideNameCode="true"
+                app:ccp_showFlag="false"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:layout_marginHorizontal="10dp"
+                app:ccp_textSize="16sp"
+                app:ccp_defaultCode="63"  />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:paddingHorizontal="10dp"
+                android:textColor="@color/_dark"
                 android:fontFamily="@font/modern_antiqua"
                 android:textSize="16sp"
-                />
+                android:inputType="phone"
+                android:hint="956*******"
+                android:id="@+id/et_phone_num"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

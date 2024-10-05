@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_fl"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".admin.fragment.FRAssessment">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/assessment"
+        android:textColor="@color/_dark"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="20dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/modern_antiqua"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/assessment_request"
+        android:id="@+id/rv_assessment_request"/>
+
+    <ImageView
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/no_data_admin"
+        android:layout_margin="50dp"
+        android:id="@+id/no_data"
+        android:contentDescription="@string/app_name"
+        />
+
+</RelativeLayout>

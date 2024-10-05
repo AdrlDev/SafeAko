@@ -50,8 +50,8 @@
     <string name="occupation">Occupation</string>
     <string name="email_address">Email Address</string>
     <string name="change_avatar">Change Avatar</string>
-    <string name="note_for_avatar">Note: Please wear a face mask when you take a photo</string>
-    <string name="open_camera">Open Camera</string>
+    <string name="note_for_avatar">You can select any avatar you want.</string>
+    <string name="select">Select Avatar</string>
     <string name="admin_list">Admin List</string>
     <string name="no_admins">No Admins</string>
     <string name="welcome_back">Welcome back!</string>
@@ -60,5 +60,12 @@
     <string name="number_zero">0</string>
     <string name="counseling">Counseling</string>
     <string name="testing">Testing</string>
+    <string name="just_for_you">Just for you!</string>
+    <string name="self_assessment">Self Assessment</string>
+    <string name="why_are_you_interested_in_sti_risk_assessment">Why are you interested in STI risk assessment?</string>
+    <string name="question">question</string>
+    <string name="info">\"Sex\" includes oral, vaginal, or anal sex, and a sexual partner is somebody with whom you have oral, vaginal, or anal sex.</string>
+    <string name="select_an_avatar">Select an Avatar</string>
+    <string name="municipality">Municipality</string>
 
 </resources>

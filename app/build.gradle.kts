@@ -43,6 +43,10 @@ android {
             )
         }
     }
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+        // You can exclude other conflicting files here if necessary
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -66,10 +70,15 @@ dependencies {
 
     // Import the BoM for the Firebase platform
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
+    //implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.storage)
+    implementation(libs.play.services.base)
+
+    //country code picker
+    implementation(libs.joielechong.countrycodepicker)
+    implementation(libs.michaelrocks.libphonenumber.android)
 
     // retrofit
     implementation(libs.retrofit)
@@ -78,14 +87,24 @@ dependencies {
 
     implementation(libs.picasso)
     implementation(libs.circleimageview)
-    //implementation(libs.imagepicker)
-    // UCrop dependency
-    //implementation(libs.ucrop)
 
     //easy permission library
     implementation(libs.easypermissions)
     implementation(libs.github.imagepicker)
-    //implementation(libs.imagepicker.support)
 
     implementation(libs.mpandroidchart)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.android.lottie)
+
+    //google docs api
+    implementation(libs.api.client.google.api.client.android)
+    // Google Docs API
+    implementation(libs.google.api.services.docs.vv1rev20220609200)
+    implementation(libs.google.auth.library.oauth2.http)
+
+    //implementation(libs.google.api.services.drive)
+    implementation(libs.google.api.services.drive.vv3rev20220815200)
+
 }

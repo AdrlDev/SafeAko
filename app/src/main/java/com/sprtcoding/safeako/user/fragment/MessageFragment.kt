@@ -15,11 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sprtcoding.safeako.R
-import com.sprtcoding.safeako.adapters.MessageAdapter
+import com.sprtcoding.safeako.user.fragment.adapter.MessageAdapter
 import com.sprtcoding.safeako.firebaseUtils.Utils
 import com.sprtcoding.safeako.user.activity.admin_list.AdminListActivity
-import com.sprtcoding.safeako.viewmodels.MessageViewModel
-import com.sprtcoding.safeako.viewmodels.factory.MessageViewModelFactory
+import com.sprtcoding.safeako.user.fragment.viewmodel.MessageViewModel
 
 class MessageFragment : Fragment() {
     private lateinit var view: View
@@ -27,7 +26,6 @@ class MessageFragment : Fragment() {
     private lateinit var noMessage: LinearLayout
     private lateinit var viewManager: LinearLayoutManager
     private lateinit var viewModel: MessageViewModel
-    private lateinit var factory: MessageViewModelFactory
     private lateinit var userId: String
     private lateinit var fabNewMsg: FloatingActionButton
     private lateinit var messageAdapter: MessageAdapter
@@ -53,16 +51,16 @@ class MessageFragment : Fragment() {
     }
 
     private fun init() {
-        viewManager = LinearLayoutManager(context)
-        rvMessage.layoutManager = viewManager
-        factory = MessageViewModelFactory()
-        viewModel = ViewModelProvider(this, factory)[MessageViewModel::class.java]
-        messageAdapter = context?.let { MessageAdapter(viewModel, arrayListOf(), it) }!!
 
         // Retrieve the arguments in onCreateView if needed
         arguments?.let {
             userId = it.getString("userId").toString()
         }
+
+        viewManager = LinearLayoutManager(context)
+        rvMessage.layoutManager = viewManager
+        viewModel = ViewModelProvider(this)[MessageViewModel::class.java]
+        messageAdapter = context?.let { MessageAdapter(viewModel, arrayListOf(), userId, it) }!!
 
     }
 
@@ -108,14 +106,14 @@ class MessageFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun getMessages(){
         // Fetch messages for a specific receiverId
-        viewModel.fetchMessages(userId, callback = { success, message ->
+        viewModel.fetchMessages(userId) { success, message ->
             if (!success) {
                 // Handle error
                 if (message != null) {
                     Log.i("data", message)
                 }
             }
-        })
+        }
         rvMessage.adapter?.notifyDataSetChanged()
 
     }

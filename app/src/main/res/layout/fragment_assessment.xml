@@ -1,14 +1,690 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".user.fragment.AssessmentFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/self_assessment"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/_dark"
+        android:fontFamily="@font/modern_antiqua"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@id/title"
+        android:layout_marginVertical="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:scrollbars="none"
+        >
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/why_are_you_interested_in_sti_risk_assessment"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/_dark"
+                />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/question"
+                android:textColor="@color/_dark"
+                android:id="@+id/cb_cat1_a1"
+                android:fontFamily="@font/modern_antiqua"
+                />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/question"
+                android:textColor="@color/_dark"
+                android:id="@+id/cb_cat1_a2"
+                android:fontFamily="@font/modern_antiqua"
+                />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/question"
+                android:textColor="@color/_dark"
+                android:id="@+id/cb_cat1_a3"
+                android:fontFamily="@font/modern_antiqua"
+                />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/question"
+                android:textColor="@color/_dark"
+                android:id="@+id/cb_cat1_a4"
+                android:fontFamily="@font/modern_antiqua"
+                />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Relationship"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/_dark"
+                />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. What is your current relationship status?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat2_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat2_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat2_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat2_a4"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sexual History"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/_dark"
+                />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:textColor="@color/_dark"
+                />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. Sex with a female with no condom?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q1_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q1_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q1_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2. Sex with a male with no condom?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q2_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q2_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q2_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3. Sex with someone whom you know has HIV?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q3_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q3_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q3_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4. Paying for sex?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q4_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q4_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q4_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5. Regularly accepting payment for sex?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q5_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q5_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q5_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6. Injected drugs without doctor's advice?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q6_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q6_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q6_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7. Received blood transfusion?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q7_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q7_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q7_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8. Occupational exposure (needlestick/sharps) ?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q8_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q8_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q8_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9. Gotten a tattoo?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q9_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q9_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q9_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10. Sexually transmitted infection (STI / STD)?"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:textColor="@color/_dark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q10_a1"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q10_a2"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/question"
+                    android:textColor="@color/_dark"
+                    android:id="@+id/cb_cat3_q10_a3"
+                    android:fontFamily="@font/modern_antiqua"
+                    />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:layout_marginVertical="20dp"
+                app:cornerRadius="5dp"
+                android:backgroundTint="@color/g1"
+                android:id="@+id/btn_submit"/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

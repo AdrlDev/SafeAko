@@ -53,6 +53,7 @@ class UserHomeDashboard : AppCompatActivity() {
         homeFragment = HomeFragment()
         homeFragment.arguments = bundle
         messageFragment.arguments = bundle
+        assessmentFragment.arguments = bundle
 
         replaceFragment(homeFragment)
     }

@@ -3,7 +3,6 @@ package com.sprtcoding.safeako.admin
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sprtcoding.safeako.R
+import com.sprtcoding.safeako.admin.fragment.FRAssessment
 import com.sprtcoding.safeako.admin.fragment.MainFragment
 import com.sprtcoding.safeako.user.fragment.MessageFragment
 
@@ -18,6 +18,7 @@ class AdminHomeDashboard : AppCompatActivity() {
     private lateinit var frameLayout: FrameLayout
     private lateinit var messageFragment: MessageFragment
     private lateinit var mainFragment: MainFragment
+    private lateinit var assessmentFragment: FRAssessment
     private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +50,10 @@ class AdminHomeDashboard : AppCompatActivity() {
 
         messageFragment = MessageFragment()
         mainFragment = MainFragment()
+        assessmentFragment = FRAssessment()
         messageFragment.arguments = bundle
+        mainFragment.arguments = bundle
+        assessmentFragment.arguments = bundle
 
         replaceFragment(mainFragment)
     }
@@ -58,7 +62,7 @@ class AdminHomeDashboard : AppCompatActivity() {
         bottomNav.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.home -> replaceFragment(mainFragment)
-                R.id.request -> Toast.makeText(this, "Request", Toast.LENGTH_SHORT).show()
+                R.id.request -> replaceFragment(assessmentFragment)
                 R.id.message -> replaceFragment(messageFragment)
             }
             true

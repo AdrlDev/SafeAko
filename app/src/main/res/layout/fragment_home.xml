@@ -32,56 +32,317 @@
             app:layout_constraintGuide_percent=".05"
             android:id="@+id/start_gl"/>
 
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:src="@drawable/light_logo"
+            app:layout_constraintStart_toStartOf="@id/start_gl"
+            app:tint="@color/g3"
+            app:layout_constraintTop_toTopOf="@id/top_gl"
+            android:contentDescription="@string/app_name"/>
+
         <LinearLayout
             android:id="@+id/nav_ll"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="end|center"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toStartOf="@id/end_gl"
-            app:layout_constraintTop_toBottomOf="@id/top_gl"
-            app:layout_constraintStart_toEndOf="@id/start_gl"
-            >
+            app:layout_constraintTop_toBottomOf="@id/top_gl">
 
             <ImageView
+                android:id="@+id/notification_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/notification"
-                android:id="@+id/notification_icon"
                 android:layout_marginEnd="15dp"
-                app:tint="@color/g3"
-                android:contentDescription="@string/app_name"/>
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/notification"
+                app:tint="@color/g3" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btn_profile"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
+                android:fadingEdgeLength="2dp"
                 android:padding="15dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="50dp"
-                android:fadingEdgeLength="2dp"
                 app:cardElevation="2dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_gravity="center"
+                    android:id="@+id/avatar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/avatar"
-                    android:id="@+id/avatar"
-                    android:contentDescription="@string/app_name"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/avatar_man" />
 
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
+        <androidx.cardview.widget.CardView
+            android:visibility="gone"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_settings_card"
+            app:layout_constraintTop_toBottomOf="@id/nav_ll"
+            app:layout_constraintEnd_toEndOf="@id/nav_ll"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/white"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="25dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_alignParentStart="true"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:fontFamily="@font/modern_antiqua"
+                        android:textColor="@color/_dark"
+                        android:id="@+id/tv_name_settings"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/btn_profile_setting"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_lock_outline_24"
+                        app:tint="@color/dark_text"
+                        android:id="@+id/icon_lock"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Profile Setting"
+                        android:layout_toEndOf="@id/icon_lock"
+                        android:layout_alignTop="@id/icon_lock"
+                        android:layout_alignBottom="@id/icon_lock"
+                        android:gravity="center_vertical"
+                        android:layout_marginHorizontal="10dp"
+                        android:textColor="@color/dark_text"
+                        android:fontFamily="@font/modern_antiqua"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_keyboard_arrow_right_24"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/icon_lock"
+                        android:layout_alignBottom="@id/icon_lock"
+                        app:tint="@color/dark_text"
+                        android:id="@+id/icon_arrow"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height=".5dp"
+                    android:background="@color/dark_text"
+                    android:layout_marginVertical="15dp"/>
+
+                <RelativeLayout
+                    android:id="@+id/btn_user_guide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_shield_24"
+                        app:tint="@color/dark_text"
+                        android:id="@+id/icon_shield"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User Guide"
+                        android:layout_toEndOf="@id/icon_shield"
+                        android:layout_alignTop="@id/icon_shield"
+                        android:layout_alignBottom="@id/icon_shield"
+                        android:gravity="center_vertical"
+                        android:layout_marginHorizontal="10dp"
+                        android:textColor="@color/dark_text"
+                        android:fontFamily="@font/modern_antiqua"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_keyboard_arrow_right_24"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/icon_shield"
+                        android:layout_alignBottom="@id/icon_shield"
+                        app:tint="@color/dark_text"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height=".5dp"
+                    android:background="@color/dark_text"
+                    android:layout_marginVertical="15dp"/>
+
+                <RelativeLayout
+                    android:id="@+id/btn_about_us"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_info_outline_24"
+                        app:tint="@color/dark_text"
+                        android:id="@+id/icon_info"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About Us"
+                        android:layout_toEndOf="@id/icon_info"
+                        android:layout_alignTop="@id/icon_info"
+                        android:layout_alignBottom="@id/icon_info"
+                        android:gravity="center_vertical"
+                        android:layout_marginHorizontal="10dp"
+                        android:textColor="@color/dark_text"
+                        android:fontFamily="@font/modern_antiqua"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_keyboard_arrow_right_24"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/icon_info"
+                        android:layout_alignBottom="@id/icon_info"
+                        app:tint="@color/dark_text"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height=".5dp"
+                    android:background="@color/dark_text"
+                    android:layout_marginVertical="15dp"/>
+
+                <RelativeLayout
+                    android:id="@+id/btn_acknowledge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/acknowledgement"
+                        app:tint="@color/dark_text"
+                        android:id="@+id/icon_acknowledge"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Acknowledgement"
+                        android:layout_toEndOf="@id/icon_acknowledge"
+                        android:layout_alignTop="@id/icon_acknowledge"
+                        android:layout_alignBottom="@id/icon_acknowledge"
+                        android:gravity="center_vertical"
+                        android:layout_marginHorizontal="10dp"
+                        android:textColor="@color/dark_text"
+                        android:fontFamily="@font/modern_antiqua"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_keyboard_arrow_right_24"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/icon_acknowledge"
+                        android:layout_alignBottom="@id/icon_acknowledge"
+                        app:tint="@color/dark_text"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height=".5dp"
+                    android:background="@color/dark_text"
+                    android:layout_marginVertical="15dp"/>
+
+                <RelativeLayout
+                    android:id="@+id/btn_log_out"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_logout_24"
+                        app:tint="@color/_red"
+                        android:id="@+id/icon_log_out"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Log Out"
+                        android:layout_toEndOf="@id/icon_log_out"
+                        android:layout_alignTop="@id/icon_log_out"
+                        android:layout_alignBottom="@id/icon_log_out"
+                        android:gravity="center_vertical"
+                        android:layout_marginHorizontal="10dp"
+                        android:textColor="@color/_red"
+                        android:fontFamily="@font/modern_antiqua"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_keyboard_arrow_right_24"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/icon_log_out"
+                        android:layout_alignBottom="@id/icon_log_out"
+                        app:tint="@color/_red"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <TextView
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:fontFamily="@font/modern_antiqua"
             app:layout_constraintStart_toEndOf="@id/start_gl"
-            app:layout_constraintTop_toBottomOf="@id/nav_ll"
+            app:layout_constraintTop_toBottomOf="@id/logo"
             android:textColor="@color/_dark"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -307,6 +568,49 @@
                     </androidx.cardview.widget.CardView>
 
                 </GridLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginVertical="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/just_for_you"
+                android:fontFamily="@font/modern_antiqua"
+                app:layout_constraintStart_toEndOf="@id/start_gl"
+                app:layout_constraintTop_toBottomOf="@id/nav_ll"
+                android:textColor="@color/_dark"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:paddingHorizontal="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingVertical="10dp"
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/videoThumbnail"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/app_name"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_all"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/modern_antiqua"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:id="@+id/tv_view_all_vid"/>
 
             </LinearLayout>
 

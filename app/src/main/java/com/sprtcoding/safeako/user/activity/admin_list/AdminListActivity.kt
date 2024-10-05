@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,12 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sprtcoding.safeako.R
-import com.sprtcoding.safeako.adapters.AdminListAdapter
-import com.sprtcoding.safeako.adapters.MessageAdapter
+import com.sprtcoding.safeako.user.activity.admin_list.adapter.AdminListAdapter
 import com.sprtcoding.safeako.model.Users
-import com.sprtcoding.safeako.user.activity.message_activity.ChatActivity
-import com.sprtcoding.safeako.viewmodels.MessageViewModel
-import com.sprtcoding.safeako.viewmodels.factory.MessageViewModelFactory
+import com.sprtcoding.safeako.user.activity.admin_list.viewmodel.AdminListViewModel
+import com.sprtcoding.safeako.user.activity.chat_activity.ChatActivity
 
 class AdminListActivity : AppCompatActivity(), IAdminListCallBack {
     private lateinit var btnBack: ImageView
@@ -29,7 +26,6 @@ class AdminListActivity : AppCompatActivity(), IAdminListCallBack {
     private lateinit var noAdmin: LinearLayout
     private lateinit var viewManager: LinearLayoutManager
     private lateinit var viewModel: AdminListViewModel
-    private lateinit var factory: AdminListViewModelFactory
     private lateinit var adapter: AdminListAdapter
     private lateinit var userId: String
 
@@ -57,8 +53,7 @@ class AdminListActivity : AppCompatActivity(), IAdminListCallBack {
     private fun init() {
         viewManager = LinearLayoutManager(this)
         rvAdmin.layoutManager = viewManager
-        factory = AdminListViewModelFactory()
-        viewModel = ViewModelProvider(this, factory)[AdminListViewModel::class.java]
+        viewModel = ViewModelProvider(this)[AdminListViewModel::class.java]
         adapter = AdminListAdapter(viewModel, this, arrayListOf(), this)
 
         userId = intent.getStringExtra("userId").toString()
@@ -67,6 +62,8 @@ class AdminListActivity : AppCompatActivity(), IAdminListCallBack {
     private fun afterInit() {
         getAdmins()
         observeData()
+
+        btnBack.setOnClickListener { finish() }
     }
 
     @SuppressLint("NotifyDataSetChanged")
