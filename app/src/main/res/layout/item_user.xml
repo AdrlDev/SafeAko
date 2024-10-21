@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:padding="10dp"
+    android:paddingHorizontal="20dp"
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:background="@drawable/admin_list_bg"
@@ -40,51 +40,49 @@
             android:fontFamily="@font/modern_antiqua"
             android:textColor="@color/_dark"
             android:textStyle="bold"
-            android:textSize="22sp"/>
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/tv_phone"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/phone_number"
             android:fontFamily="@font/modern_antiqua"
             android:textColor="@color/_dark"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/tv_email"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/email_address"
             android:fontFamily="@font/modern_antiqua"
             android:textColor="@color/_dark"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/tv_full_name"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/full_name"
             android:fontFamily="@font/modern_antiqua"
             android:textColor="@color/dark_text"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/tv_occupation"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/occupation"
             android:fontFamily="@font/modern_antiqua"
-            android:textColor="@color/dark_text"
+            android:textColor="@color/g1"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
 
 
     </LinearLayout>

@@ -1,37 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp"
-    android:layout_margin="5dp"
+    android:layout_margin="15dp"
     app:cardBackgroundColor="@color/white">
 
-    <LinearLayout
+    <com.facebook.shimmer.ShimmerFrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        app:shimmer_auto_start="false"
+        app:shimmer_shape="linear"
+        app:shimmer_clip_to_children="true"
+        android:id="@+id/shimmer">
 
-        <ImageView
-            android:layout_width="170dp"
-            android:layout_height="100dp"
-            android:id="@+id/thumbnail_img"
-            android:scaleType="fitXY"
-            android:contentDescription="@string/app_name"/>
-
-        <TextView
-            android:layout_marginHorizontal="10dp"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title"
-            android:fontFamily="@font/modern_antiqua"
-            android:layout_gravity="center_vertical"
-            android:textSize="18sp"
-            android:id="@+id/tv_title"
-            android:textColor="@color/_dark"
-            />
+            android:orientation="vertical"
+            android:gravity="center"
+            >
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/thumbnail_img"
+                android:scaleType="fitXY"
+                android:contentDescription="@string/app_name"/>
+
+            <TextView
+                android:layout_marginVertical="20dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="20sp"
+                android:id="@+id/tv_title"
+                android:textColor="@color/_dark"
+                />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </androidx.cardview.widget.CardView>

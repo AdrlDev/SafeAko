@@ -30,10 +30,10 @@ interface GoogleDocsService {
     @GET("documents/{documentId}")
     suspend fun getDocument(@Path("documentId") documentId: String): Response<Document>
 
-    @GET("files/{fileId}")
+    @GET("drive/v3/files/{fileId}")
     suspend fun getFileMetadata(
         @Path("fileId") fileId: String,
-        @Query("fields") fields: String = "name"
+        @Query("fields") fields: String = "name, thumbnailLink"
     ): Response<DriveFileMetadata>
 
 }

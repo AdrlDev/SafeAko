@@ -8,7 +8,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import android.window.OnBackInvokedDispatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,6 +24,7 @@ import com.sprtcoding.safeako.admin.AdminHomeDashboard
 import com.sprtcoding.safeako.authentication.login.viewmodel.LoginViewModel
 import com.sprtcoding.safeako.authentication.login.viewmodel.LoginViewModelFactory
 import com.sprtcoding.safeako.user.activity.UserHomeDashboard
+import com.sprtcoding.safeako.utils.Constants
 import com.sprtcoding.safeako.utils.Constants.LOG_IN_CREDENTIALS
 import com.sprtcoding.safeako.utils.Constants.LOG_IN_TAG
 import com.sprtcoding.safeako.utils.Constants.PASSWORD
@@ -131,6 +131,9 @@ class LoginActivity : AppCompatActivity() {
             result.onSuccess { response ->
                 if(response.uid != null && response.role != null) {
                     loading.dismiss()
+                    if(response.role!! == "Staff") {
+                        loginViewModel.updateOnlineStatus(response.uid!!, Constants.STATUS.ONLINE)
+                    }
                     checkRole(response.role!!, response.uid!!)
                 } else {
                     loading.dismiss()

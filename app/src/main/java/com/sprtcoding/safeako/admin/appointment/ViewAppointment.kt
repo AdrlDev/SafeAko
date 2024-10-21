@@ -26,6 +26,7 @@ class ViewAppointment : AppCompatActivity() {
     private lateinit var noData: ImageView
     private lateinit var tvTitle: TextView
     private var type: String? = null
+    private var myId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ class ViewAppointment : AppCompatActivity() {
 
     private fun init() {
         type = intent.getStringExtra("TYPE")
-
+        myId = intent.getStringExtra("UID")
         tvTitle.text = type
 
         appointmentViewModel = ViewModelProvider(this)[AppointmentViewModel::class.java]
@@ -63,7 +64,7 @@ class ViewAppointment : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun afterInit() {
-        appointmentViewModel.getAppointmentByType(type!!)
+        appointmentViewModel.getAppointmentByType(myId!!, type!!)
 
         appointmentViewModel.appointmentList.observe(this) { result ->
             result.onSuccess { appointmentList ->

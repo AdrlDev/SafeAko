@@ -4,5 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DriveFileMetadata(
     @SerializedName("name")
-    val name: String?
+    val name: String?,
+    @SerializedName("thumbnailLink")
+    val thumbnailLink: String?
 )

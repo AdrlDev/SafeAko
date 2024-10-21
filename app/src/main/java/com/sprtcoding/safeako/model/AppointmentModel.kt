@@ -10,5 +10,7 @@ data class AppointmentModel(
     val dateOfAppointment: Date? = null,
     val timeOfAppointment: Date? = null,
     val status: String? = null,
+    val note: String? = null,
+    val read: Boolean = false,
     val createdAt: Date? = null
 )

@@ -2,6 +2,7 @@ package com.sprtcoding.safeako.authentication.login.viewmodel
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,5 +35,17 @@ class LoginViewModel(context: Context): ViewModel() {
             }
 
         })
+    }
+
+    fun updateOnlineStatus(id: String, status: String) {
+        Utils.updateOnlineStatus(id, status) { isUpdated ->
+            if (isUpdated) {
+                // Status updated successfully
+                Log.d("STATUS", "Status updated successfully")
+            } else {
+                // Failed to update status
+                Log.d("STATUS", "Failed to update status")
+            }
+        }
     }
 }

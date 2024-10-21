@@ -6,6 +6,7 @@ data class AssessmentModel(
     val id: String?,
     val userId: String?,
     val docId: String?,
+    val municipality: String?,
     val docName: String?,
     val submitOn: Date?,
     val status: String

@@ -13,17 +13,22 @@ import com.google.api.services.docs.v1.model.SubstringMatchCriteria
 import com.google.api.services.drive.model.File
 import com.sprtcoding.safeako.api.google_docs_api.DocsClient
 import com.sprtcoding.safeako.api.google_docs_api.GoogleDocsService
+import com.sprtcoding.safeako.api.google_docs_api.MetadataCallback
 import com.sprtcoding.safeako.api.google_docs_api.model.AssessmentResponse
 import com.sprtcoding.safeako.api.google_docs_api.model.CopyRequest
 import com.sprtcoding.safeako.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.AssessmentModel
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.fragment.contract.IAssessment
 import com.sprtcoding.safeako.utils.Constants.CHECK_MARK
 import com.sprtcoding.safeako.utils.Constants.EMPTY_BOX
 import com.sprtcoding.safeako.utils.Utility
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class AssessmentViewModel: ViewModel() {
@@ -32,6 +37,9 @@ class AssessmentViewModel: ViewModel() {
 
     private val _copyResult = MutableLiveData<Result<File>>()
     val copyResult: LiveData<Result<File>> get() = _copyResult
+
+    private val _fileName = MutableLiveData<String>()
+    val fileName: LiveData<String> get() = _fileName
 
     private val _response = MutableLiveData<Result<AssessmentResponse>>()
     val response: LiveData<Result<AssessmentResponse>> get() = _response
@@ -46,7 +54,7 @@ class AssessmentViewModel: ViewModel() {
     val assessmentList: LiveData<Result<ArrayList<AssessmentModel>?>> get() = _assessmentList
 
     // Function to refresh the token
-    private fun refreshToken(context: Context) {
+    fun refreshToken(context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 // Update the access token
@@ -64,6 +72,50 @@ class AssessmentViewModel: ViewModel() {
             }
         }
     }
+
+    suspend fun getDriveFileMetadata(context: Context, fileId: String, callback: MetadataCallback) {
+        refreshToken(context)
+
+        token.observe(context as LifecycleOwner) { result ->
+            result.onSuccess { accessToken ->
+                Log.d("TOKEN", accessToken)
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val docsGetService = DocsClient.instanceDrive.create(GoogleDocsService::class.java)
+                        val response = docsGetService.getFileMetadata(fileId)
+
+                        if (response.isSuccessful) {
+                            val fileMetadata = response.body()
+
+                            // Use fileMetadata here (e.g., return the thumbnail link or file name)
+                            val thumbnailLink = fileMetadata?.thumbnailLink
+                            val fileName = fileMetadata?.name
+                            println("File Name: ${fileMetadata?.name}")
+                            println("Thumbnail Link: $thumbnailLink")
+
+                            // Call the success callback
+                            callback.onSuccess(thumbnailLink, fileName)
+                        } else {
+                            // Log the error response body for debugging
+                            val errorBody = response.errorBody()?.string()
+                            println("Failed to retrieve file metadata: ${response.code()} - $errorBody")
+
+                            // Call the error callback
+                            callback.onError("Failed to retrieve file metadata: ${response.code()} - $errorBody")
+                        }
+                    } catch (e: Exception) {
+                        Log.e("METADATA", e.message!!, e)
+                        e.printStackTrace()
+
+                        // Call the error callback
+                        callback.onError(e.message ?: "Unknown error")
+                    }
+                }
+            }
+        }
+    }
+
 
     // Function to copy a Google Docs template
     fun copyTemplate(context: Context, templateFileId: String, copyRequest: CopyRequest) {
@@ -85,6 +137,7 @@ class AssessmentViewModel: ViewModel() {
 
                         // Post the result to _copyResult LiveData
                         _copyResult.postValue(Result.success(copiedFile))
+                        _fileName.postValue(copyRequest.name)
                         Log.d("DocsClient", "Template copied successfully")
 
                     } catch (e: Exception) {
@@ -157,15 +210,22 @@ class AssessmentViewModel: ViewModel() {
     }
 
     fun setAssessment(userId: String, docId: String, docName: String) {
-        Utils.setAssessmentRequest(userId, docId, docName, object : IAssessment {
-            override fun onAssessmentSubmit(success: Boolean, message: String) {
-                if(success) {
-                    _isSubmitted.postValue(Result.success(Pair(true, message)))
-                } else {
-                    _isSubmitted.postValue(Result.failure(Exception(message)))
+        Utils.getUser(userId) { user ->
+            when(user) {
+                is Users -> {
+                    val municipality = user.municipality
+                    Utils.setAssessmentRequest(userId, docId, docName, municipality!!, object : IAssessment {
+                        override fun onAssessmentSubmit(success: Boolean, message: String) {
+                            if(success) {
+                                _isSubmitted.postValue(Result.success(Pair(true, message)))
+                            } else {
+                                _isSubmitted.postValue(Result.failure(Exception(message)))
+                            }
+                        }
+                    })
                 }
             }
-        })
+        }
     }
 
     fun getAssessment(userId: String) {
@@ -180,20 +240,43 @@ class AssessmentViewModel: ViewModel() {
         })
     }
 
-    fun getAllAssessment() {
-        Utils.getAllAssessmentRequest(object : IAssessment.GetAll {
-            override fun assessment(assessmentList: ArrayList<AssessmentModel>?) {
-                if(assessmentList != null) {
-                    _assessmentList.postValue(Result.success(assessmentList))
-                } else {
-                    _assessmentList.postValue(Result.success(null))
+    fun getAllAssessment(uid: String) {
+        Utils.getUser(uid) { user ->
+            when(user) {
+                is StaffModel -> {
+                    val municipality = user.displayName.substringAfter("RHU ").trim()
+                    Utils.getAllAssessmentRequest(municipality, object : IAssessment.GetAll {
+                        override fun assessment(assessmentList: ArrayList<AssessmentModel>?) {
+                            if(assessmentList != null) {
+                                _assessmentList.postValue(Result.success(assessmentList))
+                            } else {
+                                _assessmentList.postValue(Result.success(null))
+                            }
+                        }
+
+                        override fun onError(error: String) {
+                            _assessmentList.postValue(Result.failure(Exception(error)))
+                        }
+                    })
+                }
+                is Users -> {
+                    val municipality = user.displayName?.substringAfter("RHU ")?.trim()
+                    Utils.getAllAssessmentRequest(municipality!!, object : IAssessment.GetAll {
+                        override fun assessment(assessmentList: ArrayList<AssessmentModel>?) {
+                            if(assessmentList != null) {
+                                _assessmentList.postValue(Result.success(assessmentList))
+                            } else {
+                                _assessmentList.postValue(Result.success(null))
+                            }
+                        }
+
+                        override fun onError(error: String) {
+                            _assessmentList.postValue(Result.failure(Exception(error)))
+                        }
+                    })
                 }
             }
-
-            override fun onError(error: String) {
-                _assessmentList.postValue(Result.failure(Exception(error)))
-            }
-        })
+        }
     }
 
 }

@@ -107,6 +107,7 @@
             app:layout_constraintEnd_toEndOf="@id/btn_profile"
             android:layout_marginTop="10dp"
             app:cardCornerRadius="10dp"
+            android:translationZ="5dp"
             app:cardBackgroundColor="@color/white"
             >
 
@@ -219,6 +220,7 @@
                 </RelativeLayout>
 
                 <View
+                    android:id="@+id/line_staff"
                     android:layout_width="match_parent"
                     android:layout_height=".5dp"
                     android:background="@color/dark_text"
@@ -262,6 +264,7 @@
                 </RelativeLayout>
 
                 <View
+                    android:id="@+id/line_my_staff"
                     android:layout_width="match_parent"
                     android:layout_height=".5dp"
                     android:background="@color/dark_text"

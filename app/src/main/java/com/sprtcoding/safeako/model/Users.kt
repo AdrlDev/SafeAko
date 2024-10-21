@@ -7,6 +7,7 @@ data class Users(
     val occupation: String? = null,
     val email: String? = null,
     val avatar: String? = null,
+    val municipality: String? = null,
     val isPhoneVerified: Boolean? = null,
     val phone: String? = null,
     val encryptedPass: String? = null,

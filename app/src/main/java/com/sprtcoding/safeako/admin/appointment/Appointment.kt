@@ -131,6 +131,8 @@ class Appointment : AppCompatActivity() {
                     Utility.parseDateStringToDate(date),
                     Utility.parseTimeToDate(time),
                     "Send",
+                    note,
+                    false,
                     Utility.getCurrentDate()
                 )
 

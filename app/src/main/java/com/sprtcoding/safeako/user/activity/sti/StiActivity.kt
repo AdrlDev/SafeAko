@@ -7,27 +7,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sprtcoding.safeako.R
+import com.sprtcoding.safeako.api.google_docs_api.AuthTokenManager
 import com.sprtcoding.safeako.user.activity.VideoPlayerActivity
 import com.sprtcoding.safeako.user.activity.sti.adapter.STIAdapter
+import com.sprtcoding.safeako.user.fragment.viewmodel.AssessmentViewModel
+import com.sprtcoding.safeako.utils.Constants.definitionVideoId
 
 class StiActivity : AppCompatActivity() {
     private lateinit var btnBack: ImageButton
     private lateinit var rvVideo: RecyclerView
     private lateinit var stiAdapter: STIAdapter
-    private val videoList = listOf(
-        R.raw.ph1_stds,
-        R.raw.ph2_stds,
-        R.raw.ph3_stds,
-        R.raw.ph4_stds,
-        R.raw.ph5_stds,
-        R.raw.ph6_stds,
-        R.raw.ph7_stds,
-        R.raw.ph8_stds
-    )
+    private lateinit var assessmentViewModel: AssessmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +44,22 @@ class StiActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        stiAdapter = STIAdapter(videoList, this, { videoResId ->
+        assessmentViewModel = ViewModelProvider(this)[AssessmentViewModel::class.java]
+
+        assessmentViewModel.refreshToken(this)
+
+        assessmentViewModel.token.observe(this) { result ->
+            result.onSuccess { token ->
+                AuthTokenManager.accessToken = token
+            }
+        }
+
+        stiAdapter = STIAdapter(definitionVideoId, this, { videoResId, fileNames ->
             val intent = Intent(this, VideoPlayerActivity::class.java)
             intent.putExtra("VIDEO_RES_ID", videoResId)
+            intent.putExtra("FILENAME", fileNames)
             startActivity(intent)
-        }, lifecycleScope)
+        }, lifecycleScope, assessmentViewModel)
 
         rvVideo.layoutManager = LinearLayoutManager(this)
         rvVideo.adapter = stiAdapter

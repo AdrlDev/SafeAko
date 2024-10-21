@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main_frame"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".user.fragment.HomeFragment">
 
@@ -352,7 +353,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@id/tv_user_id"
             app:layout_constraintStart_toEndOf="@id/start_gl"
             app:layout_constraintEnd_toStartOf="@id/end_gl"
@@ -361,7 +362,6 @@
             >
 
             <TextView
-                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/topics"
@@ -372,6 +372,7 @@
                 android:textSize="20sp"/>
 
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:orientation="vertical"
@@ -382,7 +383,6 @@
                     android:layout_height="match_parent"
                     android:rowCount="2"
                     android:columnCount="2"
-                    android:padding="5dp"
                     android:layout_gravity="center"
                     android:alignmentMode="alignMargins"
                     android:columnOrderPreserved="false">
@@ -398,6 +398,7 @@
                         android:layout_gravity="fill"
                         android:background="@android:color/holo_green_light"
                         android:gravity="center"
+                        app:cardElevation="5dp"
                         android:textColor="@android:color/white">
 
                         <LinearLayout
@@ -443,6 +444,7 @@
                         android:layout_gravity="fill"
                         android:background="@android:color/holo_green_light"
                         android:gravity="center"
+                        app:cardElevation="5dp"
                         android:textColor="@android:color/white">
 
                         <LinearLayout
@@ -465,7 +467,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/prevention_methods"
+                                android:text="@string/testing_and_prevention_method"
                                 android:gravity="center"
                                 android:fontFamily="@font/modern_antiqua"
                                 app:layout_constraintStart_toEndOf="@id/start_gl"
@@ -488,6 +490,7 @@
                         android:layout_gravity="fill"
                         android:background="@android:color/holo_green_light"
                         android:gravity="center"
+                        app:cardElevation="5dp"
                         android:textColor="@android:color/white">
 
                         <LinearLayout
@@ -510,7 +513,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/testing_and_medication"
+                                android:text="@string/impact_and_awareness"
                                 android:gravity="center"
                                 android:fontFamily="@font/modern_antiqua"
                                 app:layout_constraintStart_toEndOf="@id/start_gl"
@@ -533,6 +536,7 @@
                         android:layout_gravity="fill"
                         android:background="@android:color/holo_green_light"
                         android:gravity="center"
+                        app:cardElevation="5dp"
                         android:textColor="@android:color/white">
 
                         <LinearLayout
@@ -571,48 +575,75 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_marginVertical="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/just_for_you"
-                android:fontFamily="@font/modern_antiqua"
-                app:layout_constraintStart_toEndOf="@id/start_gl"
-                app:layout_constraintTop_toBottomOf="@id/nav_ll"
-                android:textColor="@color/_dark"
-                android:textSize="20sp"/>
-
-            <LinearLayout
-                android:paddingHorizontal="10dp"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 >
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:id="@+id/videoThumbnail"
-                    android:scaleType="fitXY"
-                    android:contentDescription="@string/app_name"
-                    />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/just_for_you"
+                    android:fontFamily="@font/modern_antiqua"
+                    android:textColor="@color/_dark"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
 
                 <TextView
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignBottom="@id/title"
+                    android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/view_all"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/modern_antiqua"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     style="@style/TextAppearance.AppCompat.Caption"
                     android:id="@+id/tv_view_all_vid"/>
 
-            </LinearLayout>
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                >
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shimmer_auto_start="false"
+                    android:id="@+id/shimmer_home">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/videoThumbnail"
+                            android:scaleType="fitXY"
+                            android:contentDescription="@string/app_name"
+                            />
+
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 

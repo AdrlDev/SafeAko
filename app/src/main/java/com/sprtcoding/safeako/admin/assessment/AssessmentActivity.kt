@@ -42,7 +42,7 @@ class AssessmentActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun afterInit() {
-        assessmentViewModel.getAllAssessment()
+        assessmentViewModel.getAllAssessment(myId!!)
 
         assessmentViewModel.assessmentList.observe(this) { result ->
             result.onSuccess { list ->

@@ -187,8 +187,9 @@ class AssessmentFragment : Fragment() {
         assessmentViewModel.response.observe(viewLifecycleOwner) { result ->
             result.onSuccess { res ->
                 docId = res.docId!!
-                val docName = res.docName
-                assessmentViewModel.setAssessment(userId, docId, docName!!)
+                assessmentViewModel.fileName.observe(viewLifecycleOwner) { filename ->
+                    assessmentViewModel.setAssessment(userId, docId, filename!!)
+                }
             }
         }
 

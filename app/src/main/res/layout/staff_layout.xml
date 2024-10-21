@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_margin="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        app:layout_constraintTop_toTopOf="@id/info_ll"
+        app:layout_constraintBottom_toBottomOf="@id/info_ll"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/avatar_man"
+        android:id="@+id/avatar"
+        />
+
+    <LinearLayout
+        android:id="@+id/info_ll"
+        app:layout_constraintEnd_toStartOf="@id/buttons_ll"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="16sp"
+            android:textColor="@color/_dark"
+            />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="16sp"
+            android:textColor="@color/_dark"
+            />
+
+        <TextView
+            android:id="@+id/tv_job_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="16sp"
+            android:textColor="@color/_dark"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        app:layout_constraintTop_toTopOf="@id/info_ll"
+        app:layout_constraintBottom_toBottomOf="@id/info_ll"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/buttons_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/img_status"
+            android:layout_marginBottom="10dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_circle_24"
+            android:background="@android:color/transparent"
+            app:tint="@color/green" />
+
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_marginBottom="5dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_delete_24"
+            android:background="@android:color/transparent"
+            app:tint="@color/_red"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

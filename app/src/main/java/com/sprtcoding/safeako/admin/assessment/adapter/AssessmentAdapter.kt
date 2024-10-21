@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.firebaseUtils.Utils.getUsers
 import com.sprtcoding.safeako.model.AssessmentModel
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.fragment.viewmodel.AssessmentViewModel
 import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.getAvatar
@@ -63,7 +65,14 @@ class AssessmentAdapter(
 
             getUsers(assessment.userId!!) { success, user, _ ->
                 if(success) {
-                    tvUsername.text = user?.userId
+                    when(user) {
+                        is StaffModel -> {
+                            tvUsername.text = user.staffId
+                        }
+                        is Users -> {
+                            tvUsername.text = user.userId
+                        }
+                    }
                 }
             }
 

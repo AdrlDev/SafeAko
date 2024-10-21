@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".user.activity.all_vid.ViewAllVideo">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_back"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"
+        android:id="@+id/btn_back"
+        app:tint="@color/_dark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="All Video"
+        android:layout_toEndOf="@id/btn_back"
+        android:layout_alignTop="@id/btn_back"
+        android:layout_alignBottom="@id/btn_back"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:fontFamily="@font/modern_antiqua"
+        android:textColor="@color/_dark"
+        android:textSize="16sp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_back"
+        android:layout_marginTop="20dp"
+        tools:listitem="@layout/video_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/rv_vids"/>
+
+</RelativeLayout>

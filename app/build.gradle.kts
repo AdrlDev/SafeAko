@@ -107,4 +107,6 @@ dependencies {
     //implementation(libs.google.api.services.drive)
     implementation(libs.google.api.services.drive.vv3rev20220815200)
 
+    implementation(libs.shimmer)
+
 }

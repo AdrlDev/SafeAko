@@ -54,7 +54,7 @@ class AdminListActivity : AppCompatActivity(), IAdminListCallBack {
         viewManager = LinearLayoutManager(this)
         rvAdmin.layoutManager = viewManager
         viewModel = ViewModelProvider(this)[AdminListViewModel::class.java]
-        adapter = AdminListAdapter(viewModel, this, arrayListOf(), this)
+        adapter = AdminListAdapter(this, arrayListOf(), this)
 
         userId = intent.getStringExtra("userId").toString()
     }

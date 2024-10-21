@@ -14,11 +14,11 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class AdminListAdapter(
-    private val viewModel: AdminListViewModel,
     private val context: Context,
     val userList: ArrayList<Users>,
     private val onUserClick: IAdminListCallBack
 ) : RecyclerView.Adapter<AdminListAdapter.UserViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false)
         return UserViewHolder(view)

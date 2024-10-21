@@ -1,20 +1,18 @@
 package com.sprtcoding.safeako.admin.appointment.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sprtcoding.safeako.admin.appointment.contract.IAppointment
 import com.sprtcoding.safeako.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.AppointmentModel
-import com.sprtcoding.safeako.user.fragment.contract.IAssessment
 
 class AppointmentViewModel: ViewModel() {
     private val _appointment = MutableLiveData<Result<Pair<Boolean, String>>>()
     val isAppointmentSuccess: LiveData<Result<Pair<Boolean, String>>> get() = _appointment
 
-    private val _appointmentList = MutableLiveData<Result<ArrayList<AppointmentModel>?>>()
-    val appointmentList: LiveData<Result<ArrayList<AppointmentModel>?>> get() = _appointmentList
+    private val _appointmentList = MutableLiveData<Result<List<AppointmentModel>?>>()
+    val appointmentList: LiveData<Result<List<AppointmentModel>?>> get() = _appointmentList
 
     fun setAppointment(appointment: AppointmentModel) {
         Utils.setAppointment(appointment, object : IAppointment {
@@ -32,9 +30,9 @@ class AppointmentViewModel: ViewModel() {
         })
     }
 
-    fun getAppointmentByType(type: String) {
-        Utils.getAppointmentByType(type, object : IAppointment.Get {
-            override fun appointment(success: Boolean, appointment: ArrayList<AppointmentModel>?) {
+    fun getAppointmentByType(uid: String, type: String) {
+        Utils.getAppointmentByType(uid, type, object : IAppointment.Get {
+            override fun appointment(success: Boolean, appointment: List<AppointmentModel>?) {
                 if(appointment != null && success) {
                     _appointmentList.postValue(Result.success(appointment))
                 } else {

@@ -12,6 +12,8 @@ import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.admin.appointment.ViewSchedule
 import com.sprtcoding.safeako.firebaseUtils.Utils.getUsers
 import com.sprtcoding.safeako.model.AppointmentModel
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.getAvatar
 import de.hdodenhof.circleimageview.CircleImageView
@@ -73,13 +75,27 @@ class AppointmentAdapter(
 
             getUsers(appointment.userId!!) { success, user, _ ->
                 if(success) {
-                    tvUsername.text = user?.userId
+                    when(user) {
+                        is StaffModel -> {
+                            tvUsername.text = user.staffId
+                        }
+                        is Users -> {
+                            tvUsername.text = user.userId
+                        }
+                    }
                 }
             }
 
             getUsers(appointment.senderId!!) { success, user, _ ->
                 if(success) {
-                    tvApprovedBy.text = "Approved By: ${user?.fullName}"
+                    when(user) {
+                        is StaffModel -> {
+                            tvApprovedBy.text = "Approved By: ${user.fullName}"
+                        }
+                        is Users -> {
+                            tvApprovedBy.text = "Approved By: ${user.fullName}"
+                        }
+                    }
                 }
             }
 

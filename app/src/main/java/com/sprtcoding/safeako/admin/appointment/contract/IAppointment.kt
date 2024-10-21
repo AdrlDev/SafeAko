@@ -11,12 +11,17 @@ interface IAppointment {
     }
 
     interface Get {
-        fun appointment(success: Boolean, appointment: ArrayList<AppointmentModel>?)
+        fun appointment(success: Boolean, appointment: List<AppointmentModel>?)
         fun onError(error: String)
     }
 
     interface GetSingle {
         fun appointment(success: Boolean, appointment: AppointmentModel?)
+        fun onError(error: String)
+    }
+
+    interface GetType {
+        fun appointment(success: Boolean, appointment: List<AppointmentModel>?)
         fun onError(error: String)
     }
 }

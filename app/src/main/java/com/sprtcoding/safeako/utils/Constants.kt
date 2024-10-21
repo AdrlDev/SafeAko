@@ -25,6 +25,34 @@ object Constants {
     const val CHECK_MARK = "✓"  // Symbol for checked box
     const val EMPTY_BOX = "☐"   // Symbol for unchecked box
 
+    val definitionVideoId = listOf(
+        "1Rj_Vm2V-Qi-SYr6mlPgtGKh95loMFGhK",
+        "1VIZF-IHJMiN8Nu6mEkn6lQAii1owWshE",
+        "1xbVCuW18pWTFT6b8FyFfAXvjUC5NUo6Y"
+    )
+
+    val allVideoId = listOf(
+        "1Rj_Vm2V-Qi-SYr6mlPgtGKh95loMFGhK",
+        "1VIZF-IHJMiN8Nu6mEkn6lQAii1owWshE",
+        "1xbVCuW18pWTFT6b8FyFfAXvjUC5NUo6Y",
+        "17P12urG5bmzDEr4RfEb0erzQKQPoZc7M",
+        "1iS8bGbTHXLzu5vBaQXEuSp4hiy21SUUA",
+        "1r4C8AvS8x_H_99AOFn6WEAju6vFHYxEX",
+        "1H05nVg0y9dK3PDa84DgytP87itu2lJv5",
+        "1cGyVrfwgO8ZsDMtMkCRVTDyWorANE35u"
+    )
+
+    val videoTitle = listOf(
+        "Introduction",
+        "Type of STDs",
+        "Symptoms",
+        "Testing Method",
+        "Prevention",
+        "Awareness",
+        "Impact",
+        "Global Perspective"
+    )
+
     val cat1QArray = arrayOf(
         "I am starting or ending a relationship",
         "I may not have exposed to an STI",
@@ -83,5 +111,10 @@ object Constants {
 
     object OTPCredentials {
         var timeout: Long = 300L // Default timeout
+    }
+
+    object STATUS {
+        const val ONLINE = "online"
+        const val OFFLINE = "offline"
     }
 }

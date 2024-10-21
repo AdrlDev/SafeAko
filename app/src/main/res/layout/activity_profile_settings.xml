@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".utils.profile_settings.ProfileSettings">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_back"
+            android:background="@android:color/transparent"
+            app:tint="@color/_dark"
+            android:id="@+id/btn_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Profile Settings"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="18sp"
+            android:textColor="@color/_dark"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_change_avatar"
+        android:paddingVertical="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="40dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_shield_24"
+            app:tint="@color/dark_text"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Change Avatar/Nickname"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="10dp"
+            android:textColor="@color/dark_text"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_keyboard_arrow_right_24"
+            app:tint="@color/dark_text"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".1dp"
+        android:background="@color/dark_text"/>
+
+    <LinearLayout
+        android:id="@+id/btn_change_password"
+        android:paddingVertical="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="5dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_lock_outline_24"
+            app:tint="@color/dark_text"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Change Password"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="10dp"
+            android:textColor="@color/dark_text"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_keyboard_arrow_right_24"
+            app:tint="@color/dark_text"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".1dp"
+        android:background="@color/dark_text"/>
+
+    <LinearLayout
+        android:id="@+id/btn_change_phone"
+        android:paddingVertical="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="5dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_phone_24"
+            app:tint="@color/dark_text"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Change Phone Number"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="10dp"
+            android:textColor="@color/dark_text"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_keyboard_arrow_right_24"
+            app:tint="@color/dark_text"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".1dp"
+        android:background="@color/dark_text"/>
+
+</LinearLayout>

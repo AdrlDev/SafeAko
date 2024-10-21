@@ -3,18 +3,18 @@ package com.sprtcoding.safeako.user.activity.user_avatar
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.authentication.login.LoginActivity
 import com.sprtcoding.safeako.user.activity.user_avatar.viewmodel.AvatarViewModel
 import com.sprtcoding.safeako.utils.Constants.avatarList
-import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.showAlertDialogWithYesNo
 import com.sprtcoding.safeako.utils.Utility.showAvatarPickerDialog
 import de.hdodenhof.circleimageview.CircleImageView
@@ -23,7 +23,7 @@ class AddAvatarActivity : AppCompatActivity() {
     private lateinit var btnOpenCamera: MaterialButton
     private lateinit var avatar: CircleImageView
     private lateinit var btnSave: MaterialButton
-    private lateinit var etMunicipality: TextInputEditText
+    private lateinit var tvMunicipality: AutoCompleteTextView
     private var selectedAvatar: Int? = null
     private var userId: String? = null
     private lateinit var loadingDialog: ProgressDialog
@@ -48,7 +48,7 @@ class AddAvatarActivity : AppCompatActivity() {
         btnOpenCamera = findViewById(R.id.btn_open_camera)
         avatar = findViewById(R.id.avatar)
         btnSave = findViewById(R.id.btn_save)
-        etMunicipality = findViewById(R.id.et_municipality)
+        tvMunicipality = findViewById(R.id.tv_municipality)
     }
 
     private fun init() {
@@ -57,6 +57,15 @@ class AddAvatarActivity : AppCompatActivity() {
         loadingDialog.setMessage("Uploading image...")
 
         avatarViewModel = ViewModelProvider(this)[AvatarViewModel::class.java]
+
+        val municipalityList = listOf(
+            "San Jose",
+            "Magsaysay"
+        )
+
+        // Create an ArrayAdapter with the list of items
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, municipalityList)
+        tvMunicipality.setAdapter(adapter)
     }
 
     private fun afterInit() {
@@ -88,7 +97,7 @@ class AddAvatarActivity : AppCompatActivity() {
                     else -> "default_avatar"
                 }
 
-                val municipality = etMunicipality.text.toString()
+                val municipality = tvMunicipality.text.toString()
 
                 if(municipality.isNotEmpty()) {
                     avatarViewModel.saveSelectedAvatar(avatarName, municipality, uid)
@@ -113,7 +122,7 @@ class AddAvatarActivity : AppCompatActivity() {
                 val message = pairResult.second
                 if(isSuccess) {
                     loadingDialog.dismiss()
-                    Utility.showAlertDialogWithYesNo(
+                    showAlertDialogWithYesNo(
                         this,
                         layoutInflater,
                         message,

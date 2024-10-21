@@ -18,6 +18,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.OptIn
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarEntry
@@ -31,35 +32,47 @@ import com.google.android.material.card.MaterialCardView
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.admin.assessment.AssessmentActivity
 import com.sprtcoding.safeako.admin.appointment.ViewAppointment
-import com.sprtcoding.safeako.admin.appointment.contract.IAppointment
+import com.sprtcoding.safeako.admin.fragment.viewmodel.MainViewModel
+import com.sprtcoding.safeako.utils.profile_settings.ProfileSettings
+import com.sprtcoding.safeako.admin.staff.AddStaff
+import com.sprtcoding.safeako.admin.staff.MyStaff
 import com.sprtcoding.safeako.authentication.login.LoginActivity
 import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.fragment.contract.IAssessment
 import com.sprtcoding.safeako.utils.Constants
 import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.animateCardView
+import de.hdodenhof.circleimageview.CircleImageView
 
 class MainFragment : Fragment() {
     private lateinit var view: View
     private lateinit var barChart: BarChart
-    private lateinit var entries: ArrayList<BarEntry>
     private lateinit var btnProfile: MaterialCardView
+    private lateinit var avatar: CircleImageView
     private lateinit var cardAssessment: CardView
     private lateinit var cardCounseling: CardView
     private lateinit var cardTesting: CardView
     private lateinit var tvViewAllAssessment: TextView
     private lateinit var tvCountAssessment: TextView
     private lateinit var tvCountCounseling: TextView
+    private lateinit var tvName: TextView
     private lateinit var tvCountTesting: TextView
     private lateinit var badgeDrawable: BadgeDrawable
     private lateinit var mainFrameL: FrameLayout
     private lateinit var notificationIcon: ImageView
     private lateinit var profileSettingCard: CardView
     private lateinit var btnLogOut: RelativeLayout
+    private lateinit var btnAddStaff: RelativeLayout
+    private lateinit var btnMyStaff: RelativeLayout
+    private lateinit var btnProfileSetting: RelativeLayout
     private lateinit var tvNameSetting: TextView
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var lineStaff: View
+    private lateinit var lineMyStaff: View
     private lateinit var loading: ProgressDialog
     private var myId: String? = null
-    private var pendingOperations = 3 // You have 3 async calls
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,6 +103,13 @@ class MainFragment : Fragment() {
         tvCountTesting = view.findViewById(R.id.tv_count_testing)
         cardCounseling = view.findViewById(R.id.card_counseling)
         cardTesting = view.findViewById(R.id.card_testing)
+        btnAddStaff = view.findViewById(R.id.btn_add_staff)
+        btnMyStaff = view.findViewById(R.id.btn_my_staff)
+        btnProfileSetting = view.findViewById(R.id.btn_profile_setting)
+        avatar = view.findViewById(R.id.avatar)
+        tvName = view.findViewById(R.id.tv_name)
+        lineStaff = view.findViewById(R.id.line_staff)
+        lineMyStaff = view.findViewById(R.id.line_my_staff)
     }
 
     @OptIn(ExperimentalBadgeUtils::class)
@@ -99,22 +119,51 @@ class MainFragment : Fragment() {
         loading = ProgressDialog(context)
         loading.setMessage("Please wait...")
 
-        entries = ArrayList()
-
         // Initialize BadgeDrawable
         badgeDrawable = BadgeDrawable.create(requireContext())
 
         // Attach the BadgeDrawable to the FrameLayout (ImageView)
         BadgeUtils.attachBadgeDrawable(badgeDrawable, notificationIcon, mainFrameL)
+
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
+        getCount()
+    }
+
+    private fun getCount() {
+        mainViewModel.getAssessment(myId!!)
+        mainViewModel.getCounseling(myId!!)
+        mainViewModel.getTesting(myId!!)
     }
 
     private fun afterInit() {
 
         Utils.getUsers(myId!!) { success, user, _ ->
             if(success) {
-                tvNameSetting.text = user?.fullName
+                when(user) {
+                    is StaffModel -> {
+                        tvNameSetting.text = user.fullName
+                        tvName.text = user.fullName
+
+                        lineStaff.visibility = View.GONE
+                        lineMyStaff.visibility = View.GONE
+                        btnAddStaff.visibility = View.GONE
+                        btnMyStaff.visibility = View.GONE
+                    }
+                    is Users -> {
+                        tvNameSetting.text = user.fullName
+                        tvName.text = user.displayName
+
+                        lineStaff.visibility = View.VISIBLE
+                        lineMyStaff.visibility = View.VISIBLE
+                        btnAddStaff.visibility = View.VISIBLE
+                        btnMyStaff.visibility = View.VISIBLE
+                    }
+                }
             }
         }
+
+        Utility.getAvatar(myId!!, avatar)
 
         getAllData()
 
@@ -151,40 +200,62 @@ class MainFragment : Fragment() {
         }
 
         cardCounseling.setOnClickListener {
-            startActivity(Intent(requireContext(), ViewAppointment::class.java).putExtra("TYPE", Constants.COUNSELING_TAG))
+            startActivity(Intent(requireContext(), ViewAppointment::class.java)
+                .putExtra("UID", myId)
+                .putExtra("TYPE", Constants.COUNSELING_TAG))
         }
 
         cardTesting.setOnClickListener {
-            startActivity(Intent(requireContext(), ViewAppointment::class.java).putExtra("TYPE", Constants.TESTING_TAG))
+            startActivity(Intent(requireContext(), ViewAppointment::class.java)
+                .putExtra("UID", myId)
+                .putExtra("TYPE", Constants.TESTING_TAG))
+        }
+
+        btnAddStaff.setOnClickListener {
+            startActivity(Intent(requireContext(), AddStaff::class.java).putExtra("UID", myId))
+        }
+
+        btnMyStaff.setOnClickListener {
+            startActivity(Intent(requireContext(), MyStaff::class.java).putExtra("UID", myId))
+        }
+
+        btnProfileSetting.setOnClickListener {
+            startActivity(Intent(requireContext(), ProfileSettings::class.java).putExtra("UID", myId))
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        getCount()
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun getAllData() {
-        Utils.getAssessmentRequestCount(object : IAssessment.GetCount {
-            override fun count(count: Int) {
-                tvCountAssessment.text = count.toString()
-                entries.add(BarEntry(1f, count.toFloat()))
-                updateChartIfReady()
-            }
-        })
+        val entries = mutableListOf<BarEntry>()
 
-        Utils.getAppointmentCountByType(Constants.COUNSELING_TAG, object : IAppointment.GetCount {
-            @SuppressLint("SetTextI18n")
-            override fun count(count: Int) {
-                tvCountCounseling.text = "$count"
-                entries.add(BarEntry(2f, count.toFloat()))
-                updateChartIfReady()
-            }
-        })
+        mainViewModel.getAssessmentCount.observe(viewLifecycleOwner) { pair ->
+            val assessmentCount = pair.first
+            val entry = pair.second
+            tvCountAssessment.text = assessmentCount.toString()
+            entries.add(entry)
+            updateChartIfReady(entries)
+        }
 
-        Utils.getAppointmentCountByType(Constants.TESTING_TAG, object : IAppointment.GetCount {
-            @SuppressLint("SetTextI18n")
-            override fun count(count: Int) {
-                tvCountTesting.text = "$count"
-                entries.add(BarEntry(3f, count.toFloat()))
-                updateChartIfReady()
-            }
-        })
+        mainViewModel.getCounselingCount.observe(viewLifecycleOwner) { pair ->
+            val counselingCount = pair.first
+            val entry = pair.second
+            tvCountCounseling.text = "$counselingCount"
+            entries.add(entry)
+            updateChartIfReady(entries)
+        }
+
+        mainViewModel.getTestingCount.observe(viewLifecycleOwner) { pair ->
+            val testingCount = pair.first
+            val entry = pair.second
+            tvCountTesting.text = "$testingCount"
+            entries.add(entry)
+            updateChartIfReady(entries)
+        }
     }
 
     private fun signOut() {
@@ -221,21 +292,9 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun updateChartIfReady() {
-        pendingOperations--
-        if (pendingOperations == 0) {
-            // All operations are done, update the chart here
-            updateBarChart()
-        }
-    }
-
-    private fun updateBarChart() {
-        if (entries.isEmpty()) {
-            Log.e("BarChart", "Entries list is empty")
-            return
-        }
-
-        val dataSet = BarDataSet(entries, "Appointments")
+    private fun updateChartIfReady(entries: List<BarEntry>) {
+        val barDataSet = BarDataSet(entries, "Appointments")
+        val barData = BarData(barDataSet)
 
         val colors = ArrayList<Int>()
         for (i in entries.indices) {
@@ -246,23 +305,38 @@ class MainFragment : Fragment() {
                 2 -> colors.add(Color.parseColor("#E4DB88")) // Yellow for Testing
             }
         }
-
-        dataSet.colors = colors
-        dataSet.valueTextColor = Color.BLACK
-
-        val barData = BarData(dataSet)
-        barChart.data = barData
-        barChart.setFitBars(true)
-
+        barDataSet.colors = colors
+        barDataSet.valueTextColor = Color.BLACK
         // X-axis label customization
         val xAxis = barChart.xAxis
         val labels = arrayOf("Assessment", "Counseling", "Testing")
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         xAxis.granularity = 1f  // Make sure the granularity is 1, to show each label
-        xAxis.setCenterAxisLabels(true) // Align labels properly with bars
+        xAxis.isGranularityEnabled = true
+        xAxis.setDrawGridLines(false) // Remove vertical grid lines
         xAxis.position = XAxis.XAxisPosition.BOTTOM
 
-        barChart.invalidate()
+        // Enable value labels on the bars
+        barDataSet.setDrawValues(true) // Draw values on the bars
+        barDataSet.valueTextSize = 10f  // Optional: Customize the text size for the values
+
+        // Customize Y-axis if needed (e.g., setting limits)
+        barChart.axisLeft.axisMinimum = 0f // Start Y-axis from zero
+        barChart.data = barData
+
+        // Customize Left Y-axis
+        val leftAxis = barChart.axisLeft
+        leftAxis.setDrawGridLines(false) // Remove horizontal grid lines
+        leftAxis.axisMinimum = 0f // Start Y-axis from zero
+
+        // Customize Right Y-axis
+        val rightAxis = barChart.axisRight
+        rightAxis.setDrawGridLines(false) // Remove horizontal grid lines
+
+        // Optionally remove chart description
+        barChart.description.isEnabled = false
+
+        barChart.invalidate() // Refresh the chart with new data
         barChart.animateY(1000)
     }
 

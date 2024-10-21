@@ -66,6 +66,8 @@
     <string name="question">question</string>
     <string name="info">\"Sex\" includes oral, vaginal, or anal sex, and a sexual partner is somebody with whom you have oral, vaginal, or anal sex.</string>
     <string name="select_an_avatar">Select an Avatar</string>
-    <string name="municipality">Municipality</string>
+    <string name="municipality">Select Municipality</string>
+    <string name="testing_and_prevention_method">Testing and Prevention Method</string>
+    <string name="impact_and_awareness">Impact and Awareness</string>
 
 </resources>

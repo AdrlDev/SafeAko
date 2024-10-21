@@ -21,6 +21,39 @@
         android:theme="@style/Theme.SafeAko"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".user.activity.notification.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".utils.profile_settings.ChangePhone"
+            android:exported="false" />
+        <activity
+            android:name=".user.activity.contact.ContactFacility"
+            android:exported="false" />
+        <activity
+            android:name=".user.activity.all_vid.ViewAllVideo"
+            android:exported="false" />
+        <activity
+            android:name=".user.activity.impact_awareness.ImpactAwareness"
+            android:exported="false" />
+        <activity
+            android:name=".utils.profile_settings.ChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".utils.profile_settings.ChangeAvatar"
+            android:exported="false" />
+        <activity
+            android:name=".utils.profile_settings.ProfileSettings"
+            android:exported="false" />
+        <activity
+            android:name=".admin.staff.MyStaff"
+            android:exported="false" />
+        <activity
+            android:name=".admin.staff.AddStaff"
+            android:exported="false" />
+        <activity
+            android:name=".user.activity.prevention.PreventionMethodActivity"
+            android:exported="false" />
+        <activity
             android:name=".admin.appointment.ViewSchedule"
             android:exported="false" />
         <activity

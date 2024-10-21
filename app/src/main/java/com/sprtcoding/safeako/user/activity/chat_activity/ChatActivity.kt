@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.user.activity.chat_activity.adapter.ChatAdapter
 import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.chat_activity.viewmodels.ChatViewModel
 import com.sprtcoding.safeako.utils.Constants.avatarMap
 import com.sprtcoding.safeako.utils.Utility
@@ -63,6 +65,7 @@ class ChatActivity : AppCompatActivity() {
         avatar = findViewById(R.id.avatar)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init() {
         userID = intent.getStringExtra("userId")
         receiverId = intent.getStringExtra("receiverId")
@@ -70,49 +73,87 @@ class ChatActivity : AppCompatActivity() {
         val receiverName = intent.getStringExtra("receiverName")
         val name = receiverName ?: receiverId
 
-        tvReceiverName.text = name
+        Utils.getUser(receiverId!!) { user ->
+            when(user) {
+                is StaffModel -> {
+                    tvReceiverName.text = "$name (Staff)"
+                }
+                is Users -> {
+                    tvReceiverName.text = "$name"
+                }
+            }
+        }
 
         if (receiverId != null) {
             Utils.getUsers(receiverId!!) { success, user, message ->
                 if (success) {
                     if (user != null) {
-                        val avatarImg = user.avatar
+                        when(user) {
+                            is StaffModel -> {
+                                val avatarImg = user.avatar
 
-                        if(avatarImg != null) {
-                            if(avatarMap.containsKey(avatarImg)) {
-                                Picasso.get()
-                                    .load(avatarMap[avatarImg]!!)
-                                    .placeholder(R.drawable.avatar_man)
-                                    .fit()
-                                    .into(avatar)
-                            } else {
-                                if(user.role.equals("Admin")) {
+                                if(avatarMap.containsKey(avatarImg)) {
                                     Picasso.get()
-                                        .load(R.drawable.avatar)
+                                        .load(avatarMap[avatarImg]!!)
                                         .placeholder(R.drawable.avatar_man)
                                         .fit()
                                         .into(avatar)
                                 } else {
-                                    Picasso.get()
-                                        .load(R.drawable.avatar_man)
-                                        .placeholder(R.drawable.avatar_man)
-                                        .fit()
-                                        .into(avatar)
+                                    if(user.role == "Admin") {
+                                        Picasso.get()
+                                            .load(R.drawable.avatar)
+                                            .placeholder(R.drawable.avatar_man)
+                                            .fit()
+                                            .into(avatar)
+                                    } else {
+                                        Picasso.get()
+                                            .load(R.drawable.avatar_man)
+                                            .placeholder(R.drawable.avatar_man)
+                                            .fit()
+                                            .into(avatar)
+                                    }
                                 }
                             }
-                        } else {
-                            if(user.role.equals("Admin")) {
-                                Picasso.get()
-                                    .load(R.drawable.avatar)
-                                    .placeholder(R.drawable.avatar_man)
-                                    .fit()
-                                    .into(avatar)
-                            } else {
-                                Picasso.get()
-                                    .load(R.drawable.avatar_man)
-                                    .placeholder(R.drawable.avatar_man)
-                                    .fit()
-                                    .into(avatar)
+                            is Users -> {
+                                val avatarImg = user.avatar
+
+                                if(avatarImg != null) {
+                                    if(avatarMap.containsKey(avatarImg)) {
+                                        Picasso.get()
+                                            .load(avatarMap[avatarImg]!!)
+                                            .placeholder(R.drawable.avatar_man)
+                                            .fit()
+                                            .into(avatar)
+                                    } else {
+                                        if(user.role.equals("Admin")) {
+                                            Picasso.get()
+                                                .load(R.drawable.avatar)
+                                                .placeholder(R.drawable.avatar_man)
+                                                .fit()
+                                                .into(avatar)
+                                        } else {
+                                            Picasso.get()
+                                                .load(R.drawable.avatar_man)
+                                                .placeholder(R.drawable.avatar_man)
+                                                .fit()
+                                                .into(avatar)
+                                        }
+                                    }
+                                } else {
+                                    if(user.role.equals("Admin")) {
+                                        Picasso.get()
+                                            .load(R.drawable.avatar)
+                                            .placeholder(R.drawable.avatar_man)
+                                            .fit()
+                                            .into(avatar)
+                                    } else {
+                                        Picasso.get()
+                                            .load(R.drawable.avatar_man)
+                                            .placeholder(R.drawable.avatar_man)
+                                            .fit()
+                                            .into(avatar)
+                                    }
+                                }
                             }
                         }
                     }
@@ -169,42 +210,81 @@ class ChatActivity : AppCompatActivity() {
                 Utils.getUsers(userId) { success, user, message ->
                     if(success) {
                         if (user != null) {
-                            senderName = if(user.displayName == null) {
-                                user.userId.toString()
-                            } else {
-                                user.displayName.toString()
-                            }
+                            when(user) {
+                                is StaffModel -> {
+                                    senderName = user.displayName
 
-                            val msg = etMessage.text.toString()
+                                    val msg = etMessage.text.toString()
 
-                            if (msg.isNotEmpty() && receiverId != null) {
-                                if (name != null) {
-                                    viewModel.addChats(
-                                        userId,
-                                        receiverId,
-                                        senderName,
-                                        name,
-                                        msg,
-                                        callback = {isSuccess, txt ->
-                                            if (!isSuccess) {
-                                                // Handle error
-                                                if (message != null) {
-                                                    Utility.showAlertDialogWithYesNo(
-                                                        this,
-                                                        layoutInflater,
-                                                        txt!!,
-                                                        "Cancel",
-                                                        "Ok",
-                                                        null
-                                                    ) {}
-                                                }
-                                            } else {
-                                                Toast.makeText(this, "Message sent successfully", Toast.LENGTH_SHORT).show()
-                                                getChats()
-                                            }
-                                        })
+                                    if (msg.isNotEmpty() && receiverId != null) {
+                                        if (name != null) {
+                                            viewModel.addChats(
+                                                userId,
+                                                receiverId,
+                                                senderName,
+                                                name,
+                                                msg,
+                                                callback = {isSuccess, txt ->
+                                                    if (!isSuccess) {
+                                                        // Handle error
+                                                        if (message != null) {
+                                                            Utility.showAlertDialogWithYesNo(
+                                                                this,
+                                                                layoutInflater,
+                                                                txt!!,
+                                                                "Cancel",
+                                                                "Ok",
+                                                                null
+                                                            ) {}
+                                                        }
+                                                    } else {
+                                                        Toast.makeText(this, "Message sent successfully", Toast.LENGTH_SHORT).show()
+                                                        getChats()
+                                                    }
+                                                })
+                                        }
+                                        etMessage.text.clear()
+                                    }
                                 }
-                                etMessage.text.clear()
+                                is Users -> {
+                                    senderName = if(user.displayName == null) {
+                                        user.userId.toString()
+                                    } else {
+                                        user.displayName.toString()
+                                    }
+
+                                    val msg = etMessage.text.toString()
+
+                                    if (msg.isNotEmpty() && receiverId != null) {
+                                        if (name != null) {
+                                            viewModel.addChats(
+                                                userId,
+                                                receiverId,
+                                                senderName,
+                                                name,
+                                                msg,
+                                                callback = {isSuccess, txt ->
+                                                    if (!isSuccess) {
+                                                        // Handle error
+                                                        if (message != null) {
+                                                            Utility.showAlertDialogWithYesNo(
+                                                                this,
+                                                                layoutInflater,
+                                                                txt!!,
+                                                                "Cancel",
+                                                                "Ok",
+                                                                null
+                                                            ) {}
+                                                        }
+                                                    } else {
+                                                        Toast.makeText(this, "Message sent successfully", Toast.LENGTH_SHORT).show()
+                                                        getChats()
+                                                    }
+                                                })
+                                        }
+                                        etMessage.text.clear()
+                                    }
+                                }
                             }
                         }
                     } else {

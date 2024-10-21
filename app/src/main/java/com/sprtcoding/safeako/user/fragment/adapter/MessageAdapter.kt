@@ -1,5 +1,6 @@
 package com.sprtcoding.safeako.user.fragment.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sprtcoding.safeako.R
+import com.sprtcoding.safeako.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.Message
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.chat_activity.ChatActivity
 import com.sprtcoding.safeako.user.fragment.viewmodel.MessageViewModel
 import com.sprtcoding.safeako.utils.Utility
@@ -70,6 +74,7 @@ class MessageAdapter(
         private val tvDate: TextView = binding.findViewById(R.id.tv_date)
         private lateinit var formattedDate: String
 
+        @SuppressLint("SetTextI18n")
         fun bind(message: Message){
             // Format the date into desired format
             // Initialize Handler and Runnable for periodic update
@@ -81,13 +86,31 @@ class MessageAdapter(
                     getAvatar(senderUID, imgUserPic)
                 }
 
-                tvUsername.text = message.senderName
+                Utils.getUser(message.senderId!!) { user ->
+                    when(user) {
+                        is StaffModel -> {
+                            tvUsername.text = "${message.senderName} (Staff)"
+                        }
+                        is Users -> {
+                            tvUsername.text = "${message.senderName}"
+                        }
+                    }
+                }
             } else {
                 message.receiverId?.let { receiverUID ->
                     getAvatar(receiverUID, imgUserPic)
                 }
 
-                tvUsername.text = message.receiverName
+                Utils.getUser(message.receiverId!!) { user ->
+                    when(user) {
+                        is StaffModel -> {
+                            tvUsername.text = "${message.receiverName} (Staff)"
+                        }
+                        is Users -> {
+                            tvUsername.text = "${message.receiverName}"
+                        }
+                    }
+                }
             }
             tvMessage.text = message.message
             tvDate.text = formattedDate

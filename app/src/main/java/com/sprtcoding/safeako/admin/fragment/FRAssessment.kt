@@ -58,7 +58,7 @@ class FRAssessment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun afterInit() {
-        assessmentViewModel.getAllAssessment()
+        assessmentViewModel.getAllAssessment(myId!!)
 
         assessmentViewModel.assessmentList.observe(viewLifecycleOwner) { result ->
             result.onSuccess { list ->

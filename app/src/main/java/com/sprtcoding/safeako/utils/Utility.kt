@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MimeTypes
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -33,6 +35,10 @@ import com.sprtcoding.safeako.authentication.signup.contract.IOtpCallback
 import com.sprtcoding.safeako.authentication.signup.contract.VerifyOtpCallback
 import com.sprtcoding.safeako.firebaseUtils.Utils
 import com.sprtcoding.safeako.admin.assessment.ViewAssessment
+import com.sprtcoding.safeako.api.google_docs_api.DocsClient
+import com.sprtcoding.safeako.api.google_docs_api.GoogleDocsService
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.user_avatar.adapter.AvatarAdapter
 import com.sprtcoding.safeako.utils.Constants.avatarMap
 import com.squareup.picasso.Picasso
@@ -57,6 +63,12 @@ object Utility {
         val randomCenter = (10000..99999).random()
         val randomSuffix = (10..99).random()
         return "SA-$randomCenter-$randomSuffix"
+    }
+
+    fun generateStaffId(): String {
+        val randomCenter = (10000..99999).random()
+        val randomSuffix = (10..99).random()
+        return "STAFF-$randomCenter-$randomSuffix"
     }
 
     //generate user id
@@ -193,7 +205,14 @@ object Utility {
         playerView.player = exoPlayer
 
         // Prepare the media source
-        val mediaItem = MediaItem.fromUri(videoUri)
+        //val mediaItem = MediaItem.fromUri(videoUri)
+
+        // Set the media item and manually specify the MIME type (adjust as needed)
+        val mediaItem = MediaItem.Builder()
+            .setUri(videoUri)
+            .setMimeType(MimeTypes.VIDEO_MP4) // Specify the MIME type
+            .build()
+
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
 
@@ -298,20 +317,36 @@ object Utility {
         Utils.getUsers(id) { success, user, _ ->
             if(success) {
                 if (user != null) {
-                    val avatarImg = user.avatar
+                    when(user) {
+                        is StaffModel -> {
+                            // Handle StaffModel case
+                            val avatarImg = user.avatar
 
-                    if(avatarImg != null) {
-                        if(avatarMap.containsKey(avatarImg)) {
-                            Picasso.get()
-                                .load(avatarMap[avatarImg]!!)
-                                .placeholder(R.drawable.avatar_man)
-                                .fit()
-                                .into(imgUserPic)
-                        } else {
-                            setDefaultAvatar(user.role!!, imgUserPic)
+                            if(avatarMap.containsKey(avatarImg)) {
+                                Picasso.get()
+                                    .load(avatarMap[avatarImg]!!)
+                                    .placeholder(R.drawable.avatar_man)
+                                    .fit()
+                                    .into(imgUserPic)
+                            } else {
+                                setDefaultAvatar(user.role, imgUserPic)
+                            }
                         }
-                    } else {
-                        setDefaultAvatar(user.role!!, imgUserPic)
+                        is Users -> {
+                            // Handle Users case
+                            // Handle StaffModel case
+                            val avatarImg = user.avatar
+
+                            if(avatarMap.containsKey(avatarImg)) {
+                                Picasso.get()
+                                    .load(avatarMap[avatarImg]!!)
+                                    .placeholder(R.drawable.avatar_man)
+                                    .fit()
+                                    .into(imgUserPic)
+                            } else {
+                                setDefaultAvatar(user.role!!, imgUserPic)
+                            }
+                        }
                     }
                 }
             }
@@ -345,7 +380,8 @@ object Utility {
                 DocsScopes.DOCUMENTS_READONLY,
                 DocsScopes.DOCUMENTS,  // Google Docs scope
                 DriveScopes.DRIVE,     // Google Drive scope
-                DriveScopes.DRIVE_FILE
+                DriveScopes.DRIVE_FILE,
+                DriveScopes.DRIVE_METADATA_READONLY
             ))
 
         // Fetch the access token.

@@ -147,20 +147,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:hint="@string/municipality"
-                app:endIconMode="clear_text"
+                app:endIconMode="dropdown_menu"
                 app:helperText="Required*"
                 app:helperTextTextColor="@color/_red"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/et_municipality"
-                    android:fontFamily="@font/modern_antiqua"
-                    android:textColor="@color/_dark"
                     android:inputType="text"
-                    />
+                    android:fontFamily="@font/modern_antiqua"
+                    android:id="@+id/tv_municipality"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

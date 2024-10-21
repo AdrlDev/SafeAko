@@ -28,6 +28,7 @@ picasso = "2.71828"
 playServicesBase = "18.5.0"
 retrofit = "2.11.0"
 firebaseMessaging = "24.0.1"
+shimmer = "0.5.0"
 uiDesktop = "1.7.0"
 firebaseStorage = "21.0.0"
 lottieVersion = "6.0.0"
@@ -66,6 +67,7 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottieVersion" }
+shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
