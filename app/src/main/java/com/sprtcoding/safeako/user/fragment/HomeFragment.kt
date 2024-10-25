@@ -29,7 +29,9 @@ import com.sprtcoding.safeako.api.google_docs_api.AuthTokenManager
 import com.sprtcoding.safeako.api.google_docs_api.MetadataCallback
 import com.sprtcoding.safeako.authentication.login.LoginActivity
 import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.user.activity.Acknowledgement
 import com.sprtcoding.safeako.user.activity.VideoPlayerActivity
+import com.sprtcoding.safeako.user.activity.about.AboutUs
 import com.sprtcoding.safeako.user.activity.all_vid.ViewAllVideo
 import com.sprtcoding.safeako.user.activity.contact.ContactFacility
 import com.sprtcoding.safeako.user.activity.impact_awareness.ImpactAwareness
@@ -65,6 +67,8 @@ class HomeFragment : Fragment() {
     private lateinit var profileSettingCard: CardView
     private lateinit var btnLogOut: RelativeLayout
     private lateinit var btnProfileSetting: RelativeLayout
+    private lateinit var btnAcknowledgement: RelativeLayout
+    private lateinit var btnAbout: RelativeLayout
     private lateinit var tvNameSetting: TextView
     private lateinit var shimmerContainer: ShimmerFrameLayout
     private lateinit var assessmentViewModel: AssessmentViewModel
@@ -103,6 +107,8 @@ class HomeFragment : Fragment() {
         contactCard = view.findViewById(R.id.contact_card)
         notification = view.findViewById(R.id.notification_icon)
         mainFrameL = view.findViewById(R.id.main_frame)
+        btnAcknowledgement = view.findViewById(R.id.btn_acknowledge)
+        btnAbout = view.findViewById(R.id.btn_about_us)
     }
 
     @OptIn(ExperimentalBadgeUtils::class)
@@ -240,6 +246,14 @@ class HomeFragment : Fragment() {
         btnProfileSetting.setOnClickListener {
             startActivity(Intent(requireContext(), ProfileSettings::class.java)
                 .putExtra("UID", userId))
+        }
+
+        btnAcknowledgement.setOnClickListener {
+            startActivity(Intent(requireContext(), Acknowledgement::class.java))
+        }
+
+        btnAbout.setOnClickListener {
+            startActivity(Intent(requireContext(), AboutUs::class.java))
         }
 
         btnLogOut.setOnClickListener { signOut() }

@@ -21,6 +21,15 @@
         android:theme="@style/Theme.SafeAko"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".user.activity.about.AboutUs"
+            android:exported="false" />
+        <activity
+            android:name=".user.activity.Acknowledgement"
+            android:exported="false" />
+        <activity
+            android:name=".user.activity.user_appointment.ViewUserAppointment"
+            android:exported="false" />
+        <activity
             android:name=".user.activity.notification.NotificationActivity"
             android:exported="false" />
         <activity

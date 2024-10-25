@@ -18,6 +18,7 @@ import com.sprtcoding.safeako.model.AppointmentModel
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.notification.viewmodel.UserAppointmentViewModel
+import com.sprtcoding.safeako.user.activity.user_appointment.ViewUserAppointment
 import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.getAvatar
 import de.hdodenhof.circleimageview.CircleImageView
@@ -41,8 +42,19 @@ class NotificationAdapter(
 
         holder.bind(appointment)
 
+        val formattedDate = appointment.dateOfAppointment?.let { Utility.formatDateToDateString(it) }.toString()
+        val formattedTime = appointment.timeOfAppointment?.let { Utility.formatDateTo12Hour(it) }.toString()
+
         holder.itemView.setOnClickListener {
             userAppointmentViewModel.updateReadState(appointment.id!!)
+            context.startActivity(Intent(context, ViewUserAppointment::class.java)
+                .putExtra("myID", appointment.userId)
+                .putExtra("adminID", appointment.senderId)
+                .putExtra("appointmentNote", appointment.note)
+                .putExtra("appointmentType", appointment.type)
+                .putExtra("appointmentDate", formattedDate)
+                .putExtra("appointmentTime", formattedTime)
+                .putExtra("appointmentStatus", appointment.status))
         }
     }
 
