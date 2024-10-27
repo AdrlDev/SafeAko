@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.sprtcoding.safeako.R
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.encryptPassword
 import com.sprtcoding.safeako.utils.profile_settings.viewmodel.ProfileSettingsViewModel

@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.admin.appointment.ViewSchedule
-import com.sprtcoding.safeako.firebaseUtils.Utils.getUsers
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils.getUsers
 import com.sprtcoding.safeako.model.AppointmentModel
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
@@ -39,6 +39,7 @@ class AppointmentAdapter(
         holder.itemView.setOnClickListener {
             context.startActivity(Intent(context, ViewSchedule::class.java)
                 .putExtra("APPOINTMENT_ID", appointment.id)
+                .putExtra("APPOINTMENT_TYPE", appointment.type)
                 .putExtra("USER_ID", appointment.userId)
                 .putExtra("SENDER_ID", appointment.senderId)
                 .putExtra("TYPE", appointment.type)

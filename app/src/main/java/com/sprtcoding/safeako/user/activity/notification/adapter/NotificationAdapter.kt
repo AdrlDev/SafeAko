@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.admin.appointment.ViewSchedule
-import com.sprtcoding.safeako.firebaseUtils.Utils.getUsers
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils.getUsers
 import com.sprtcoding.safeako.model.AppointmentModel
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
@@ -50,6 +50,7 @@ class NotificationAdapter(
             context.startActivity(Intent(context, ViewUserAppointment::class.java)
                 .putExtra("myID", appointment.userId)
                 .putExtra("adminID", appointment.senderId)
+                .putExtra("appointmentId", appointment.id)
                 .putExtra("appointmentNote", appointment.note)
                 .putExtra("appointmentType", appointment.type)
                 .putExtra("appointmentDate", formattedDate)

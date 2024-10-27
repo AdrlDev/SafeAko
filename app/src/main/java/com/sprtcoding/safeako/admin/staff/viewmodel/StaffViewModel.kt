@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sprtcoding.safeako.admin.staff.contract.IStaff
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.StaffModel
 
 class StaffViewModel: ViewModel() {

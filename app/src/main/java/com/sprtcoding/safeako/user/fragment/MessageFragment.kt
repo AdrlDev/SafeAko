@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.user.fragment.adapter.MessageAdapter
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.user.activity.admin_list.AdminListActivity
 import com.sprtcoding.safeako.user.fragment.viewmodel.MessageViewModel
 
@@ -115,7 +115,6 @@ class MessageFragment : Fragment() {
             }
         }
         rvMessage.adapter?.notifyDataSetChanged()
-
     }
 
     private fun swipeToDelete() {

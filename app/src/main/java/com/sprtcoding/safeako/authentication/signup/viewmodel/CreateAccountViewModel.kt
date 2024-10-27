@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.sprtcoding.safeako.api.sms.OTPManager
 import com.sprtcoding.safeako.authentication.signup.contract.IOtpCallback
 import com.sprtcoding.safeako.authentication.signup.contract.ISignUp
-import com.sprtcoding.safeako.firebaseUtils.Utils.setUser
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils.setUser
 import com.sprtcoding.safeako.model.OTPResponse
 import com.sprtcoding.safeako.model.SignUpResponse
 import com.sprtcoding.safeako.model.Users

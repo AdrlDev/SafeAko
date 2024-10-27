@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.storage)
     implementation(libs.play.services.base)
+    implementation(libs.volley)
 
     //country code picker
     implementation(libs.joielechong.countrycodepicker)

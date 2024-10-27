@@ -69,5 +69,10 @@
     <string name="municipality">Select Municipality</string>
     <string name="testing_and_prevention_method">Testing and Prevention Method</string>
     <string name="impact_and_awareness">Impact and Awareness</string>
+    <string name="developers">Developers</string>
+    <string name="self_assessment_result">Self Assessment Result</string>
+    <string name="attention_user">Attention, User</string>
+    <string name="you_can_contact_this_facility_admin_to_your_confirm_appointment">You can contact this facility admin to your confirm appointment.</string>
+    <string name="request_an_schedule_update">Request an Schedule Update</string>
 
 </resources>

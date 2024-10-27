@@ -14,6 +14,9 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.api.google_docs_api.AuthTokenManager
 import com.sprtcoding.safeako.api.google_docs_api.model.CopyRequest
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.fragment.viewmodel.AssessmentViewModel
 import com.sprtcoding.safeako.utils.Constants.COPY_DOC_ID
 import com.sprtcoding.safeako.utils.Constants.FOLDER_ID
@@ -188,6 +191,7 @@ class AssessmentFragment : Fragment() {
             result.onSuccess { res ->
                 docId = res.docId!!
                 assessmentViewModel.fileName.observe(viewLifecycleOwner) { filename ->
+                    sendNotification(userId, docId, filename)
                     assessmentViewModel.setAssessment(userId, docId, filename!!)
                 }
             }
@@ -221,6 +225,47 @@ class AssessmentFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun sendNotification(userId: String, docId: String, filename: String?) {
+        Utils.getUser(userId) { user ->
+            when(user) {
+                is Users -> {
+                    val municipality = user.municipality
+                    Log.d("MUNICIPALITY", municipality!!)
+                    Utils.getUserAdmin(municipality) { adminList ->
+                        if(adminList != null) {
+                            for(admin in adminList) {
+                                when(admin) {
+                                    is StaffModel -> {
+                                        val adminId = admin.staffId
+                                        Log.d("MUNICIPALITY_ID_STAFF", adminId)
+                                        Utils.sendNotification(
+                                            adminId,
+                                            "${user.userId}",
+                                            "${user.userId} sent assessment.\nfilename: $filename\ndocument id: $docId",
+                                            "assessment",
+                                            requireContext()
+                                        )
+                                    }
+                                    is Users -> {
+                                        val adminId = admin.userId
+                                        Log.d("MUNICIPALITY_ID", adminId!!)
+                                        Utils.sendNotification(
+                                            adminId,
+                                            "${user.userId}",
+                                            "${user.userId} sent assessment.\nfilename: $filename\ndocument id: $docId",
+                                            "assessment",
+                                            requireContext()
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun setUpCB() {

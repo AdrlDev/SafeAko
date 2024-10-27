@@ -1,23 +1,26 @@
 package com.sprtcoding.safeako.user.activity.user_appointment
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
 import com.sprtcoding.safeako.R
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.chat_activity.ChatActivity
 import com.sprtcoding.safeako.utils.Utility
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ViewUserAppointment : AppCompatActivity() {
@@ -31,6 +34,8 @@ class ViewUserAppointment : AppCompatActivity() {
     private lateinit var tvFullName: TextView
     private lateinit var tvOccupation: TextView
     private lateinit var avatar: CircleImageView
+    private lateinit var imgStatus: ImageView
+    private lateinit var btnRequestUpdate: MaterialButton
     private var myID: String? = null
     private var adminID: String? = null
     private var appointmentNote: String? = null
@@ -38,6 +43,7 @@ class ViewUserAppointment : AppCompatActivity() {
     private var appointmentDate: String? = null
     private var appointmentTime: String? = null
     private var appointmentStatus: String? = null
+    private var appointmentId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +71,8 @@ class ViewUserAppointment : AppCompatActivity() {
         tvEmail = findViewById(R.id.tv_email)
         tvFullName = findViewById(R.id.tv_full_name)
         tvOccupation = findViewById(R.id.tv_occupation)
+        imgStatus = findViewById(R.id.img_status)
+        btnRequestUpdate = findViewById(R.id.btn_request_update)
     }
 
     @SuppressLint("SetTextI18n")
@@ -76,6 +84,7 @@ class ViewUserAppointment : AppCompatActivity() {
         appointmentDate = intent.getStringExtra("appointmentDate")
         appointmentTime = intent.getStringExtra("appointmentTime")
         appointmentStatus = intent.getStringExtra("appointmentStatus")
+        appointmentId = intent.getStringExtra("appointmentId")
 
         tvUserName.text = "Attention, $myID"
     }
@@ -114,6 +123,47 @@ class ViewUserAppointment : AppCompatActivity() {
             finish()
         }
 
+        when(appointmentStatus) {
+            "Cancel" -> {
+                imgStatus.visibility = View.VISIBLE
+                cardContact.isEnabled = false
+                btnRequestUpdate.visibility = View.GONE
+
+                Picasso.get()
+                    .load(R.drawable.cancelled)
+                    .into(imgStatus)
+            }
+            "Done" -> {
+                imgStatus.visibility = View.VISIBLE
+                cardContact.isEnabled = false
+                btnRequestUpdate.visibility = View.GONE
+
+                Picasso.get()
+                    .load(R.drawable.done_stamp)
+                    .into(imgStatus)
+            }
+            "Not Active" -> {
+                imgStatus.visibility = View.VISIBLE
+                cardContact.isEnabled = false
+                btnRequestUpdate.visibility = View.GONE
+
+                Picasso.get()
+                    .load(R.drawable.not_active_stamp)
+                    .into(imgStatus)
+            }
+            else -> {
+                imgStatus.visibility = View.GONE
+                cardContact.isEnabled = true
+                Utils.isRequestUpdate(myID!!) { isRequested ->
+                    if(isRequested) {
+                        btnRequestUpdate.visibility = View.GONE
+                    } else {
+                        btnRequestUpdate.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+
         cardContact.setOnClickListener {
             Utils.getUser(adminID!!) { user ->
                 when(user) {
@@ -135,5 +185,47 @@ class ViewUserAppointment : AppCompatActivity() {
             }
         }
 
+        btnRequestUpdate.setOnClickListener {
+            val loading = ProgressDialog(this)
+            loading.setTitle("Request Update")
+            loading.setMessage("Please wait...")
+            loading.show()
+
+            Utils.getUser(myID!!) { user ->
+                when(user) {
+                    is Users -> {
+                        val municipality = user.municipality
+                        val genId = Utility.generateUpdateId()
+                        val requestMap = mapOf(
+                            Pair("id", genId),
+                            Pair("userId", myID),
+                            Pair("municipality", municipality),
+                            Pair("appointmentId", appointmentId),
+                            Pair("appointmentType", appointmentType),
+                            Pair("msg", "${user.userId} requested to update schedule.")
+                        )
+
+                        Utils.setRequestUpdate(requestMap) { isSuccess ->
+                            if(isSuccess) {
+                                loading.dismiss()
+                                sendNotifications(adminID!!, requestMap["msg"]!!)
+                                btnRequestUpdate.visibility = View.GONE
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun sendNotifications(receiverId: String, msg: String) {
+        Utils.sendNotification(
+            receiverId,
+            "Update Request",
+            msg,
+            "update",
+            this
+        )
     }
 }

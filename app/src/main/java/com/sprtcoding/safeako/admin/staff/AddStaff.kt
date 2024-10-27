@@ -162,5 +162,7 @@ class AddStaff : AppCompatActivity() {
                 ){}
             }
         }
+
+        btnBack.setOnClickListener { finish() }
     }
 }

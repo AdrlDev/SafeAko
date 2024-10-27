@@ -81,6 +81,7 @@ class ViewAssessment : AppCompatActivity() {
                     intent.putExtra("USER_ID", userId)
                     intent.putExtra("APPOINTMENT_TYPE", Constants.TESTING_TAG)
                     intent.putExtra("SENDER_ID", senderId)
+                    .putExtra("status", Constants.STATUS.SET)
                     startActivity(intent)
             }, {
                 //counseling btn click
@@ -88,6 +89,7 @@ class ViewAssessment : AppCompatActivity() {
                     intent.putExtra("USER_ID", userId)
                     intent.putExtra("APPOINTMENT_TYPE", Constants.COUNSELING_TAG)
                     intent.putExtra("SENDER_ID", senderId)
+                    .putExtra("status", Constants.STATUS.SET)
                     startActivity(intent)
             })
         }

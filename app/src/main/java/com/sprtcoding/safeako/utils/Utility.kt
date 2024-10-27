@@ -33,7 +33,7 @@ import com.google.auth.oauth2.GoogleCredentials.fromStream
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.authentication.signup.contract.IOtpCallback
 import com.sprtcoding.safeako.authentication.signup.contract.VerifyOtpCallback
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.admin.assessment.ViewAssessment
 import com.sprtcoding.safeako.api.google_docs_api.DocsClient
 import com.sprtcoding.safeako.api.google_docs_api.GoogleDocsService
@@ -82,6 +82,12 @@ object Utility {
         val randomCenter = (10000..99999).random()
         val randomSuffix = (10..99).random()
         return "ASSESSMENT-$randomCenter-$randomSuffix"
+    }
+
+    fun generateUpdateId(): String {
+        val randomCenter = (10000..99999).random()
+        val randomSuffix = (10..99).random()
+        return "UPDATE-$randomCenter-$randomSuffix"
     }
 
     fun generateAppointmentId(): String {

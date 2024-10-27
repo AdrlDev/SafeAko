@@ -2,7 +2,7 @@ package com.sprtcoding.safeako.user.fragment.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.Message
 import com.sprtcoding.safeako.model.Users
 

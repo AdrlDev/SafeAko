@@ -107,7 +107,19 @@
             android:background="@color/dark_text"
             />
 
+        <TextView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remarks: Send"
+            android:fontFamily="@font/modern_antiqua"
+            android:textSize="18sp"
+            android:textColor="@color/_dark"
+            android:textStyle="bold"
+            android:id="@+id/tv_remarks"/>
+
         <LinearLayout
+            android:id="@+id/button_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

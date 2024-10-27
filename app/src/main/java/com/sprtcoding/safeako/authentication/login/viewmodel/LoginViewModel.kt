@@ -10,7 +10,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.sprtcoding.safeako.authentication.login.ILoginCallBack
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.LoginResponse
 
 class LoginViewModel(context: Context): ViewModel() {

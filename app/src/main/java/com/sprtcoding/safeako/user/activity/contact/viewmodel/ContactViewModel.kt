@@ -3,7 +3,7 @@ package com.sprtcoding.safeako.user.activity.contact.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.Users
 
 class ContactViewModel: ViewModel() {

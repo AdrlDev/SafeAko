@@ -4,8 +4,12 @@ import com.sprtcoding.safeako.R
 
 object Constants {
 
+    const val FCM_URL = "https://fcm.googleapis.com/v1/projects/safeako-5848b/messages:send"
+
     const val MSG_TYPE_LEFT = 0
     const val MSG_TYPE_RIGHT = 1
+    const val NOTIFICATION_PERMISSION_REQUEST_CODE = 3
+    const val LOCATION_PERMISSION_REQUEST_CODE = 1
 
     const val TESTING_TAG = "Testing"
     const val COUNSELING_TAG = "Counseling"
@@ -116,5 +120,7 @@ object Constants {
     object STATUS {
         const val ONLINE = "online"
         const val OFFLINE = "offline"
+        const val UPDATE = "update"
+        const val SET = "set"
     }
 }

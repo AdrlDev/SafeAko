@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.user.activity.chat_activity.adapter.ChatAdapter
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.chat_activity.viewmodels.ChatViewModel
@@ -165,7 +165,7 @@ class ChatActivity : AppCompatActivity() {
 
         Picasso.get()
             .load(receiverAvatar)
-            .placeholder(R.drawable.avatar)
+            .placeholder(R.drawable.avatar_man)
             .fit()
             .into(avatar)
 
@@ -238,6 +238,7 @@ class ChatActivity : AppCompatActivity() {
                                                             ) {}
                                                         }
                                                     } else {
+                                                        sendNotifications(receiverId, senderName, msg)
                                                         Toast.makeText(this, "Message sent successfully", Toast.LENGTH_SHORT).show()
                                                         getChats()
                                                     }
@@ -277,6 +278,7 @@ class ChatActivity : AppCompatActivity() {
                                                             ) {}
                                                         }
                                                     } else {
+                                                        sendNotifications(receiverId, senderName, msg)
                                                         Toast.makeText(this, "Message sent successfully", Toast.LENGTH_SHORT).show()
                                                         getChats()
                                                     }
@@ -300,12 +302,22 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
+    private fun sendNotifications(receiverId: String, senderName: String, msg: String) {
+        Utils.sendNotification(
+            receiverId,
+            "$senderName sent you a message",
+            msg,
+            "chat",
+            this
+        )
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun observeData(){
-        viewModel.liveMessage.observe(this) {
-            Log.i("data", it.toString())
+        viewModel.liveMessage.observe(this) { message ->
+            Log.i("data", message.toString())
             adapter.arrayList.clear()
-            adapter.arrayList.addAll(it)
+            adapter.arrayList.addAll(message)
             adapter.notifyDataSetChanged()
             // Scroll RecyclerView to the bottom after new messages are added
             rvChats.scrollToPosition(adapter.itemCount - 1)

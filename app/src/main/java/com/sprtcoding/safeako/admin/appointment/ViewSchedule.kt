@@ -1,19 +1,28 @@
 package com.sprtcoding.safeako.admin.appointment
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.admin.appointment.contract.IAppointment
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.admin.appointment.viewmodel.AppointmentViewModel
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.AppointmentModel
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
+import com.sprtcoding.safeako.utils.Constants
 import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.getAvatar
 import de.hdodenhof.circleimageview.CircleImageView
@@ -30,7 +39,12 @@ class ViewSchedule : AppCompatActivity(), IAppointment.GetSingle {
     private lateinit var btnCancel: MaterialButton
     private lateinit var btnNotActive: MaterialButton
     private lateinit var cardRemark: CardView
+    private lateinit var buttonContainer: LinearLayout
+    private lateinit var tvRemarks: TextView
+    private lateinit var appointmentViewModel: AppointmentViewModel
+    private lateinit var loading: ProgressDialog
     private var appointmentId: String? = null
+    private var appointmentType: String? = null
     private var userId: String? = null
     private var senderId: String? = null
     private var type: String? = null
@@ -62,26 +76,159 @@ class ViewSchedule : AppCompatActivity(), IAppointment.GetSingle {
         btnDone = findViewById(R.id.btn_done)
         btnCancel = findViewById(R.id.btn_cancel)
         btnNotActive = findViewById(R.id.btn_not_active)
+        buttonContainer = findViewById(R.id.button_container)
+        tvRemarks = findViewById(R.id.tv_remarks)
     }
 
     private fun init() {
         appointmentId = intent.getStringExtra("APPOINTMENT_ID")
+        appointmentType = intent.getStringExtra("APPOINTMENT_TYPE")
         userId = intent.getStringExtra("USER_ID")
         senderId = intent.getStringExtra("SENDER_ID")
         type = intent.getStringExtra("TYPE")
+
+        loading = ProgressDialog(this)
 
         tvType.text = type
         getAvatar(userId!!, userAvatar)
         tvUserId.text = userId
 
         Utils.getSingleAppointmentById(appointmentId!!, this)
+
+        appointmentViewModel = ViewModelProvider(this)[AppointmentViewModel::class.java]
+
+        appointmentViewModel.getSingleAppointment(appointmentId!!)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun afterInit() {
         btnBack.setOnClickListener { finish() }
 
         btnSetRemark.setOnClickListener {
             Utility.animateCardView(true, cardRemark)
+        }
+
+        appointmentViewModel.appointmentSingle.observe(this) { result ->
+            result.onSuccess { appointment ->
+                when(appointment?.status) {
+                    "Send" -> {
+                        tvRemarks.visibility = View.GONE
+                        buttonContainer.visibility = View.VISIBLE
+                    }
+                    "Done", "Cancel", "Not Active" -> {
+                        cardRemark.visibility = View.GONE
+                        tvRemarks.visibility = View.VISIBLE
+                        buttonContainer.visibility = View.GONE
+
+                        tvRemarks.text = "Remarks: ${appointment.type} mark as ${appointment.status}"
+                    }
+                }
+            }
+        }
+
+        btnUpdateSchedule.setOnClickListener {
+            startActivity(Intent(this, Appointment::class.java)
+                .putExtra("status", Constants.STATUS.UPDATE)
+                .putExtra("appointmentId", appointmentId)
+                .putExtra("USER_ID", userId)
+                .putExtra("SENDER_ID", senderId)
+                .putExtra("APPOINTMENT_TYPE", appointmentType))
+        }
+
+        btnDone.setOnClickListener {
+            val done = btnDone.text.toString()
+            loading.setTitle("Set Remark")
+            loading.setMessage("Please wait...")
+            loading.show()
+
+            sendNotification(done)
+
+            appointmentViewModel.updateAppointmentRemark(appointmentId!!, done)
+        }
+
+        btnCancel.setOnClickListener {
+            val cancel = btnCancel.text.toString()
+            loading.setTitle("Set Remark")
+            loading.setMessage("Please wait...")
+            loading.show()
+
+            sendNotification(cancel)
+
+            appointmentViewModel.updateAppointmentRemark(appointmentId!!, cancel)
+        }
+
+        btnNotActive.setOnClickListener {
+            val notActive = btnNotActive.text.toString()
+            loading.setTitle("Set Remark")
+            loading.setMessage("Please wait...")
+            loading.show()
+
+            sendNotification(notActive)
+
+            appointmentViewModel.updateAppointmentRemark(appointmentId!!, notActive)
+        }
+
+        observer()
+    }
+
+    private fun sendNotification(remark: String) {
+        Utils.getUser(senderId!!) { sender ->
+            when(sender) {
+                is StaffModel -> {
+                    Utils.sendNotification(
+                        userId!!,
+                        "Remarks",
+                        "${sender.displayName} (Staff) set your appointment to ${remark}.",
+                        "appointment",
+                        this
+                    )
+                }
+                is Users -> {
+                    Utils.sendNotification(
+                        userId!!,
+                        "Remarks",
+                        "${sender.displayName} set your appointment to ${remark}.",
+                        "appointment",
+                        this
+                    )
+                }
+            }
+        }
+    }
+
+    private fun observer() {
+        appointmentViewModel.isAppointmentRemarkUpdated.observe(this) { result ->
+            result.onSuccess { success ->
+                if(success) {
+                    loading.dismiss()
+                    Utility.showAlertDialog(
+                        this,
+                        layoutInflater,
+                        "Remark",
+                        "Scheduled Appointment set remark successfully.",
+                        "Ok"
+                    ){}
+                } else {
+                    loading.dismiss()
+                    Utility.showAlertDialog(
+                        this,
+                        layoutInflater,
+                        "Remark",
+                        "Scheduled Appointment set remark failed.",
+                        "Ok"
+                    ){}
+                }
+            }
+            result.onFailure { e ->
+                loading.dismiss()
+                Utility.showAlertDialog(
+                    this,
+                    layoutInflater,
+                    "Remark",
+                    e.message!!,
+                    "Ok"
+                ){}
+            }
         }
     }
 

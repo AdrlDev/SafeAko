@@ -1,4 +1,4 @@
-package com.sprtcoding.safeako.firebaseUtils
+package com.sprtcoding.safeako.firebase.firebaseUtils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,6 +10,7 @@ import com.sprtcoding.safeako.admin.appointment.contract.IAppointment
 import com.sprtcoding.safeako.admin.staff.contract.IStaff
 import com.sprtcoding.safeako.authentication.login.ILoginCallBack
 import com.sprtcoding.safeako.authentication.signup.contract.ISignUp
+import com.sprtcoding.safeako.firebase.messaging.FCMNotificationSender
 import com.sprtcoding.safeako.model.AppointmentModel
 import com.sprtcoding.safeako.model.AssessmentModel
 import com.sprtcoding.safeako.model.Message
@@ -20,6 +21,7 @@ import com.sprtcoding.safeako.user.fragment.contract.IAssessment
 import com.sprtcoding.safeako.utils.Constants
 import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.generateAssessmentId
+import java.util.Objects
 
 object Utils {
 
@@ -135,7 +137,23 @@ object Utils {
                     callback(false)
                 }
             }
+    }
 
+    fun setToken(userId: String, token: String, callback: (Boolean) -> Unit) {
+        val rtDB = Firebase.firestore
+        val tokenRef = rtDB.collection("token").document(userId)
+        val data = mapOf(
+            "token" to token
+        )
+        tokenRef.set(data)
+            .addOnCompleteListener {
+                if(it.isSuccessful) {
+                    callback(true)
+                }
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
     }
 
     //check if users login
@@ -187,6 +205,18 @@ object Utils {
                 }
         } else {
             callback.onCheckLoginStatusFailed("No saved credentials found")
+        }
+    }
+
+    fun sendNotification(userId: String, title: String, body: String, fragment: String, context: Context) {
+        val db = Firebase.firestore
+        val ref = db.collection("token").document(userId)
+        ref.get().addOnSuccessListener { result ->
+            if(result.exists()) {
+                val token = result.getString("token")
+                Log.d("TOKEN_USER", token!!)
+                FCMNotificationSender.sendNotification(title, body, fragment, token, context)
+            }
         }
     }
 
@@ -417,7 +447,7 @@ object Utils {
                         }
                     }
                 }
-                val uniqueMessages = messageMap.values.toList()
+                val uniqueMessages = messageMap.values.sortedByDescending { it.receivedOn }
                 callback(true, uniqueMessages, null)
             }
         }
@@ -444,7 +474,7 @@ object Utils {
                         }
                     }
                 }
-                val uniqueMessages = messageMap.values.toList()
+                val uniqueMessages = messageMap.values.sortedByDescending { it.sentOn }
                 callback(true, uniqueMessages, null)
             }
         }
@@ -511,7 +541,6 @@ object Utils {
 
     fun getMessagesToInbox(userId: String, receiverId: String, callback: (Boolean, List<Message>?, String?) -> Unit) {
         val db = Firebase.firestore
-        val messages = mutableListOf<Message>()
 
         // Query for messages where senderId is equal to userId
         val senderQuery = db.collection("messages")
@@ -523,15 +552,25 @@ object Utils {
             .whereEqualTo("receiverId", userId)
             .whereEqualTo("senderId", receiverId)
 
-        // Run the queries and combine the results
-        senderQuery.get().addOnSuccessListener { senderSnapshot ->
-            for (document in senderSnapshot) {
-                val message = document.toObject(Message::class.java)
-                messages.add(message)
+        senderQuery.addSnapshotListener { senderSnapshot, senderError ->
+            if (senderError != null) {
+                callback(false, null, senderError.message)
             }
 
-            receiverQuery.get().addOnSuccessListener { receiverSnapshot ->
-                for (document in receiverSnapshot) {
+            receiverQuery.addSnapshotListener { receiverSnapshot, receiverError ->
+                if (receiverError != null) {
+                    callback(false, null, receiverError.message)
+                }
+
+                // Clear the messages list and add messages from both sender and receiver queries
+                val messages = mutableListOf<Message>()
+
+                senderSnapshot?.forEach { document ->
+                    val message = document.toObject(Message::class.java)
+                    messages.add(message)
+                }
+
+                receiverSnapshot?.forEach { document ->
                     val message = document.toObject(Message::class.java)
                     messages.add(message)
                 }
@@ -541,13 +580,9 @@ object Utils {
 
                 // Pass sorted messages to the callback
                 callback(true, sortedMessages, null)
-            }.addOnFailureListener { e ->
-                callback(false, null, e.message)
             }
-
-        }.addOnFailureListener { e ->
-            callback(false, null, e.message)
         }
+
     }
 
     //add chat
@@ -692,6 +727,65 @@ object Utils {
                         }
                     }
                     callback(user)
+                } else {
+                    callback(null)
+                }
+            }
+    }
+
+    fun setRequestUpdate(updateMap: Map<String, String?>, callback: (Boolean) -> Unit) {
+        val firestore = Firebase.firestore
+
+        firestore.collection("update_request")
+            .document(updateMap["id"]!!)
+            .set(updateMap)
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
+    }
+
+    fun isRequestUpdate(userId: String, callback: (Boolean) -> Unit) {
+        val firestore = Firebase.firestore
+
+        firestore.collection("update_request")
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { result ->
+                if(!result.isEmpty || result.size() != 0) {
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
+    }
+
+    fun getUserAdmin(municipality: String, callback: (List<Any>?) -> Unit) {
+        val firestore = Firebase.firestore
+
+        firestore.collection("users")
+            .whereEqualTo("displayName", "RHU $municipality")
+            .get()
+            .addOnSuccessListener { result ->
+                if(!result.isEmpty) {
+                    val adminList = mutableListOf<Any>()
+
+                    for(i in result) {
+                        val role = i.getString("role")
+                        Log.d("ADMIN_ROLE", role!!)
+                        val user: Any = when(role) {
+                            "Staff" -> {
+                                i.toObject(StaffModel::class.java)
+                            } else -> {
+                                i.toObject(Users::class.java)
+                            }
+                        }
+                        adminList.add(user)
+                    }
+
+                    callback(adminList)
                 } else {
                     callback(null)
                 }
@@ -940,6 +1034,34 @@ object Utils {
                 iAppointment.onError(error?.message!!)
             }
         }
+    }
+
+    fun updateAppointment(appointmentId: String, appointment: Map<String, Any>, iAppointment: IAppointment.Update) {
+        val db = Firebase.firestore
+
+        val ref = db.collection("appointment")
+
+        ref.document(appointmentId).update(appointment)
+            .addOnSuccessListener {
+                iAppointment.onSuccess(true)
+            }
+            .addOnFailureListener { e ->
+                iAppointment.onError(e.message!!)
+            }
+    }
+
+    fun updateAppointmentRemark(appointmentId: String, remark: String, iAppointment: IAppointment.Update) {
+        val db = Firebase.firestore
+
+        val ref = db.collection("appointment")
+
+        ref.document(appointmentId).update("status", remark)
+            .addOnSuccessListener {
+                iAppointment.onSuccess(true)
+            }
+            .addOnFailureListener { e ->
+                iAppointment.onError(e.message!!)
+            }
     }
 
     fun getUserAppointment(uid: String, iAppointment: IAppointment.Get) {

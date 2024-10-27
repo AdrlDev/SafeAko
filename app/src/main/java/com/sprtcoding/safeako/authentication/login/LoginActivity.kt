@@ -23,6 +23,9 @@ import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.admin.AdminHomeDashboard
 import com.sprtcoding.safeako.authentication.login.viewmodel.LoginViewModel
 import com.sprtcoding.safeako.authentication.login.viewmodel.LoginViewModelFactory
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils.setToken
+import com.sprtcoding.safeako.firebase.messaging.SaveToken.Token.saveToken
+import com.sprtcoding.safeako.firebase.messaging.contract.IToken
 import com.sprtcoding.safeako.user.activity.UserHomeDashboard
 import com.sprtcoding.safeako.utils.Constants
 import com.sprtcoding.safeako.utils.Constants.LOG_IN_CREDENTIALS
@@ -33,7 +36,7 @@ import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.encryptPassword
 import com.sprtcoding.safeako.welcome_page.WelcomeLoginActivity
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), IToken {
     private lateinit var btnBack : ImageView
     private lateinit var btnLogin: MaterialButton
     private lateinit var rememberMe: CheckBox
@@ -151,6 +154,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkRole(role: String, uid: String) {
+        saveToken(uid, this, this, layoutInflater)
         if(role == "User") {
             val intent = Intent(this, UserHomeDashboard::class.java)
             intent.putExtra("userId", uid)
@@ -167,5 +171,15 @@ class LoginActivity : AppCompatActivity() {
     private fun backToLoginWelcome() {
         startActivity(Intent(this, WelcomeLoginActivity::class.java))
         finish()
+    }
+
+    override fun onTokenGenerated(token: String, uid: String) {
+        setToken(uid, token) { success ->
+            if(success) {
+                Log.d("Token", "Save token success")
+            } else {
+                Log.d("Token", "Save token failed")
+            }
+        }
     }
 }

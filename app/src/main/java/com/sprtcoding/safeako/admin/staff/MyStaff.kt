@@ -76,5 +76,7 @@ class MyStaff : AppCompatActivity() {
                 rvStaff.visibility = View.GONE
             }
         }
+
+        btnBack.setOnClickListener { finish() }
     }
 }

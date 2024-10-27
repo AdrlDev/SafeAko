@@ -37,7 +37,7 @@ import com.sprtcoding.safeako.utils.profile_settings.ProfileSettings
 import com.sprtcoding.safeako.admin.staff.AddStaff
 import com.sprtcoding.safeako.admin.staff.MyStaff
 import com.sprtcoding.safeako.authentication.login.LoginActivity
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.fragment.contract.IAssessment

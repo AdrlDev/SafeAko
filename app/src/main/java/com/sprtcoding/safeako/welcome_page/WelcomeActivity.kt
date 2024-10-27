@@ -1,19 +1,29 @@
 package com.sprtcoding.safeako.welcome_page
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager.widget.ViewPager
 import com.sprtcoding.safeako.R
+import com.sprtcoding.safeako.utils.Constants.LOCATION_PERMISSION_REQUEST_CODE
+import com.sprtcoding.safeako.utils.Constants.NOTIFICATION_PERMISSION_REQUEST_CODE
+import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.welcome_page.adapter.ViewPagerAdapter
 
 class WelcomeActivity : AppCompatActivity() {
@@ -24,6 +34,24 @@ class WelcomeActivity : AppCompatActivity() {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var dots: Array<TextView>
     private lateinit var mDotLayout: LinearLayout
+
+    // Declare the launcher at the top of your Activity/Fragment:
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            Log.d("Notification Permission", "Permission granted.")
+        } else {
+            // TODO: Inform user that that your app will not show notifications.
+            Utility.showAlertDialog(
+                this,
+                layoutInflater,
+                "Notification Permission",
+                "Permission denied. You cannot received notification.",
+                "Ok"
+            ){}
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +66,7 @@ class WelcomeActivity : AppCompatActivity() {
         init()
         initViews()
         afterInit()
+        askNotificationPermission()
     }
 
     private fun init() {
@@ -149,5 +178,36 @@ class WelcomeActivity : AppCompatActivity() {
     private fun welcomeLogin() {
         startActivity(Intent(this, WelcomeLoginActivity::class.java))
         finish()
+    }
+
+    private fun askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    NOTIFICATION_PERMISSION_REQUEST_CODE
+                )
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        } else {
+            checkOtherPermissions()
+        }
+    }
+
+    private fun checkOtherPermissions() {
+        // Example: Check for location permission on lower API levels
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        }
+        // Add other permission checks as needed
     }
 }

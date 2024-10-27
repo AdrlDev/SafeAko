@@ -3,6 +3,7 @@ package com.sprtcoding.safeako.admin.appointment
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -13,8 +14,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.sprtcoding.safeako.R
+import com.sprtcoding.safeako.admin.appointment.contract.IAppointment
 import com.sprtcoding.safeako.admin.appointment.viewmodel.AppointmentViewModel
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.AppointmentModel
+import com.sprtcoding.safeako.model.StaffModel
+import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.utils.Constants
 import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.generateAppointmentId
@@ -34,6 +39,8 @@ class Appointment : AppCompatActivity() {
     private var senderId: String? = null
     private var appointmentType: String? = null
     private var appointmentId: String? = null
+    private var status: String? = null
+    private var appointmentIdToUpdate: String? = null
     private lateinit var appointmentViewModel: AppointmentViewModel
     private lateinit var loadingDialog: ProgressDialog
 
@@ -67,6 +74,8 @@ class Appointment : AppCompatActivity() {
         userId = intent.getStringExtra("USER_ID")
         senderId = intent.getStringExtra("SENDER_ID")
         appointmentType = intent.getStringExtra("APPOINTMENT_TYPE")
+        status = intent.getStringExtra("status")
+        appointmentIdToUpdate = intent.getStringExtra("appointmentId")
 
         loadingDialog = ProgressDialog(this)
         loadingDialog.setMessage("Loading...")
@@ -107,36 +116,114 @@ class Appointment : AppCompatActivity() {
             }
         }
 
-        btnConfirm.setOnClickListener {
-            loadingDialog.show()
-            val date = selectDate.text.toString()
-            val time = selectTime.text.toString()
-            val note = etNote.text.toString()
+        if(status == Constants.STATUS.UPDATE) {
+            Utils.getSingleAppointmentById(appointmentIdToUpdate!!, object : IAppointment.GetSingle {
+                @SuppressLint("SetTextI18n")
+                override fun appointment(success: Boolean, appointment: AppointmentModel?) {
+                    if(success) {
+                        val formattedDate = appointment?.dateOfAppointment?.let { Utility.formatDateToDateString(it) }.toString()
+                        val formattedTime = appointment?.timeOfAppointment?.let { Utility.formatDateTo12Hour(it) }.toString()
+                        selectDate.text = formattedDate
+                        selectTime.text = formattedTime
 
-            if(date.isEmpty() || date == "Select Date" || time.isEmpty() || time == "Select Time" || note.isEmpty()) {
-                loadingDialog.dismiss()
-                Utility.showAlertDialog(
-                    this,
-                    layoutInflater,
-                    "Warning",
-                    "Please fill in all fields",
-                    "Ok"
-                ) {}
-            } else {
-                val data = AppointmentModel(
-                    appointmentId,
-                    userId,
-                    senderId,
-                    appointmentType,
-                    Utility.parseDateStringToDate(date),
-                    Utility.parseTimeToDate(time),
-                    "Send",
-                    note,
-                    false,
-                    Utility.getCurrentDate()
-                )
+                        etNote.setText(appointment?.note)
 
-                appointmentViewModel.setAppointment(data)
+                        btnConfirm.text = "Update"
+
+                        btnConfirm.setOnClickListener {
+                            loadingDialog.show()
+                            val date = selectDate.text.toString()
+                            val time = selectTime.text.toString()
+                            val note = etNote.text.toString()
+
+                            if(date.isEmpty() || date == "Select Date" || time.isEmpty() || time == "Select Time" || note.isEmpty()) {
+                                loadingDialog.dismiss()
+                                Utility.showAlertDialog(
+                                    this@Appointment,
+                                    layoutInflater,
+                                    "Warning",
+                                    "Please fill in all fields",
+                                    "Ok"
+                                ) {}
+                            } else {
+                                val data = mapOf<String, Any>(
+                                    "id" to appointmentIdToUpdate!!,
+                                    "userId" to userId!!,
+                                    "senderId" to senderId!!,
+                                    "type" to appointmentType!!,
+                                    "dateOfAppointment" to Utility.parseDateStringToDate(date)!!,
+                                    "timeOfAppointment" to Utility.parseTimeToDate(time)!!,
+                                    "status" to "Send",
+                                    "note" to note,
+                                    "read" to false,
+                                    "createdAt" to Utility.getCurrentDate()
+                                )
+
+                                appointmentViewModel.updateAppointment(appointmentIdToUpdate!!, data)
+                            }
+                        }
+                    }
+                }
+
+                override fun onError(error: String) {
+                    Log.d("", error)
+                }
+            })
+        } else {
+            btnConfirm.setOnClickListener {
+                loadingDialog.show()
+                val date = selectDate.text.toString()
+                val time = selectTime.text.toString()
+                val note = etNote.text.toString()
+
+                if(date.isEmpty() || date == "Select Date" || time.isEmpty() || time == "Select Time" || note.isEmpty()) {
+                    loadingDialog.dismiss()
+                    Utility.showAlertDialog(
+                        this,
+                        layoutInflater,
+                        "Warning",
+                        "Please fill in all fields",
+                        "Ok"
+                    ) {}
+                } else {
+                    val data = AppointmentModel(
+                        appointmentId,
+                        userId,
+                        senderId,
+                        appointmentType,
+                        Utility.parseDateStringToDate(date),
+                        Utility.parseTimeToDate(time),
+                        "Send",
+                        note,
+                        false,
+                        Utility.getCurrentDate()
+                    )
+
+                    Utils.getUser(senderId!!) { sender ->
+                        when(sender) {
+                            is StaffModel -> {
+                                Utils.sendNotification(
+                                    userId!!,
+                                    "Appointment",
+                                    "${sender.displayName} (Staff) scheduled you an ${data.type} appointment.",
+                                    "appointment",
+                                    this
+                                )
+                            }
+                            is Users -> {
+                                Utils.sendNotification(
+                                    userId!!,
+                                    "Appointment",
+                                    "${sender.displayName} scheduled you an ${data.type} appointment.",
+                                    "appointment",
+                                    this
+                                )
+                            }
+                        }
+                    }
+
+                    appointmentViewModel.setAppointment(data)
+                }
             }
         }
 
@@ -166,6 +253,64 @@ class Appointment : AppCompatActivity() {
                         layoutInflater,
                         "Failed",
                         message,
+                        "Ok"
+                    ) {}
+                }
+            }
+            result.onFailure { e ->
+                loadingDialog.dismiss()
+                Utility.showAlertDialog(
+                    this,
+                    layoutInflater,
+                    "Error",
+                    e.message!!,
+                    "Ok"
+                ) {}
+            }
+        }
+
+        appointmentViewModel.isAppointmentUpdated.observe(this) { result ->
+            result.onSuccess { isSuccess ->
+                if(isSuccess) {
+                    loadingDialog.dismiss()
+
+                    Utils.getUser(senderId!!) { sender ->
+                        when(sender) {
+                            is StaffModel -> {
+                                Utils.sendNotification(
+                                    userId!!,
+                                    "Appointment",
+                                    "${sender.displayName} (Staff) updated your schedule.",
+                                    "appointment",
+                                    this@Appointment
+                                )
+                            }
+                            is Users -> {
+                                Utils.sendNotification(
+                                    userId!!,
+                                    "Appointment",
+                                    "${sender.displayName} updated your schedule",
+                                    "appointment",
+                                    this@Appointment
+                                )
+                            }
+                        }
+                    }
+
+                    Utility.showAlertDialog(
+                        this,
+                        layoutInflater,
+                        "Success",
+                        "Schedule updated successfully.",
+                        "Ok"
+                    ) {finish()}
+                } else {
+                    loadingDialog.dismiss()
+                    Utility.showAlertDialog(
+                        this,
+                        layoutInflater,
+                        "Failed",
+                        "Failed to update schedule.",
                         "Ok"
                     ) {}
                 }

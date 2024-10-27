@@ -23,7 +23,7 @@ class AboutUs : AppCompatActivity() {
         setContentView(R.layout.activity_about_us)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left + 60, systemBars.top + 60, systemBars.right + 60, systemBars.bottom + 60)
             insets
         }
 
@@ -32,42 +32,42 @@ class AboutUs : AppCompatActivity() {
 
         rvDevelopers = findViewById(R.id.rv_developers)
 
-        val benjie = Developers(
+        val dev1 = Developers(
             "Benjie B. Santos",
             "sbenjie962@gmail.com",
             R.drawable.benjie
         )
 
-        val charity = Developers(
+        val dev2 = Developers(
             "Charity D. Bayaoa",
             "charity.bayaoa16@gmail.com",
             R.drawable.charity
         )
 
-        val renante = Developers(
+        val dev3 = Developers(
             "Renante H. Oliveros",
             "renanteoliveros262003@gmail.com",
             R.drawable.renante
         )
 
-        val christian = Developers(
+        val dev4 = Developers(
             "Christian P. Bartolome",
             "christianbartolome911@gmail.com",
             R.drawable.christian
         )
 
-        val nexon = Developers(
+        val dev5 = Developers(
             "Nexon P. Minorca",
             "minorcanexon33@gmail.com",
             R.drawable.nexon
         )
 
         val devs = listOf(
-            benjie,
-            charity,
-            renante,
-            christian,
-            nexon
+            dev1,
+            dev2,
+            dev3,
+            dev4,
+            dev5
         )
 
         val ll = LinearLayoutManager(this)

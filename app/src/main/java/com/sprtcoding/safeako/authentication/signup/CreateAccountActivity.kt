@@ -29,7 +29,7 @@ import com.sprtcoding.safeako.api.sms.OTPManager
 import com.sprtcoding.safeako.authentication.login.LoginActivity
 import com.sprtcoding.safeako.authentication.signup.contract.VerifyOtpCallback
 import com.sprtcoding.safeako.authentication.signup.viewmodel.CreateAccountViewModel
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.user_avatar.AddAvatarActivity
 import com.sprtcoding.safeako.utils.Constants

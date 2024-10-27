@@ -16,7 +16,7 @@ import com.sprtcoding.safeako.api.google_docs_api.GoogleDocsService
 import com.sprtcoding.safeako.api.google_docs_api.MetadataCallback
 import com.sprtcoding.safeako.api.google_docs_api.model.AssessmentResponse
 import com.sprtcoding.safeako.api.google_docs_api.model.CopyRequest
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.model.AssessmentModel
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users

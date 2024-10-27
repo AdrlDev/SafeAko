@@ -14,13 +14,17 @@ import androidx.core.view.WindowInsetsCompat
 import com.sprtcoding.safeako.admin.AdminHomeDashboard
 import com.sprtcoding.safeako.api.access.AccessManager
 import com.sprtcoding.safeako.api.access.ResponseAccessCallback
-import com.sprtcoding.safeako.firebaseUtils.ICheckLoginStatus
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.ICheckLoginStatus
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils.setToken
+import com.sprtcoding.safeako.firebase.messaging.SaveToken.Token.saveToken
+import com.sprtcoding.safeako.firebase.messaging.contract.IToken
 import com.sprtcoding.safeako.user.activity.UserHomeDashboard
+import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.welcome_page.WelcomeActivity
 
 @SuppressLint("CustomSplashScreen")
-class SplashActivity : AppCompatActivity(), ICheckLoginStatus, ResponseAccessCallback {
+class SplashActivity : AppCompatActivity(), ICheckLoginStatus, ResponseAccessCallback, IToken {
     private lateinit var accessManager: AccessManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +47,7 @@ class SplashActivity : AppCompatActivity(), ICheckLoginStatus, ResponseAccessCal
 
     override fun onCheckLoginStatusSuccess(isLogin: Boolean, userId: String?, role: String?) {
         if(isLogin) {
+            saveToken(userId!!, this, this, layoutInflater)
             if(role == "User") {
                 val intent = Intent(this, UserHomeDashboard::class.java)
                 intent.putExtra("userId", userId)
@@ -82,5 +87,15 @@ class SplashActivity : AppCompatActivity(), ICheckLoginStatus, ResponseAccessCal
 
     override fun onFailure(errorMessage: String) {
         Log.d("ACCESS_DENIED", errorMessage)
+    }
+
+    override fun onTokenGenerated(token: String, uid: String) {
+        setToken(uid,token) { success ->
+            if(success) {
+                Log.d("Token", "Save token success")
+            } else {
+                Log.d("Token", "Save token failed")
+            }
+        }
     }
 }

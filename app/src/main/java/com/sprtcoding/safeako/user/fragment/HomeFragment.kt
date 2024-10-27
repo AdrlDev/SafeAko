@@ -28,7 +28,7 @@ import com.sprtcoding.safeako.utils.profile_settings.ProfileSettings
 import com.sprtcoding.safeako.api.google_docs_api.AuthTokenManager
 import com.sprtcoding.safeako.api.google_docs_api.MetadataCallback
 import com.sprtcoding.safeako.authentication.login.LoginActivity
-import com.sprtcoding.safeako.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.user.activity.Acknowledgement
 import com.sprtcoding.safeako.user.activity.VideoPlayerActivity
 import com.sprtcoding.safeako.user.activity.about.AboutUs

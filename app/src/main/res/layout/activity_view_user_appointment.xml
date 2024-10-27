@@ -18,6 +18,7 @@
         >
 
         <ImageButton
+            android:contentDescription="@string/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/arrow_back"
@@ -28,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Self Assessment Result"
+            android:text="@string/self_assessment_result"
             android:layout_marginHorizontal="15dp"
             android:gravity="center"
             android:fontFamily="@font/modern_antiqua"
@@ -38,139 +39,174 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="20dp"
         >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Attention, User"
-            android:fontFamily="@font/modern_antiqua"
-            android:id="@+id/username"
-            android:textSize="20sp"
-            android:textColor="@color/_dark"
-            android:textStyle="bold"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Attention, User"
-            android:fontFamily="@font/modern_antiqua"
-            android:id="@+id/message"
-            android:textSize="18sp"
-            android:textColor="@color/_dark"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="You can contact this facility admin to your confirm appointment."
-            android:fontFamily="@font/modern_antiqua"
-            android:textSize="16sp"
-            android:id="@+id/tv_contact_admin"
-            android:textColor="@color/dark_text"
-            />
-
         <LinearLayout
-            android:background="@drawable/admin_list_bg"
-            android:layout_marginVertical="20dp"
-            android:id="@+id/card_contact"
-            android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:gravity="center"
+            android:orientation="vertical"
             >
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/avatar"
-                android:contentDescription="@string/app_name"
-                android:id="@+id/avatar"
+                android:layout_marginTop="30dp"
+                android:text="@string/attention_user"
+                android:fontFamily="@font/modern_antiqua"
+                android:id="@+id/username"
+                android:textSize="20sp"
+                android:textColor="@color/_dark"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/attention_user"
+                android:fontFamily="@font/modern_antiqua"
+                android:id="@+id/message"
+                android:textSize="18sp"
+                android:textColor="@color/_dark"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/you_can_contact_this_facility_admin_to_your_confirm_appointment"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="16sp"
+                android:id="@+id/tv_contact_admin"
+                android:textColor="@color/dark_text"
                 />
 
             <LinearLayout
-                android:layout_marginStart="15dp"
+                android:background="@drawable/admin_list_bg"
+                android:layout_marginVertical="20dp"
+                android:id="@+id/card_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintStart_toEndOf="@id/avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:padding="15dp"
-                android:gravity="center_vertical">
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:gravity="center"
+                >
 
-                <TextView
-                    android:id="@+id/tv_display_name"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/avatar"
+                    android:contentDescription="@string/app_name"
+                    android:id="@+id/avatar"
+                    />
+
+                <LinearLayout
+                    android:layout_marginStart="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/display_username"
-                    android:fontFamily="@font/modern_antiqua"
-                    android:textColor="@color/_dark"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@id/avatar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="15dp"
+                    android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/tv_phone"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone_number"
-                    android:fontFamily="@font/modern_antiqua"
-                    android:textColor="@color/_dark"
-                    android:textStyle="bold"
-                    android:textSize="15sp"/>
+                    <TextView
+                        android:id="@+id/tv_display_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/display_username"
+                        android:fontFamily="@font/modern_antiqua"
+                        android:textColor="@color/_dark"
+                        android:textStyle="bold"
+                        android:textSize="18sp"/>
 
-                <TextView
-                    android:id="@+id/tv_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/email_address"
-                    android:fontFamily="@font/modern_antiqua"
-                    android:textColor="@color/_dark"
-                    android:textStyle="bold"
-                    android:textSize="15sp"/>
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone_number"
+                        android:fontFamily="@font/modern_antiqua"
+                        android:textColor="@color/_dark"
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
 
-                <TextView
-                    android:id="@+id/tv_full_name"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/full_name"
-                    android:fontFamily="@font/modern_antiqua"
-                    android:textColor="@color/dark_text"
-                    android:textStyle="bold"
-                    android:textSize="15sp"/>
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email_address"
+                        android:fontFamily="@font/modern_antiqua"
+                        android:textColor="@color/_dark"
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
 
-                <TextView
-                    android:id="@+id/tv_occupation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/occupation"
-                    android:fontFamily="@font/modern_antiqua"
-                    android:textColor="@color/g1"
-                    android:textStyle="bold"
-                    android:textSize="15sp"/>
+                    <TextView
+                        android:id="@+id/tv_full_name"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/full_name"
+                        android:fontFamily="@font/modern_antiqua"
+                        android:textColor="@color/dark_text"
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_occupation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/occupation"
+                        android:fontFamily="@font/modern_antiqua"
+                        android:textColor="@color/g1"
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/request_an_schedule_update"
+                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:paddingVertical="20dp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                app:cornerRadius="5dp"
+                app:strokeColor="@color/g1"
+                android:textColor="@color/g1"
+                android:id="@+id/btn_request_update"/>
+
+
         </LinearLayout>
 
-    </LinearLayout>
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/img_status"
+            android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cancelled"
+            android:layout_centerInParent="true"
+            app:tint="#3E7C7C7C"
+            />
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sprtcoding.safeako.authentication.signup.contract.ISignUp
-import com.sprtcoding.safeako.firebaseUtils.Utils
-import com.sprtcoding.safeako.firebaseUtils.Utils.saveImageUrlToFireStore
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
+import com.sprtcoding.safeako.firebase.firebaseUtils.Utils.saveImageUrlToFireStore
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.user_avatar.IDetailsCallBack

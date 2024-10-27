@@ -21,6 +21,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/arrow_back"
             app:tint="@color/_dark"
             android:background="@android:color/transparent"
@@ -30,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:text="Developers"
+            android:text="@string/developers"
             android:fontFamily="@font/modern_antiqua"
             android:textColor="@color/_dark"
             android:textSize="18sp"

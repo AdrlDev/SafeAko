@@ -24,4 +24,9 @@ interface IAppointment {
         fun appointment(success: Boolean, appointment: List<AppointmentModel>?)
         fun onError(error: String)
     }
+
+    interface Update {
+        fun onSuccess(success: Boolean)
+        fun onError(error: String)
+    }
 }
