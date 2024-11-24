@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login_text"
         android:textSize="18sp"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa_bold"
         app:layout_constraintStart_toEndOf="@id/start_gl"
         app:layout_constraintEnd_toStartOf="@id/end_gl"
         app:layout_constraintTop_toBottomOf="@id/top_nav_gl"
@@ -112,7 +112,7 @@
                 android:background="@android:color/transparent"
                 android:paddingHorizontal="10dp"
                 android:textColor="@color/_dark"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa"
                 android:textSize="16sp"
                 android:inputType="phone"
                 android:hint="956*******"
@@ -136,18 +136,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa"
                 android:textSize="16sp"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/comfortaa"
+            android:textStyle="bold"
+            android:id="@+id/tv_forgot"
+            />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:text="@string/remember_me"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:textSize="14sp"
             android:layout_marginStart="10dp"
             android:textColor="@color/_dark"
@@ -164,7 +175,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/login_text"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa_bold"
         android:textSize="18sp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"

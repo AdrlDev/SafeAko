@@ -90,6 +90,10 @@ class ChangePassword : AppCompatActivity() {
     }
 
     private fun afterInit() {
+        btnBack.setOnClickListener {
+            finish()
+        }
+
         saveBtn.setOnClickListener {
             loading.show()
 

@@ -36,13 +36,12 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/btn_back"
         android:layout_alignTop="@id/btn_back"
-        android:layout_alignBottom="@id/btn_back"
         android:text="File Name"
         android:layout_marginHorizontal="15dp"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa"
         android:textColor="@color/_dark"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:id="@+id/file_name"/>
 
     <androidx.media3.ui.PlayerView

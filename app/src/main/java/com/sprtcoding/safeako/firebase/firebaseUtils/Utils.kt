@@ -3,17 +3,36 @@ package com.sprtcoding.safeako.firebase.firebaseUtils
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.sprtcoding.safeako.admin.appointment.contract.IAppointment
 import com.sprtcoding.safeako.admin.staff.contract.IStaff
+import com.sprtcoding.safeako.authentication.forgot.contract.IForgotPassword
 import com.sprtcoding.safeako.authentication.login.ILoginCallBack
 import com.sprtcoding.safeako.authentication.signup.contract.ISignUp
 import com.sprtcoding.safeako.firebase.messaging.FCMNotificationSender
 import com.sprtcoding.safeako.model.AppointmentModel
 import com.sprtcoding.safeako.model.AssessmentModel
+import com.sprtcoding.safeako.model.AssessmentQuestion
+import com.sprtcoding.safeako.model.BirthMother
+import com.sprtcoding.safeako.model.Education
+import com.sprtcoding.safeako.model.Gender
+import com.sprtcoding.safeako.model.Interest
+import com.sprtcoding.safeako.model.MedicalHistory
 import com.sprtcoding.safeako.model.Message
+import com.sprtcoding.safeako.model.Reason
+import com.sprtcoding.safeako.model.Relationships
+import com.sprtcoding.safeako.model.Sexual2
+import com.sprtcoding.safeako.model.Sexual3
+import com.sprtcoding.safeako.model.Sexual4
+import com.sprtcoding.safeako.model.Sexual5
+import com.sprtcoding.safeako.model.Sexual6
+import com.sprtcoding.safeako.model.Sexual7
+import com.sprtcoding.safeako.model.SexualHistory
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.user_avatar.IDetailsCallBack
@@ -21,6 +40,7 @@ import com.sprtcoding.safeako.user.fragment.contract.IAssessment
 import com.sprtcoding.safeako.utils.Constants
 import com.sprtcoding.safeako.utils.Utility
 import com.sprtcoding.safeako.utils.Utility.generateAssessmentId
+import kotlinx.coroutines.tasks.await
 import java.util.Objects
 
 object Utils {
@@ -92,12 +112,45 @@ object Utils {
             }
     }
 
+    fun checkStaffPassword(id: String, password: String, callback: (Boolean) -> Unit) {
+        val db = Firebase.firestore
+
+        db.collection("users")
+            .whereEqualTo("staffId", id)
+            .whereEqualTo("encryptedPass", password)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    //user found
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
+    }
+
     fun updatePassword(id: String, newPassword: String, callback: (Boolean) -> Unit) {
         val db = Firebase.firestore
 
         db.collection("users")
             .document(id)
             .update("encryptedPass", newPassword)
+            .addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
+
+    }
+
+    fun updateStaff(id: String, staff: Map<String, String>, callback: (Boolean) -> Unit) {
+        val db = Firebase.firestore
+
+        db.collection("users")
+            .document(id)
+            .update(staff)
             .addOnCompleteListener { task ->
                 if(task.isSuccessful) {
                     callback(true)
@@ -364,6 +417,33 @@ object Utils {
                 } else {
                     iStaff.onGetStaffFailed(error?.message!!)
                 }
+            }
+    }
+
+    fun getStaff(staffId: String, iStaff: IStaff.Staff) {
+        val db = Firebase.firestore
+        db.collection("users").document(staffId)
+            .get()
+            .addOnSuccessListener { result ->
+                if(result.exists()) {
+                    val staff = result.toObject(StaffModel::class.java)
+                    iStaff.onSuccess(staff!!)
+                }
+            }
+            .addOnFailureListener { e ->
+                iStaff.onError(Exception(e))
+            }
+    }
+
+    fun deleteStaff(staffId: String, iStaff: IStaff.DeleteStaff) {
+        val db = Firebase.firestore
+        db.collection("users").document(staffId)
+            .delete()
+            .addOnSuccessListener {
+                iStaff.onSuccess()
+            }
+            .addOnFailureListener { e ->
+                iStaff.onError(Exception(e))
             }
     }
 
@@ -733,6 +813,37 @@ object Utils {
             }
     }
 
+    fun getUserPhone(phone: String, callback: IForgotPassword.User) {
+        val firestore = Firebase.firestore
+
+        val collection = firestore.collection("users")
+            .whereEqualTo("phone", phone)
+
+        collection.get()
+            .addOnCompleteListener { result ->
+                if(result.isSuccessful) {
+                    val data = result.result
+                    if(data.isEmpty) {
+                        callback.onSuccess(null)
+                    } else {
+                        val role = data.documents[0].getString("role")
+
+                        val user: Any? = when(role) {
+                            "Staff" -> {
+                                data.documents[0].toObject(StaffModel::class.java)
+                            } else -> {
+                                data.documents[0].toObject(Users::class.java)
+                            }
+                        }
+                        callback.onSuccess(user)
+                    }
+                } else {
+                    callback.onError(result.exception ?: Exception("Unknown error")) // Handle any errors
+                }
+            }
+
+    }
+
     fun setRequestUpdate(updateMap: Map<String, String?>, callback: (Boolean) -> Unit) {
         val firestore = Firebase.firestore
 
@@ -793,7 +904,7 @@ object Utils {
     }
 
     //save assessment
-    fun setAssessmentRequest(userId: String, docId: String, docName: String, municipality: String, iAssessment: IAssessment) {
+    fun setAssessmentRequest(userId: String, docId: String, docName: String, municipality: String, selectedAnswers: List<String>, iAssessment: IAssessment) {
         val db = Firebase.firestore
 
         val assessmentID = generateAssessmentId()
@@ -809,7 +920,8 @@ object Utils {
             "docName" to docName,
             "submitOn" to dateNow,
             "status" to "pending",
-            "municipality" to municipality
+            "municipality" to municipality,
+            "selectedAnswers" to selectedAnswers
         )
 
         ref.set(data).addOnCompleteListener { res ->
@@ -878,11 +990,19 @@ object Utils {
         }
     }
 
-    fun getAllAssessmentRequest(municipalities: String, iAssessment: IAssessment.GetAll) {
+    fun getAllAssessmentRequest(municipalities: String, type: String, iAssessment: IAssessment.GetAll) {
         val db = Firebase.firestore
 
-        val ref = db.collection("assessment")
-            .whereEqualTo("municipality", municipalities)
+        val ref = if(type == "assessment") {
+            db.collection("assessment")
+                .whereEqualTo("municipality", municipalities)
+                .whereEqualTo("status", "pending")
+                .orderBy("submitOn", Query.Direction.DESCENDING)
+        } else {
+            db.collection("assessment")
+                .whereEqualTo("municipality", municipalities)
+                .orderBy("submitOn", Query.Direction.DESCENDING)
+        }
 
         ref.addSnapshotListener { value, error ->
             if(error == null && value != null) {
@@ -915,7 +1035,8 @@ object Utils {
                     iAssessment.assessment(null)
                 }
             } else {
-                iAssessment.onError(error?.message!!)
+                Log.e("FIREBASE_ERROR", error?.message!!, error)
+                iAssessment.onError(error.message!!)
             }
         }
     }
@@ -925,6 +1046,7 @@ object Utils {
 
         val ref = db.collection("assessment")
             .whereEqualTo("municipality", municipality)
+            .whereEqualTo("status", "pending")
 
         ref.addSnapshotListener { value, error ->
             if(error == null && value != null) {
@@ -1016,6 +1138,7 @@ object Utils {
         val ref = db.collection("appointment")
             .whereEqualTo("senderId", uid)
             .whereEqualTo("type", type)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
 
         ref.addSnapshotListener { value, error ->
             if(error == null && value != null) {
@@ -1031,7 +1154,8 @@ object Utils {
                     iAppointment.appointment(false, null)
                 }
             } else {
-                iAppointment.onError(error?.message!!)
+                Log.e("FIREBASE_ERROR", error?.message!!, error)
+                iAppointment.onError(error.message!!)
             }
         }
     }
@@ -1069,6 +1193,7 @@ object Utils {
 
         val ref = db.collection("appointment")
             .whereEqualTo("userId", uid)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
 
         ref.addSnapshotListener { value, error ->
             if(error == null && value != null) {
@@ -1086,6 +1211,7 @@ object Utils {
             } else {
                 iAppointment.appointment(false, null)
                 iAppointment.onError(error?.message!!)
+                Log.e("FIREBASE_ERROR", error.message!!, error)
             }
         }
     }
@@ -1167,6 +1293,322 @@ object Utils {
                 }
             } else {
                 iAppointment.onError(error?.message!!)
+            }
+        }
+    }
+
+    fun getAssessmentQuestions(callback: AssessmentQuestionsCallback) {
+        val db = Firebase.firestore
+        val qCollection = db.collection("assessment_questions")
+
+        // Fetch all documents in the collection
+        qCollection.get()
+            .addOnSuccessListener { snapshot ->
+                if (!snapshot.isEmpty) {
+                    var genderObj: Gender? = null
+                    var relationshipsObj: Relationships? = null
+                    var educationObj: Education? = null
+                    var interestObj: Interest? = null
+                    var birthObj: BirthMother? = null
+                    var sexualObj: SexualHistory? = null
+                    var sexual2Obj: Sexual2? = null
+                    var sexual3Obj: Sexual3? = null
+                    var sexual4Obj: Sexual4? = null
+                    var sexual5Obj: Sexual5? = null
+                    var sexual6Obj: Sexual6? = null
+                    var sexual7Obj: Sexual7? = null
+                    var reasonObj: Reason? = null
+                    var medicalHistoryObj: MedicalHistory? = null
+
+                    // Counter to check all documents are processed
+                    val documentCount = snapshot.documents.size
+                    var completedCount = 0
+
+                    for (document in snapshot.documents) {
+                        val questionId = document.id
+                        val coll = when (questionId) {
+                            "question1" -> "gender"
+                            "question2" -> "relationships"
+                            "question3" -> "education"
+                            "question4" -> "interest"
+                            "question5" -> "birth_mother"
+                            "question6" -> "sexual_history"
+                            "question7" -> "sexual2"
+                            "question8" -> "sexual3"
+                            "question9" -> "sexual4"
+                            "question10" -> "sexual5"
+                            "question11" -> "sexual6"
+                            "question12" -> "sexual7"
+                            "question13" -> "reason"
+                            "question14" -> "medical_history"
+                            else -> ""
+                        }
+
+                        if (coll.isEmpty()) {
+                            Log.e("QUESTIONS", "Unknown questionId: $questionId")
+                            continue
+                        }
+
+                        val ref = qCollection
+                            .document(questionId)
+                            .collection(coll)
+
+                        ref.get()
+                            .addOnSuccessListener { relationshipsSnapshot ->
+                                relationshipsSnapshot.documents.forEach { data ->
+                                    val questionText = data.getString("q")
+                                    Log.d("QUESTIONS", "Fetched question: $questionText for $coll")
+                                    when (coll) {
+                                        "education" -> educationObj = data.toObject(Education::class.java)
+                                        "gender" -> genderObj = data.toObject(Gender::class.java)
+                                        "relationships" -> relationshipsObj = data.toObject(Relationships::class.java)
+                                        "birth_mother" -> birthObj = data.toObject(BirthMother::class.java)
+                                        "sexual_history" -> sexualObj = data.toObject(SexualHistory::class.java)
+                                        "interest" -> interestObj = data.toObject(Interest::class.java)
+                                        "sexual2" -> sexual2Obj = data.toObject(Sexual2::class.java)
+                                        "sexual3" -> sexual3Obj = data.toObject(Sexual3::class.java)
+                                        "sexual4" -> sexual4Obj = data.toObject(Sexual4::class.java)
+                                        "sexual5" -> sexual5Obj = data.toObject(Sexual5::class.java)
+                                        "sexual6" -> sexual6Obj = data.toObject(Sexual6::class.java)
+                                        "sexual7" -> sexual7Obj = data.toObject(Sexual7::class.java)
+                                        "reason" -> reasonObj = data.toObject(Reason::class.java)
+                                        "medical_history" -> medicalHistoryObj = data.toObject(MedicalHistory::class.java)
+                                        else -> Log.w("QUESTIONS", "Unexpected collection: $coll")
+                                    }
+                                }
+
+                                // Increment completed counter and check if all documents processed
+                                completedCount++
+                                Log.d("QUESTIONS", "Completed count: $completedCount of $documentCount")
+                                if (completedCount == documentCount) {
+                                    if (genderObj != null && relationshipsObj != null && educationObj != null &&
+                                        interestObj != null && birthObj != null && sexualObj != null && sexual2Obj != null
+                                        && sexual3Obj != null && sexual4Obj != null && sexual5Obj != null && sexual6Obj != null && sexual7Obj != null
+                                        && reasonObj != null && medicalHistoryObj != null) {
+                                        val assessmentQuestions = AssessmentQuestion(
+                                            genderObj!!,
+                                            relationshipsObj!!,
+                                            educationObj!!,
+                                            interestObj!!,
+                                            birthObj!!,
+                                            sexualObj!!,
+                                            sexual2Obj!!,
+                                            sexual3Obj!!,
+                                            sexual4Obj!!,
+                                            sexual5Obj!!,
+                                            sexual6Obj!!,
+                                            sexual7Obj!!,
+                                            reasonObj!!,
+                                            medicalHistoryObj!!
+                                        )
+                                        callback.onSuccess(assessmentQuestions)
+                                    } else {
+                                        Log.e("QUESTIONS", "Incomplete data: Gender: $genderObj, Relationships: $relationshipsObj, Education: $educationObj, Interest: $interestObj, BirthMother: $birthObj, SexualHistory: $sexualObj")
+                                        callback.onFailure(Exception("Incomplete data"))
+                                    }
+                                }
+                            }
+                            .addOnFailureListener { exception ->
+                                callback.onFailure(exception)
+                            }
+                    }
+                } else {
+                    callback.onFailure(Exception("No documents found"))
+                }
+            }
+            .addOnFailureListener { exception ->
+                callback.onFailure(exception)
+            }
+    }
+
+    fun getGenderCount(callback: (Pair<Int, Int>) -> Unit) {
+        val db = Firebase.firestore
+        val collection = db.collection("assessment")
+
+        var maleCount = 0
+        var femaleCount = 0
+        collection.addSnapshotListener { value, error ->
+            if(error == null && value != null) {
+                if(!value.isEmpty) {
+                    for(item in value) {
+                        val selectedAnswer = item["selectedAnswers"] as? List<*>
+                        if(selectedAnswer != null && "Gender: Male" in selectedAnswer) {
+                            maleCount++
+                        } else if(selectedAnswer != null && "Gender: Female" in selectedAnswer) {
+                            femaleCount++
+                        }
+                    }
+                    callback(Pair(maleCount, femaleCount))
+                } else {
+                    callback(Pair(0, 0))
+                }
+            }
+        }
+    }
+
+    fun getRelationshipCount(callback: (Int, Int, Int) -> Unit) {
+        val db = Firebase.firestore
+        val collection = db.collection("assessment")
+
+        var noSteadyPartnerCount = 0
+        var multiplePartnerCount = 0
+        var steadyPartnerCount = 0
+        collection.addSnapshotListener { value, error ->
+            if(error == null && value != null) {
+                if(!value.isEmpty) {
+                    for(item in value) {
+                        val selectedAnswer = item["selectedAnswers"] as? List<*>
+                        if(selectedAnswer != null && "Relationships: No steady partner" in selectedAnswer) {
+                            noSteadyPartnerCount++
+                        } else if(selectedAnswer != null && "Relationships: Multiple partners" in selectedAnswer) {
+                            multiplePartnerCount++
+                        } else if(selectedAnswer != null && "Relationships: Steady partner" in selectedAnswer) {
+                            steadyPartnerCount++
+                        }
+                    }
+                    callback(noSteadyPartnerCount, multiplePartnerCount, steadyPartnerCount)
+                } else {
+                    callback(0, 0, 0)
+                }
+            }
+        }
+    }
+
+    fun getBirthMotherCount(callback: (Int, Int, Int) -> Unit) {
+        val db = Firebase.firestore
+        val collection = db.collection("assessment")
+
+        var doNotKnowCount = 0
+        var noCount = 0
+        var yesCount = 0
+        collection.addSnapshotListener { value, error ->
+            if(error == null && value != null) {
+                if(!value.isEmpty) {
+                    for(item in value) {
+                        val selectedAnswer = item["selectedAnswers"] as? List<*>
+                        if(selectedAnswer != null && "Did your birth mother have HIV when you were born? : Do not know" in selectedAnswer) {
+                            doNotKnowCount++
+                        } else if(selectedAnswer != null && "Did your birth mother have HIV when you were born? : No" in selectedAnswer) {
+                            noCount++
+                        } else if(selectedAnswer != null && "Did your birth mother have HIV when you were born? : Yes" in selectedAnswer) {
+                            yesCount++
+                        }
+                    }
+                    callback(doNotKnowCount, noCount, yesCount)
+                } else {
+                    callback(0, 0, 0)
+                }
+            }
+        }
+    }
+
+    fun getSexualCount(question: String, callback: (Int, Int, Int) -> Unit) {
+        val db = Firebase.firestore
+        val collection = db.collection("assessment")
+
+        var noCount = 0
+        var yesCount = 0
+        var yes2Count = 0
+        collection.addSnapshotListener { value, error ->
+            if(error == null && value != null) {
+                if(!value.isEmpty) {
+                    for(item in value) {
+                        val selectedAnswer = item["selectedAnswers"] as? List<*>
+                        // Check if the list is valid and has enough elements
+                        if(selectedAnswer != null && "$question: No" in selectedAnswer) {
+                            noCount++
+                        } else if(selectedAnswer != null && "$question: Yes; the most recent time was within the past 12 months" in selectedAnswer) {
+                            yesCount++
+                        } else if(selectedAnswer != null && "$question: Yes; the most recent time was more than 12 months ago" in selectedAnswer) {
+                            yes2Count++
+                        }
+                    }
+                    callback(noCount, yesCount, yes2Count)
+                } else {
+                    callback(0, 0, 0)
+                }
+            }
+        }
+    }
+
+    fun getReasonMedicalCount(question: String, callback: (Int, Int, Int, Int, Int) -> Unit) {
+        val db = Firebase.firestore
+        val collection = db.collection("assessment")
+
+        var c1 = 0
+        var c2 = 0
+        var c3 = 0
+        var c4 = 0
+        var c5 = 0
+        collection.addSnapshotListener { value, error ->
+            if(error == null && value != null) {
+                if(!value.isEmpty) {
+                    for(item in value) {
+                        val selectedAnswer = item["selectedAnswers"] as? List<*>
+                        // Check if the list is valid and has enough elements
+                        if(question == "Reason for submitting pre-assessment for counseling and testing") {
+                            if(selectedAnswer != null && "$question: Possible exposure to STIs" in selectedAnswer) {
+                                c1++
+                            } else if(selectedAnswer != null && "$question: Recommended by physician/nurse/midwife" in selectedAnswer) {
+                                c2++
+                            } else if(selectedAnswer != null && "$question: Referred by peer educator" in selectedAnswer) {
+                                c3++
+                            } else if(selectedAnswer != null && "$question: Employment - Overseas/Abroad" in selectedAnswer) {
+                                c4++
+                            } else if(selectedAnswer != null && "$question: Employment Local/Philippines" in selectedAnswer) {
+                                c5++
+                            }
+                        } else if(question == "Medical History") {
+                            if(selectedAnswer != null && "$question: Current TB patient" in selectedAnswer) {
+                                c1++
+                            } else if(selectedAnswer != null && "$question: With Hepatitis B" in selectedAnswer) {
+                                c2++
+                            } else if(selectedAnswer != null && "$question: Diagnosed with other STIs" in selectedAnswer) {
+                                c3++
+                            } else if(selectedAnswer != null && "$question: With Hepatitis C" in selectedAnswer) {
+                                c4++
+                            } else if(selectedAnswer != null && "$question: Currently Pregnant" in selectedAnswer) {
+                                c5++
+                            }
+                        }
+                    }
+                    callback(c1, c2, c3, c4, c5)
+                } else {
+                    callback(0, 0, 0, 0, 0)
+                }
+            }
+        }
+    }
+
+    fun getPositiveCount(callback: (Int) -> Unit) {
+        val db = Firebase.firestore
+        val positiveCollection = db.collection("appointment").whereEqualTo("type", "Testing")
+            .whereEqualTo("status", "Positive")
+
+        positiveCollection.addSnapshotListener { value, error ->
+            if(error == null && value != null) {
+                if(!value.isEmpty) {
+                    callback(value.size())
+                } else {
+                    callback(0)
+                }
+            }
+        }
+    }
+
+    fun getNegativeCount(callback: (Int) -> Unit) {
+        val db = Firebase.firestore
+
+        val negativeCollection = db.collection("appointment").whereEqualTo("type", "Testing")
+            .whereEqualTo("status", "Negative")
+
+        negativeCollection.addSnapshotListener { value, error ->
+            if(error == null && value != null) {
+                if(!value.isEmpty) {
+                    callback(value.size())
+                } else {
+                    callback(0)
+                }
             }
         }
     }

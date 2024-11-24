@@ -37,10 +37,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/display_username"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:textColor="@color/_dark"
             android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tv_phone"
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/phone_number"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:textColor="@color/_dark"
             android:textStyle="bold"
             android:textSize="15sp"/>
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/email_address"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:textColor="@color/_dark"
             android:textStyle="bold"
             android:textSize="15sp"/>
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/full_name"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:textColor="@color/dark_text"
             android:textStyle="bold"
             android:textSize="15sp"/>
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/occupation"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:textColor="@color/g1"
             android:textStyle="bold"
             android:textSize="15sp"/>

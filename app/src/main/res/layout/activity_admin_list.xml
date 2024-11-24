@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:text="@string/admin_list"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa_bold"
             android:textSize="18sp"
             android:textColor="@color/_dark"
             android:id="@+id/tv_title" />

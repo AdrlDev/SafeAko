@@ -83,6 +83,10 @@ class ChangeAvatar : AppCompatActivity() {
     }
 
     private fun afterInit() {
+        btnBack.setOnClickListener {
+            finish()
+        }
+
         chooseAvatarBtn.setOnClickListener {
             // Check for storage permissions
             showAvatarPickerDialog(this, avatarList, avatar) { selectedAvatar ->

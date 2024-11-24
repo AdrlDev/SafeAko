@@ -23,7 +23,7 @@ object Constants {
 
     const val LOG_IN_TAG = "LoginActivity"
 
-    const val COPY_DOC_ID = "1YRVvJvy3PPcx9JVF0atfgkHT6GF9C8i-nQXhWYUBDvc"
+    const val COPY_DOC_ID = "1DE9DHTKvcvChlwmsmOocRvGudepopcjFgBdrjwWL-4g"
     const val FOLDER_ID = "1gEvZk3K-Ki6BDUlIe4gz4DXZmxIVRnMP"
 
     const val CHECK_MARK = "✓"  // Symbol for checked box
@@ -67,8 +67,7 @@ object Constants {
     val cat2QArray = arrayOf(
         "No steady partner",
         "Multiple partners",
-        "Steady partner",
-        "Others"
+        "Steady partner"
     )
 
     val cat3QArray = arrayOf(

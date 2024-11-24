@@ -32,7 +32,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="topics">Topics</string>
-    <string name="stis_definition">STIs Definition</string>
+    <string name="stis_definition">STDs Definition</string>
     <string name="prevention_methods">Prevention Methods</string>
     <string name="testing_and_medication">Testing and Medication</string>
     <string name="contact_facilities">Contact Facilities</string>
@@ -74,5 +74,38 @@
     <string name="attention_user">Attention, User</string>
     <string name="you_can_contact_this_facility_admin_to_your_confirm_appointment">You can contact this facility admin to your confirm appointment.</string>
     <string name="request_an_schedule_update">Request an Schedule Update</string>
+    <string name="user_guide">User Guide</string>
+    <string name="how_to_change_password">How to change Password?</string>
+    <string name="how_password">1. Tap User Profile\n2. Click Profile Setting \n3. Tap change password \n4. Then fill up the form \n5. Click “Save”</string>
+    <string name="how_to_change_phone_number">How to change Phone Number?</string>
+    <string name="change_phone">1. Tap User Profile\n2. Click Profile Setting\n3. Tap change phone number\n4. Then fill up the form\n5. Click “Save”</string>
+    <string name="how_to_change_avatar_and_nickname">How to change Avatar and Nickname?</string>
+    <string name="change_nickname">1. Tap User Profile\n2. Click Profile Setting\n3. Tap change “Avatar and Nickname”\n4. Then fill up the form\n5. Click “Save”</string>
+    <string name="how_to_get_counseling_and_testing_schedule">How to get counseling and testing schedule?</string>
+    <string name="counseling_testing_info">1. Pre- Assessment button. Place at the middle of inner pane.\n2. Check the button for your answer and answer it correctly.\n3. Then click submit\n4. Then wait for the evaluation and schedule given by Health Facilitator</string>
+    <string name="acknowledgement">Acknowledgement</string>
+    <string name="main">Main</string>
+    <string name="summary_of_reports">Summary Of Reports</string>
+    <string name="message">Message</string>
+    <string name="positive">Positive</string>
+    <string name="negative">Negative</string>
+    <string name="gender">Gender</string>
+    <string name="relationship">Relationship</string>
+    <string name="stds_assessment_form">STDs Assessment Form</string>
+    <string name="assessment_info">All information given will be STRICTLY CONFIDENTIAL. Please fill out this form COMPLETELY and as honestly as possible. Please CHECK the appropriate boxes.</string>
+    <string name="did_your_birth_mother_have_hiv_when_you_were_born">Did your birth mother have HIV when you were born?</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="male">Male:</string>
+    <string name="female">Female:</string>
+    <string name="sexual1">Sex with a male/female with no condom</string>
+    <string name="sexual2">Sex with someone whom you know has HIV</string>
+    <string name="paying_for_sex">Paying for sex</string>
+    <string name="injected_drugs_without_doctor_s_advice">Injected drugs without doctor\'s advice</string>
+    <string name="sexual5">Received blood transfusion</string>
+    <string name="sexual6">Occupational exposure (needlestick/sharps)</string>
+    <string name="sexual7">Gotten a tattoo</string>
+    <string name="reason">Reason for submitting pre-assessment for counseling and testing</string>
+    <string name="medical_history">Medical History</string>
+    <string name="change_staff_password">Change Staff Password?</string>
 
 </resources>

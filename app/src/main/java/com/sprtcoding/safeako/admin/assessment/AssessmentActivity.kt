@@ -24,6 +24,7 @@ class AssessmentActivity : AppCompatActivity() {
     private lateinit var assessmentViewModel: AssessmentViewModel
     private lateinit var noData: ImageView
     private var myId: String? = null
+    private var type: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,7 @@ class AssessmentActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun afterInit() {
-        assessmentViewModel.getAllAssessment(myId!!)
+        assessmentViewModel.getAllAssessment(myId!!, type!!)
 
         assessmentViewModel.assessmentList.observe(this) { result ->
             result.onSuccess { list ->
@@ -88,6 +89,7 @@ class AssessmentActivity : AppCompatActivity() {
 
     private fun init() {
         myId = intent.getStringExtra("MY_ID")
+        type = intent.getStringExtra("TYPE")
 
         val viewManager = LinearLayoutManager(this)
         rvAssessmentRequest.layoutManager = viewManager

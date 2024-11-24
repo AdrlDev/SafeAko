@@ -124,6 +124,24 @@ class ViewUserAppointment : AppCompatActivity() {
         }
 
         when(appointmentStatus) {
+            "Positive" -> {
+                imgStatus.visibility = View.VISIBLE
+                cardContact.isEnabled = false
+                btnRequestUpdate.visibility = View.GONE
+
+                Picasso.get()
+                    .load(R.drawable.cheking)
+                    .into(imgStatus)
+            }
+            "Negative" -> {
+                imgStatus.visibility = View.VISIBLE
+                cardContact.isEnabled = false
+                btnRequestUpdate.visibility = View.GONE
+
+                Picasso.get()
+                    .load(R.drawable.negative)
+                    .into(imgStatus)
+            }
             "Cancel" -> {
                 imgStatus.visibility = View.VISIBLE
                 cardContact.isEnabled = false

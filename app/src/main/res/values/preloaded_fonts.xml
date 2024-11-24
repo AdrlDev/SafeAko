@@ -2,6 +2,9 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/aladin</item>
+        <item>@font/comfortaa</item>
+        <item>@font/comfortaa_bold</item>
         <item>@font/modern_antiqua</item>
+        <item>@font/montserrat_alternates_black</item>
     </array>
 </resources>

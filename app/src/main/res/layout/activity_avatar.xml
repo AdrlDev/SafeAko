@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:text="@string/update_profile"
             android:textSize="18sp"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa_bold"
             app:layout_constraintStart_toEndOf="@id/start_gl"
             app:layout_constraintEnd_toStartOf="@id/end_gl"
             app:layout_constraintTop_toBottomOf="@id/top_nav_gl"
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/change_avatar"
                 android:textSize="26sp"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa_bold"
                 android:textColor="@color/_dark"/>
 
             <TextView
@@ -111,8 +111,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/note_for_avatar"
                 android:gravity="center"
-                android:textSize="16sp"
-                android:fontFamily="@font/modern_antiqua"
+                android:textSize="14sp"
+                android:fontFamily="@font/comfortaa_bold"
                 android:textColor="@color/_dark"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -133,9 +133,9 @@
                 app:iconGravity="textStart"
                 android:text="@string/select"
                 android:textStyle="bold"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa_bold"
                 android:letterSpacing=".1"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:paddingTop="15dp"
                 app:cornerRadius="30dp"
                 android:backgroundTint="@color/g3"
@@ -157,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:fontFamily="@font/modern_antiqua"
+                    android:fontFamily="@font/comfortaa"
                     android:id="@+id/tv_municipality"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -173,7 +173,7 @@
         app:layout_constraintStart_toStartOf="@id/start_gl"
         app:layout_constraintEnd_toEndOf="@id/end_gl"
         android:text="@string/save"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa"
         android:letterSpacing=".1"
         android:textSize="18sp"
         android:paddingTop="15dp"

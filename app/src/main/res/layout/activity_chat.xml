@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="@string/display_username"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa_bold"
             android:textColor="@color/_dark"
             android:textStyle="bold"
             android:id="@+id/tv_receiver_name"/>

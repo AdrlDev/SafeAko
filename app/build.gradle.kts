@@ -54,6 +54,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -109,5 +112,7 @@ dependencies {
     implementation(libs.google.api.services.drive.vv3rev20220815200)
 
     implementation(libs.shimmer)
+
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.13.18")
 
 }

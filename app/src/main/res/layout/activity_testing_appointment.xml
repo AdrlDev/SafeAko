@@ -36,7 +36,7 @@
             android:text="Set Testing Date"
             android:id="@+id/title"
             android:layout_marginHorizontal="20dp"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa_bold"
             android:textColor="@color/_dark"
             android:textSize="18sp"
             />
@@ -60,9 +60,9 @@
         android:layout_height="wrap_content"
         android:text="User Id"
         android:layout_marginHorizontal="20dp"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa_bold"
         android:textColor="@color/_dark"
-        android:textSize="20sp"
+        android:textSize="16sp"
         />
 
     <LinearLayout
@@ -98,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date"
-                    android:fontFamily="@font/modern_antiqua"
+                    android:fontFamily="@font/comfortaa"
                     android:textColor="@color/dark_text"
                     android:textSize="18sp"
                     />
@@ -111,7 +111,7 @@
                 android:text="Select Date"
                 android:textColor="@color/_dark"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa_bold"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:id="@+id/btn_select_date"
                 />
@@ -144,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Time"
-                    android:fontFamily="@font/modern_antiqua"
+                    android:fontFamily="@font/comfortaa"
                     android:textColor="@color/dark_text"
                     android:textSize="18sp"
                     />
@@ -157,7 +157,7 @@
                 android:text="Select Time"
                 android:textColor="@color/_dark"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa_bold"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:id="@+id/btn_select_time"
                 />
@@ -173,7 +173,7 @@
         android:layout_marginHorizontal="20dp"
         android:hint="Note"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -181,7 +181,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:id="@+id/et_note"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -193,7 +193,7 @@
         android:layout_gravity="center_horizontal"
         android:textColor="@color/_dark"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa"
         style="@style/Widget.Material3.Button.OutlinedButton"
         app:strokeColor="@color/g1"
         android:paddingHorizontal="35dp"

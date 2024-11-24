@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:text="@string/developers"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa_bold"
             android:textColor="@color/_dark"
             android:textSize="18sp"
             />

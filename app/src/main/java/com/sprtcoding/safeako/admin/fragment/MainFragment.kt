@@ -188,15 +188,15 @@ class MainFragment : Fragment() {
         btnLogOut.setOnClickListener { signOut() }
 
         cardAssessment.setOnClickListener {
-            startActivity(Intent(requireContext(), AssessmentActivity::class.java).putExtra("MY_ID", myId))
+            startActivity(Intent(requireContext(), AssessmentActivity::class.java).putExtra("MY_ID", myId).putExtra("TYPE", "assessment"))
         }
 
         tvViewAllAssessment.setOnClickListener {
-            startActivity(Intent(requireContext(), AssessmentActivity::class.java).putExtra("MY_ID", myId))
+            startActivity(Intent(requireContext(), AssessmentActivity::class.java).putExtra("MY_ID", myId).putExtra("TYPE", "assessment"))
         }
 
         notificationIcon.setOnClickListener {
-            startActivity(Intent(requireContext(), AssessmentActivity::class.java).putExtra("MY_ID", myId))
+            startActivity(Intent(requireContext(), AssessmentActivity::class.java).putExtra("MY_ID", myId).putExtra("TYPE", "notification"))
         }
 
         cardCounseling.setOnClickListener {

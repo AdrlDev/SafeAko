@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/h1"
-        android:fontFamily="@font/aladin"
+        android:fontFamily="@font/comfortaa_bold"
         android:layout_marginTop="20dp"
         android:textSize="22sp"
         android:textColor="@color/black"
@@ -32,10 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa"
         android:gravity="center"
         android:text="@string/desc1"
         android:textColor="@color/black"
-        android:textSize="17sp" />
+        android:textSize="15sp" />
 
 </LinearLayout>

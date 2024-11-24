@@ -73,7 +73,7 @@ class AssessmentViewModel: ViewModel() {
         }
     }
 
-    suspend fun getDriveFileMetadata(context: Context, fileId: String, callback: MetadataCallback) {
+    fun getDriveFileMetadata(context: Context, fileId: String, callback: MetadataCallback) {
         refreshToken(context)
 
         token.observe(context as LifecycleOwner) { result ->
@@ -209,12 +209,12 @@ class AssessmentViewModel: ViewModel() {
         }
     }
 
-    fun setAssessment(userId: String, docId: String, docName: String) {
+    fun setAssessment(userId: String, docId: String, docName: String, selectedAnswers: List<String>) {
         Utils.getUser(userId) { user ->
             when(user) {
                 is Users -> {
                     val municipality = user.municipality
-                    Utils.setAssessmentRequest(userId, docId, docName, municipality!!, object : IAssessment {
+                    Utils.setAssessmentRequest(userId, docId, docName, municipality!!, selectedAnswers, object : IAssessment {
                         override fun onAssessmentSubmit(success: Boolean, message: String) {
                             if(success) {
                                 _isSubmitted.postValue(Result.success(Pair(true, message)))
@@ -240,12 +240,12 @@ class AssessmentViewModel: ViewModel() {
         })
     }
 
-    fun getAllAssessment(uid: String) {
+    fun getAllAssessment(uid: String, type: String) {
         Utils.getUser(uid) { user ->
             when(user) {
                 is StaffModel -> {
                     val municipality = user.displayName.substringAfter("RHU ").trim()
-                    Utils.getAllAssessmentRequest(municipality, object : IAssessment.GetAll {
+                    Utils.getAllAssessmentRequest(municipality, type, object : IAssessment.GetAll {
                         override fun assessment(assessmentList: ArrayList<AssessmentModel>?) {
                             if(assessmentList != null) {
                                 _assessmentList.postValue(Result.success(assessmentList))
@@ -261,7 +261,7 @@ class AssessmentViewModel: ViewModel() {
                 }
                 is Users -> {
                     val municipality = user.displayName?.substringAfter("RHU ")?.trim()
-                    Utils.getAllAssessmentRequest(municipality!!, object : IAssessment.GetAll {
+                    Utils.getAllAssessmentRequest(municipality!!, type, object : IAssessment.GetAll {
                         override fun assessment(assessmentList: ArrayList<AssessmentModel>?) {
                             if(assessmentList != null) {
                                 _assessmentList.postValue(Result.success(assessmentList))

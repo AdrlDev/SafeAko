@@ -13,4 +13,9 @@
     <color name="dark_text">#7C7C7C</color>
     <color name="_dark">#211D1D</color>
     <color name="_red">#FE6B39</color>
+    <color name="blue">#0055ff</color>
+    <color name="pink">#E22762</color>
+    <color name="yellow">#c6c600</color>
+    <color name="violet">#a30eff</color>
+    <color name="dark_blue">#00007f</color>
 </resources>

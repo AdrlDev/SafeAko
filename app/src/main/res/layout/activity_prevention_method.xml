@@ -6,6 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".user.activity.prevention.PreventionMethodActivity">
 
     <ImageButton
@@ -25,124 +26,138 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/back_button"
         android:layout_alignTop="@id/back_button"
-        android:layout_alignBottom="@id/back_button"
         android:text="@string/testing_and_prevention_method"
         android:layout_marginHorizontal="15dp"
         android:gravity="center"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa_bold"
         android:textColor="@color/_dark"
         android:textSize="18sp"
         />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/back_button"
-        android:layout_marginTop="30dp"
-        android:padding="10dp"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:scrollbars="none">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/video_1_card"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
-            android:layout_margin="15dp"
-            app:cardBackgroundColor="@color/white"
-            >
+            android:layout_below="@id/back_button"
+            android:orientation="vertical"
+            android:gravity="center">
 
-            <com.facebook.shimmer.ShimmerFrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shimmer_auto_start="false"
-                android:id="@+id/shimmer_video_1">
+                android:orientation="vertical"
+                android:id="@+id/pdf_container"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <ImageView
-                        android:scaleType="fitXY"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:id="@+id/thumbnail_1"
-                        android:contentDescription="@string/app_name"
-                        />
-
-                    <TextView
-                        android:layout_marginVertical="20dp"
-                        android:id="@+id/video_title_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="Prevention Method"
-                        android:layout_marginHorizontal="15dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/modern_antiqua"
-                        android:textColor="@color/_dark"
-                        android:textSize="18sp"
-                        />
-
-                </LinearLayout>
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/video_2_card"
-            android:layout_margin="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
-            app:cardBackgroundColor="@color/white"
-            >
-
-            <com.facebook.shimmer.ShimmerFrameLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/video_1_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shimmer_auto_start="false"
-                android:id="@+id/shimmer_video_2">
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                android:layout_margin="15dp"
+                app:cardBackgroundColor="@color/white"
+                >
 
-                <LinearLayout
+                <com.facebook.shimmer.ShimmerFrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    app:shimmer_auto_start="false"
+                    android:id="@+id/shimmer_video_1">
 
-                    <ImageView
-                        android:scaleType="fitXY"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:id="@+id/thumbnail_2"
-                        android:contentDescription="@string/app_name"
-                        />
-
-                    <TextView
-                        android:layout_marginVertical="20dp"
-                        android:id="@+id/video_title_2"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="Prevention Method"
-                        android:layout_marginHorizontal="15dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/modern_antiqua"
-                        android:textColor="@color/_dark"
-                        android:textSize="18sp"
-                        />
+                        android:orientation="vertical"
+                        >
 
-                </LinearLayout>
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:id="@+id/thumbnail_1"
+                            android:contentDescription="@string/app_name"
+                            />
 
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                        <TextView
+                            android:layout_marginVertical="20dp"
+                            android:id="@+id/video_title_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="Prevention Method"
+                            android:layout_marginHorizontal="15dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/modern_antiqua"
+                            android:textColor="@color/_dark"
+                            android:textSize="18sp"
+                            />
 
-        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
-    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/video_2_card"
+                android:layout_margin="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardBackgroundColor="@color/white"
+                >
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:shimmer_auto_start="false"
+                    android:id="@+id/shimmer_video_2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:id="@+id/thumbnail_2"
+                            android:contentDescription="@string/app_name"
+                            />
+
+                        <TextView
+                            android:layout_marginVertical="20dp"
+                            android:id="@+id/video_title_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="Prevention Method"
+                            android:layout_marginHorizontal="15dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/modern_antiqua"
+                            android:textColor="@color/_dark"
+                            android:textSize="18sp"
+                            />
+
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

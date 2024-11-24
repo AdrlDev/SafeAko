@@ -3,6 +3,7 @@ package com.sprtcoding.safeako.utils
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -10,15 +11,25 @@ import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MimeTypes
 import androidx.media3.exoplayer.ExoPlayer
@@ -26,25 +37,36 @@ import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.api.client.json.gson.GsonFactory
 import com.google.api.services.docs.v1.DocsScopes
 import com.google.api.services.drive.DriveScopes
 import com.google.auth.oauth2.GoogleCredentials.fromStream
+import com.sprtcoding.safeako.BuildConfig
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.authentication.signup.contract.IOtpCallback
 import com.sprtcoding.safeako.authentication.signup.contract.VerifyOtpCallback
 import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
 import com.sprtcoding.safeako.admin.assessment.ViewAssessment
+import com.sprtcoding.safeako.admin.staff.contract.IStaff
+import com.sprtcoding.safeako.admin.staff.viewmodel.StaffViewModel
 import com.sprtcoding.safeako.api.google_docs_api.DocsClient
 import com.sprtcoding.safeako.api.google_docs_api.GoogleDocsService
+import com.sprtcoding.safeako.api.sms.OTPManager
+import com.sprtcoding.safeako.authentication.forgot.viewmodel.ForgotPasswordViewModel
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
 import com.sprtcoding.safeako.user.activity.user_avatar.adapter.AvatarAdapter
+import com.sprtcoding.safeako.utils.Constants.MESSAGE
+import com.sprtcoding.safeako.utils.Constants.SENDER_NAME
 import com.sprtcoding.safeako.utils.Constants.avatarMap
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.security.GeneralSecurityException
@@ -270,7 +292,6 @@ object Utility {
         alertDialog.show()
     }
 
-    @SuppressLint("InflateParams")
     fun showAlertDialog(context: Context, layoutInflater: LayoutInflater, title: String, message: String, btnYes: String, btnYesAction: () -> Unit) {
         val view = layoutInflater.inflate(R.layout.dialog_one_button, null)
         val alertDialog = AlertDialog.Builder(context, R.style.TransparentAlertDialog)
@@ -295,6 +316,113 @@ object Utility {
         alertDialog.show()
     }
 
+    fun showChangePasswordDialog(context: Context,
+                                 layoutInflater: LayoutInflater,
+                                 staffId: String,
+                                 staffViewModel: StaffViewModel,
+                                 loading: ProgressDialog) {
+        val view = layoutInflater.inflate(R.layout.dialog_change_password, null)
+        val alertDialog = AlertDialog.Builder(context, R.style.TransparentAlertDialog)
+            .setView(view)
+            .setCancelable(false)
+            .create()
+
+        val etOldPassword = view.findViewById<TextInputEditText>(R.id.et_old_password)
+        val etNewPassword = view.findViewById<TextInputEditText>(R.id.et_new_password)
+        val etConfirmPassword = view.findViewById<TextInputEditText>(R.id.et_confirm_new_password)
+        val btnSave = view.findViewById<MaterialButton>(R.id.btn_save)
+        val btnCancel = view.findViewById<MaterialButton>(R.id.btn_cancel)
+
+        btnSave.setOnClickListener {
+            val oldPassword = etOldPassword.text.toString()
+            val newPassword = etNewPassword.text.toString()
+            val confirmNewPassword = etConfirmPassword.text.toString()
+
+            if(oldPassword.isEmpty()) {
+                loading.dismiss()
+                showAlertDialog(
+                    context,
+                    layoutInflater,
+                    "Change Password",
+                    "Please enter your old password to continue.",
+                    "Ok"
+                ) {
+                    etOldPassword.requestFocus()
+                    return@showAlertDialog
+                }
+            } else if(newPassword.isEmpty()) {
+                loading.dismiss()
+                showAlertDialog(
+                    context,
+                    layoutInflater,
+                    "Change Password",
+                    "Please enter your new password to continue.",
+                    "Ok"
+                ) {
+                    etNewPassword.requestFocus()
+                    return@showAlertDialog
+                }
+            } else if(confirmNewPassword.isEmpty()) {
+                loading.dismiss()
+                showAlertDialog(
+                    context,
+                    layoutInflater,
+                    "Change Password",
+                    "Please confirm your new password to continue.",
+                    "Ok"
+                ) {
+                    etConfirmPassword.requestFocus()
+                    return@showAlertDialog
+                }
+            } else {
+                Log.d("OLD_PASSWORD", oldPassword)
+                Log.d("STAFF_ID", staffId)
+                val encryptedOldPassword = encryptPassword(oldPassword)
+                Log.d("ENCRYPTED_PASSWORD", encryptedOldPassword)
+                Utils.checkStaffPassword(staffId, encryptedOldPassword) { isPasswordCorrect ->
+                    if(isPasswordCorrect) {
+                        if(confirmNewPassword == newPassword) {
+                            val encryptedNewPassword = encryptPassword(newPassword)
+
+                            staffViewModel.updatePassword(staffId, encryptedNewPassword)
+                            alertDialog.dismiss()
+                        } else {
+                            loading.dismiss()
+                            showAlertDialog(
+                                context,
+                                layoutInflater,
+                                "Change Password",
+                                "New password not match. please try again!",
+                                "Ok"
+                            ) {
+                                etConfirmPassword.requestFocus()
+                                return@showAlertDialog
+                            }
+                        }
+                    } else {
+                        loading.dismiss()
+                        showAlertDialog(
+                            context,
+                            layoutInflater,
+                            "Change Password",
+                            "Your old password is incorrect. please try again!",
+                            "Ok"
+                        ) {
+                            etOldPassword.requestFocus()
+                            return@showAlertDialog
+                        }
+                    }
+                }
+            }
+        }
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
+    }
+
     @SuppressLint("InflateParams", "MissingInflatedId")
     fun showAppointmentDialog(context: Context, layoutInflater: LayoutInflater, btnTesting: () -> Unit , btnCounseling: () -> Unit) {
         val view = layoutInflater.inflate(R.layout.appointment_dialog, null)
@@ -313,6 +441,151 @@ object Utility {
 
         btnCounselingBtn.setOnClickListener {
             btnCounseling()
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
+    }
+
+    @SuppressLint("InflateParams", "MissingInflatedId", "SetTextI18n")
+    fun showOTPDialog(context: Context,
+                      layoutInflater: LayoutInflater,
+                      username: String,
+                      phone: String,
+                      loading: ProgressDialog,
+                      lifecycleOwner: LifecycleOwner,
+                      otpManager: OTPManager,
+                      viewmodel: ForgotPasswordViewModel,
+                      verifyOtpCallback: VerifyOtpCallback) {
+        val view = layoutInflater.inflate(R.layout.otp_dialog, null)
+        val alertDialog = AlertDialog.Builder(context, R.style.TransparentAlertDialog)
+            .setView(view)
+            .setCancelable(false)
+            .create()
+
+        val btnSendBtn = view.findViewById<TextView>(R.id.tv_send)
+        val btnCancelBtn = view.findViewById<TextView>(R.id.tv_cancel)
+        val otpContainer = view.findViewById<LinearLayout>(R.id.otpContainer)
+        val otpBox1 = view.findViewById<EditText>(R.id.otpBox1)
+        val otpBox2 = view.findViewById<EditText>(R.id.otpBox2)
+        val otpBox3 = view.findViewById<EditText>(R.id.otpBox3)
+        val otpBox4 = view.findViewById<EditText>(R.id.otpBox4)
+        val otpBox5 = view.findViewById<EditText>(R.id.otpBox5)
+        val otpBox6 = view.findViewById<EditText>(R.id.otpBox6)
+        val otpTimer = view.findViewById<TextView>(R.id.otp_timer)
+        val tvUserName = view.findViewById<TextView>(R.id.tv_user_name)
+        val tvPhone = view.findViewById<TextView>(R.id.phone)
+
+        tvUserName.text = "Hi, $username"
+        tvPhone.text = "OTP will be sent to $phone"
+
+        otpContainer.visibility = View.GONE
+        otpTimer.visibility = View.GONE
+
+        val otpBoxes = listOf(otpBox1, otpBox2, otpBox3, otpBox4, otpBox5, otpBox6)
+
+        otpBoxes.forEachIndexed { index, editText ->
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (s?.length == 1 && index < otpBoxes.size - 1) {
+                        otpBoxes[index + 1].requestFocus() // Move to the next box
+                    } else if (s.isNullOrEmpty() && index > 0) {
+                        otpBoxes[index - 1].requestFocus() // Move back to the previous box
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
+        }
+
+        btnSendBtn.setOnClickListener {
+            loading.show()
+            viewmodel.sendOtp(otpManager, BuildConfig.API_KEY, phone, MESSAGE, SENDER_NAME, null, otpTimer)
+        }
+
+        viewmodel.onOtpSent.observe(lifecycleOwner) { result ->
+            result.onSuccess { response ->
+                if(response.isCodeSent) {
+                    loading.dismiss()
+                    otpContainer.visibility = View.VISIBLE
+                    otpTimer.visibility = View.VISIBLE
+
+                    Constants.VerificationStatus.isVerifying = true
+
+                    tvPhone.text = "OTP Sent. Please type code below!"
+                    btnSendBtn.text = "Submit"
+
+                    btnSendBtn.setOnClickListener {
+                        loading.show()
+                        val otp = otpBoxes.joinToString("") { it.text.toString() }
+                        if (otp.length == 6) { // Ensure all boxes are filled
+                            val code = response.code
+
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                verifyOTP(code, otp, verifyOtpCallback)
+                            }, 3000)
+
+                            alertDialog.dismiss()
+                        } else {
+                            loading.dismiss()
+                            showAlertDialog(
+                                context,
+                                layoutInflater,
+                                "OTP",
+                                "Please enter a valid 6-digit OTP",
+                                "Ok"
+                            ) {
+                                otpBoxes[otp.length].requestFocus()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        viewmodel.onOtpSentFailed.observe(lifecycleOwner) { result ->
+            result.onSuccess { response ->
+                if(!response.isCodeSent) {
+                    loading.dismiss()
+                    tvPhone.text = "${response.message}"
+                }
+            }
+        }
+
+        viewmodel.onOtpSentError.observe(lifecycleOwner) { result->
+            result.onSuccess { err ->
+                loading.dismiss()
+                showAlertDialog(
+                    context,
+                    layoutInflater,
+                    "OTP",
+                    err,
+                    "Ok"
+                ) {
+
+                }
+            }
+        }
+
+        viewmodel.onOtpExpired.observe(lifecycleOwner) { result ->
+            result.onSuccess { isExpired ->
+                if(isExpired) {
+                    loading.dismiss()
+                    btnSendBtn.text = "Resend OTP"
+
+                    tvPhone.text = "OTP Expired please resend code to $phone"
+
+                    btnSendBtn.setOnClickListener {
+                        loading.show()
+                        viewmodel.sendOtp(otpManager, BuildConfig.API_KEY, phone, MESSAGE, SENDER_NAME, null, otpTimer)
+                    }
+                }
+            }
+        }
+
+        btnCancelBtn.setOnClickListener {
             alertDialog.dismiss()
         }
 
@@ -513,6 +786,9 @@ object Utility {
     fun animateCardView(show: Boolean, cardView: CardView) {
         if (show) {
             cardView.visibility = View.VISIBLE
+            cardView.isClickable = true // Enable interactivity
+            cardView.isFocusable = true
+
             val fadeIn = AlphaAnimation(0f, 1f).apply {
                 duration = 500 // Animation duration in milliseconds
                 fillAfter = true
@@ -524,7 +800,10 @@ object Utility {
                 fillAfter = true
             }
             fadeOut.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation?) {}
+                override fun onAnimationStart(animation: Animation?) {
+                    cardView.isClickable = false // Disable interactivity
+                    cardView.isFocusable = false
+                }
 
                 override fun onAnimationEnd(animation: Animation?) {
                     cardView.visibility = View.GONE
@@ -534,6 +813,29 @@ object Utility {
             })
             cardView.startAnimation(fadeOut)
         }
+    }
+
+    fun copyPdfFromAssets(context: Context, assetFileName: String): File? {
+        val assetManager = context.assets
+        val outFile = File(context.cacheDir, assetFileName)
+        return try {
+            assetManager.open(assetFileName).use { inputStream ->
+                FileOutputStream(outFile).use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+            }
+            outFile
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    fun replaceFragment(fragment: Fragment, supportFragmentManager: FragmentManager) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
     }
 
 }

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/select_an_avatar"
         android:textColor="@color/_dark"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa"
         style="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
         android:textSize="18sp"

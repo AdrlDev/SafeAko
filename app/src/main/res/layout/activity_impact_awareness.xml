@@ -6,6 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".user.activity.impact_awareness.ImpactAwareness">
 
     <ImageButton
@@ -24,14 +25,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/back_button"
-        android:layout_alignTop="@id/back_button"
-        android:layout_alignBottom="@id/back_button"
+        android:layout_alignParentTop="true"
         android:text="@string/impact_and_awareness"
         android:layout_marginHorizontal="15dp"
         android:gravity="center"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa_bold"
         android:textColor="@color/_dark"
-        android:textSize="18sp"
+        android:textSize="16sp"
         />
 
     <LinearLayout
@@ -82,7 +82,7 @@
                         android:text="Prevention Method"
                         android:layout_marginHorizontal="15dp"
                         android:gravity="center"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa_bold"
                         android:textColor="@color/_dark"
                         android:textSize="18sp"
                         />
@@ -132,7 +132,7 @@
                         android:text="Prevention Method"
                         android:layout_marginHorizontal="15dp"
                         android:gravity="center"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa_bold"
                         android:textColor="@color/_dark"
                         android:textSize="18sp"
                         />

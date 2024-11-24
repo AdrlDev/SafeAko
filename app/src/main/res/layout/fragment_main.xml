@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toTopOf="@id/tv_name"
             android:layout_marginStart="20dp"
             android:id="@+id/welcome_txt"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:textStyle="bold"
             android:letterSpacing=".1"
             android:layout_marginBottom="5dp"
@@ -46,7 +46,7 @@
             app:layout_constraintBottom_toBottomOf="@id/gl_top"
             android:layout_marginBottom="10dp"
             android:id="@+id/tv_name"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:textStyle="bold"
             android:letterSpacing=".1"
             android:textAllCaps="true"/>
@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Name"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         android:textColor="@color/_dark"
                         android:id="@+id/tv_name_settings"/>
 
@@ -161,7 +161,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginHorizontal="10dp"
                         android:textColor="@color/dark_text"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         />
 
                     <ImageView
@@ -205,7 +205,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginHorizontal="10dp"
                         android:textColor="@color/dark_text"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         />
 
                     <ImageView
@@ -249,7 +249,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginHorizontal="10dp"
                         android:textColor="@color/dark_text"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         />
 
                     <ImageView
@@ -293,7 +293,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginHorizontal="10dp"
                         android:textColor="@color/_red"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         />
 
                     <ImageView
@@ -363,7 +363,7 @@
                                 android:text="@string/view_all"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 android:textColor="@color/_dark"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginEnd="5dp"
@@ -376,7 +376,7 @@
                                 app:layout_constraintBottom_toTopOf="@id/tv_title_assessment"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 android:textColor="@color/_dark"
                                 android:textSize="46sp"
                                 android:layout_marginBottom="5dp"
@@ -389,7 +389,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 android:textColor="@color/_dark"
                                 android:textSize="16sp"
                                 android:layout_marginBottom="5dp"
@@ -420,7 +420,7 @@
                                 android:text="@string/view_all"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 android:textColor="@color/_dark"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginEnd="5dp"
@@ -433,7 +433,7 @@
                                 app:layout_constraintBottom_toTopOf="@id/tv_title_counseling"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 android:textColor="@color/_dark"
                                 android:textSize="46sp"
                                 android:layout_marginBottom="5dp"
@@ -446,7 +446,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 android:textColor="@color/_dark"
                                 android:textSize="16sp"
                                 android:layout_marginBottom="5dp"
@@ -486,7 +486,7 @@
                                 android:text="@string/view_all"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 android:textColor="@color/_dark"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginEnd="5dp"
@@ -499,7 +499,7 @@
                                 app:layout_constraintBottom_toTopOf="@id/tv_title_testing"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 android:textColor="@color/_dark"
                                 android:textSize="46sp"
                                 android:layout_marginBottom="5dp"
@@ -512,7 +512,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 android:textColor="@color/_dark"
                                 android:textSize="16sp"
                                 android:layout_marginBottom="5dp"

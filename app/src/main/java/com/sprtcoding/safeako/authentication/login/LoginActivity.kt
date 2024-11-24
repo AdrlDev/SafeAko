@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.firestore
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.admin.AdminHomeDashboard
+import com.sprtcoding.safeako.authentication.forgot.ForgotPassword
 import com.sprtcoding.safeako.authentication.login.viewmodel.LoginViewModel
 import com.sprtcoding.safeako.authentication.login.viewmodel.LoginViewModelFactory
 import com.sprtcoding.safeako.firebase.firebaseUtils.Utils.setToken
@@ -43,6 +45,7 @@ class LoginActivity : AppCompatActivity(), IToken {
     private lateinit var etPhoneNumber: EditText
     private lateinit var etPassword: TextInputEditText
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var tvForgot: TextView
     private lateinit var loading: ProgressDialog
     private lateinit var db: FirebaseFirestore
     private lateinit var ccp: CountryCodePicker
@@ -69,6 +72,7 @@ class LoginActivity : AppCompatActivity(), IToken {
         etPassword = findViewById(R.id.et_password)
         rememberMe = findViewById(R.id.remember_cb)
         ccp = findViewById(R.id.ccp)
+        tvForgot = findViewById(R.id.tv_forgot)
     }
 
     private fun init() {
@@ -150,6 +154,10 @@ class LoginActivity : AppCompatActivity(), IToken {
                     ) {}
                 }
             }
+        }
+
+        tvForgot.setOnClickListener {
+            startActivity(Intent(this, ForgotPassword::class.java))
         }
     }
 

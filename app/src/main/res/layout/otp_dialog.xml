@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="18dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardPreventCornerOverlap="true"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+            android:fontFamily="@font/comfortaa_bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:textSize="25sp"
+            android:text="Hi,"
+            android:textColor="@color/_dark"
+            android:id="@+id/tv_user_name"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:fontFamily="@font/comfortaa"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:textSize="15sp"
+            android:text="OTP will be sent to your phone number."
+            android:textColor="@color/_dark"
+            android:id="@+id/message"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:fontFamily="@font/comfortaa_bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:textSize="18sp"
+            android:lineSpacingExtra="5dp"
+            android:text="OTP will be sent to "
+            android:textColor="@color/_dark"
+            android:id="@+id/phone"
+            />
+
+        <LinearLayout
+            android:id="@+id/otpContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/otpBox1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box_background"
+                android:imeOptions="actionNext" />
+
+            <EditText
+                android:id="@+id/otpBox2"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box_background"
+                android:imeOptions="actionNext" />
+
+            <EditText
+                android:id="@+id/otpBox3"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box_background"
+                android:imeOptions="actionNext" />
+
+            <EditText
+                android:id="@+id/otpBox4"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box_background"
+                android:imeOptions="actionNext" />
+
+            <EditText
+                android:id="@+id/otpBox5"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box_background"
+                android:imeOptions="actionNext" />
+
+            <EditText
+                android:id="@+id/otpBox6"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box_background"
+                android:singleLine="true"
+                android:imeOptions="actionDone" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:fontFamily="@font/comfortaa"
+            android:layout_marginHorizontal="20dp"
+            android:textSize="15sp"
+            android:lineSpacingExtra="5dp"
+            android:text="OTP Expire in"
+            android:textColor="@color/_dark"
+            android:id="@+id/otp_timer"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height=".7dp"
+            android:background="#A67C7C7C"
+            android:layout_marginTop="20dp"
+            android:id="@+id/line_center"
+            />
+
+        <LinearLayout
+            android:id="@+id/btn_ll"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/comfortaa_bold"
+                android:textSize="16sp"
+                android:text="Send OTP"
+                android:textColor="@color/_dark"
+                android:id="@+id/tv_send"
+                />
+
+            <View
+                android:layout_width=".7dp"
+                android:layout_height="match_parent"
+                android:background="#A67C7C7C"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/comfortaa_bold"
+                android:textSize="16sp"
+                android:text="Cancel"
+                android:textColor="@color/_dark"
+                android:id="@+id/tv_cancel"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

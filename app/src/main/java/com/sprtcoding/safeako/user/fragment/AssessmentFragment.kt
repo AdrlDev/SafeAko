@@ -144,7 +144,7 @@ class AssessmentFragment : Fragment() {
 
         assessmentViewModel = ViewModelProvider(this)[AssessmentViewModel::class.java]
 
-        for(i in 1 until 39) {
+        for(i in 1 until 52) {
             checkboxPositions.add("q$i ")
         }
 
@@ -192,7 +192,7 @@ class AssessmentFragment : Fragment() {
                 docId = res.docId!!
                 assessmentViewModel.fileName.observe(viewLifecycleOwner) { filename ->
                     sendNotification(userId, docId, filename)
-                    assessmentViewModel.setAssessment(userId, docId, filename!!)
+                    assessmentViewModel.setAssessment(userId, docId, filename!!, emptyList())
                 }
             }
         }

@@ -2,14 +2,21 @@ package com.sprtcoding.safeako.admin.staff
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.semantics.setSelection
+import androidx.compose.ui.semantics.setText
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.i18n.phonenumbers.NumberParseException
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.model.Users
@@ -68,6 +75,52 @@ class AddStaff : AppCompatActivity() {
         avatarViewModel = ViewModelProvider(this)[AvatarViewModel::class.java]
 
         avatarViewModel.getUser(myId!!)
+
+        phoneEt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) {
+                    return
+                }
+
+                if (s.toString().startsWith("+63")) {
+                    // Country code is already present, do nothing
+                    return
+                }
+
+                try {
+                    val phoneNumberUtil = PhoneNumberUtil.getInstance()
+                    val number = phoneNumberUtil.parse(s.toString(), "PH") // PH for Philippines
+
+                    if (phoneNumberUtil.isValidNumber(number)) {
+                        val formattedNumber = phoneNumberUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL)
+                        phoneEt.setText(formattedNumber)
+                        phoneEt.setSelection(formattedNumber.length)
+                    } else {
+                        phoneEt.error = "Invalid phone number!"
+                    }
+                } catch (e: NumberParseException) {
+                    Log.d("TAG", "Error parsing phone number: $e")
+                }
+            }
+        })
     }
 
     private fun afterInit() {

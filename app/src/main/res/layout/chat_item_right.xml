@@ -33,7 +33,7 @@
             android:background="@drawable/chat_bg_right"
             android:textColor="@android:color/white"
             android:padding="10dp"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:layout_marginStart="10dp"/>
 
     </RelativeLayout>
@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="@id/chat_body"
         android:layout_marginTop="5dp"
         android:textColor="@color/_dark"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa"
         android:textSize="12sp"
         />
 

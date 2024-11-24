@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".admin.staff.StaffActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_back"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/app_name"
+            android:id="@+id/btn_back"
+            app:tint="@color/_dark" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="20dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Staff"
+                android:textSize="26sp"
+                android:fontFamily="@font/comfortaa_bold"
+                android:textColor="@color/_dark"/>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your staff handle request if you are not active."
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="@font/comfortaa_bold"
+                android:textColor="@color/_dark"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginTop="30dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/avatar_man"
+                android:id="@+id/avatar"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_gl"
+                app:layout_constraintStart_toStartOf="@id/start_gl"
+                app:layout_constraintEnd_toEndOf="@id/end_gl"
+                app:icon="@drawable/camera_18"
+                app:iconGravity="textStart"
+                android:text="@string/select"
+                android:textStyle="bold"
+                android:fontFamily="@font/comfortaa"
+                android:letterSpacing=".1"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:textSize="12sp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:id="@+id/btn_open_camera"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Name"
+                app:endIconMode="clear_text"
+                app:helperText="Required*"
+                app:helperTextTextColor="@color/_red"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_name"
+                    android:fontFamily="@font/comfortaa"
+                    android:textColor="@color/_dark"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Job Description"
+                app:endIconMode="clear_text"
+                app:helperText="Required*"
+                app:helperTextTextColor="@color/_red"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_job_desc"
+                    android:fontFamily="@font/comfortaa"
+                    android:textColor="@color/_dark"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Phone Number"
+                app:endIconMode="clear_text"
+                app:helperText="Required*"
+                app:helperTextTextColor="@color/_red"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_phone"
+                    android:fontFamily="@font/comfortaa"
+                    android:textColor="@color/_dark"
+                    android:inputType="phone"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_staff_password"
+                android:fontFamily="@font/comfortaa"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/tv_change_password"
+                android:layout_gravity="end"
+                android:layout_marginVertical="15dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_gl"
+                app:layout_constraintStart_toStartOf="@id/start_gl"
+                app:layout_constraintEnd_toEndOf="@id/end_gl"
+                app:icon="@drawable/baseline_person_add_alt_24"
+                app:iconGravity="textStart"
+                android:text="Update"
+                android:textStyle="bold"
+                android:paddingHorizontal="50dp"
+                android:textColor="@color/g3"
+                app:iconTint="@color/g3"
+                app:strokeColor="@color/g3"
+                android:fontFamily="@font/comfortaa"
+                android:letterSpacing=".1"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:textSize="12sp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:id="@+id/btn_save"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

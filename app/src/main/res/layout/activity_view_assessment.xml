@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="@string/assessment"
             android:layout_marginHorizontal="20dp"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa_bold"
             android:textColor="@color/_dark"
             android:textSize="18sp"
             />
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="File Name"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:textSize="16sp"
             android:textColor="@color/dark_text"
             android:id="@+id/tv_file_name"/>
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="View Document"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa"
             android:paddingVertical="15dp"
             android:paddingHorizontal="40dp"
             style="@style/Widget.Material3.Button.TextButton"
@@ -97,7 +97,7 @@
         android:text="Set Appointment"
         android:paddingVertical="15dp"
         android:backgroundTint="@color/g1"
-        android:fontFamily="@font/modern_antiqua"
+        android:fontFamily="@font/comfortaa"
         android:paddingHorizontal="40dp"
         android:layout_marginBottom="30dp"
         />

@@ -45,8 +45,8 @@
             app:layout_constraintStart_toEndOf="@id/start_gl"
             app:layout_constraintEnd_toStartOf="@id/end_gl"
             android:text="@string/messages"
-            android:textSize="28sp"
-            android:fontFamily="@font/modern_antiqua"
+            android:textSize="24sp"
+            android:fontFamily="@font/comfortaa_bold"
             android:textColor="@color/_dark"
             android:id="@+id/header_text"/>
 

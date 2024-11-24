@@ -86,5 +86,9 @@ class NotificationActivity : AppCompatActivity() {
                 ) {}
             }
         }
+
+        btnBack.setOnClickListener {
+            finish()
+        }
     }
 }

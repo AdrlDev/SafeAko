@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Name"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         android:textColor="@color/_dark"
                         android:id="@+id/tv_name_settings"/>
 
@@ -145,7 +145,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginHorizontal="10dp"
                         android:textColor="@color/dark_text"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         />
 
                     <ImageView
@@ -189,7 +189,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginHorizontal="10dp"
                         android:textColor="@color/dark_text"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         />
 
                     <ImageView
@@ -232,7 +232,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginHorizontal="10dp"
                         android:textColor="@color/dark_text"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         />
 
                     <ImageView
@@ -275,7 +275,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginHorizontal="10dp"
                         android:textColor="@color/dark_text"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         />
 
                     <ImageView
@@ -318,7 +318,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginHorizontal="10dp"
                         android:textColor="@color/_red"
-                        android:fontFamily="@font/modern_antiqua"
+                        android:fontFamily="@font/comfortaa"
                         />
 
                     <ImageView
@@ -337,18 +337,18 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:id="@+id/tv_user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/comfortaa_bold"
+            android:letterSpacing=".1"
             android:text="@string/app_name"
-            android:fontFamily="@font/modern_antiqua"
-            app:layout_constraintStart_toEndOf="@id/start_gl"
-            app:layout_constraintTop_toBottomOf="@id/logo"
             android:textColor="@color/_dark"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:letterSpacing=".1"
-            android:id="@+id/tv_user_id"/>
+            app:layout_constraintStart_toEndOf="@id/start_gl"
+            app:layout_constraintTop_toBottomOf="@id/logo" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -364,12 +364,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="@string/topics"
-                android:fontFamily="@font/modern_antiqua"
-                app:layout_constraintStart_toEndOf="@id/start_gl"
-                app:layout_constraintTop_toBottomOf="@id/nav_ll"
                 android:textColor="@color/_dark"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@id/start_gl"
+                app:layout_constraintTop_toBottomOf="@id/nav_ll" />
 
             <LinearLayout
                 android:layout_marginTop="5dp"
@@ -423,7 +423,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/stis_definition"
                                 android:gravity="center"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 app:layout_constraintStart_toEndOf="@id/start_gl"
                                 app:layout_constraintTop_toBottomOf="@id/nav_ll"
                                 android:textColor="@color/_dark"
@@ -469,7 +469,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/testing_and_prevention_method"
                                 android:gravity="center"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 app:layout_constraintStart_toEndOf="@id/start_gl"
                                 app:layout_constraintTop_toBottomOf="@id/nav_ll"
                                 android:textColor="@color/_dark"
@@ -515,7 +515,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/impact_and_awareness"
                                 android:gravity="center"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 app:layout_constraintStart_toEndOf="@id/start_gl"
                                 app:layout_constraintTop_toBottomOf="@id/nav_ll"
                                 android:textColor="@color/_dark"
@@ -561,7 +561,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/contact_facilities"
                                 android:gravity="center"
-                                android:fontFamily="@font/modern_antiqua"
+                                android:fontFamily="@font/comfortaa"
                                 app:layout_constraintStart_toEndOf="@id/start_gl"
                                 app:layout_constraintTop_toBottomOf="@id/nav_ll"
                                 android:textColor="@color/_dark"
@@ -590,23 +590,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/just_for_you"
-                    android:fontFamily="@font/modern_antiqua"
+                    android:fontFamily="@font/comfortaa_bold"
                     android:textColor="@color/_dark"
                     android:textStyle="bold"
                     android:textSize="18sp"/>
 
-                <TextView
-                    android:layout_marginEnd="10dp"
-                    android:layout_alignBottom="@id/title"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/view_all"
-                    android:fontFamily="@font/modern_antiqua"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Caption"
-                    android:id="@+id/tv_view_all_vid"/>
+<!--                <TextView-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:layout_alignBottom="@id/title"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/view_all"-->
+<!--                    android:fontFamily="@font/"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    style="@style/TextAppearance.AppCompat.Caption"-->
+<!--                    android:id="@+id/tv_view_all_vid"/>-->
 
             </RelativeLayout>
 

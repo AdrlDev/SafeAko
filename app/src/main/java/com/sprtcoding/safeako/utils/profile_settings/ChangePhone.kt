@@ -5,6 +5,9 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -17,6 +20,8 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.i18n.phonenumbers.NumberParseException
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker
 import com.sprtcoding.safeako.BuildConfig
 import com.sprtcoding.safeako.R
@@ -31,8 +36,7 @@ import com.sprtcoding.safeako.utils.profile_settings.viewmodel.ProfileSettingsVi
 class ChangePhone : AppCompatActivity(), VerifyOtpCallback {
     private lateinit var btnBack: ImageButton
     private lateinit var etPassword: TextInputEditText
-    private lateinit var etNewPhone: EditText
-    private lateinit var ccp: CountryCodePicker
+    private lateinit var etNewPhone: TextInputEditText
     private lateinit var otpLL: LinearLayout
     private lateinit var tvOtpSec: TextView
     private lateinit var etOtp: TextInputEditText
@@ -60,8 +64,7 @@ class ChangePhone : AppCompatActivity(), VerifyOtpCallback {
     private fun initViews() {
         btnBack = findViewById(R.id.btn_back)
         etPassword = findViewById(R.id.et_password)
-        etNewPhone = findViewById(R.id.et_phone_num)
-        ccp = findViewById(R.id.ccp)
+        etNewPhone = findViewById(R.id.et_phone)
         otpLL = findViewById(R.id.otp_ll)
         tvOtpSec = findViewById(R.id.otp_sec)
         etOtp = findViewById(R.id.et_otp)
@@ -77,9 +80,59 @@ class ChangePhone : AppCompatActivity(), VerifyOtpCallback {
 
         profileSettingsViewModel = ViewModelProvider(this)[ProfileSettingsViewModel::class.java]
         otpManager = OTPManager()
+
+        etNewPhone.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) {
+                    return
+                }
+
+                if (s.toString().startsWith("+63")) {
+                    // Country code is already present, do nothing
+                    return
+                }
+
+                try {
+                    val phoneNumberUtil = PhoneNumberUtil.getInstance()
+                    val number = phoneNumberUtil.parse(s.toString(), "PH") // PH for Philippines
+
+                    if (phoneNumberUtil.isValidNumber(number)) {
+                        val formattedNumber = phoneNumberUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL)
+                        etNewPhone.setText(formattedNumber)
+                        etNewPhone.setSelection(formattedNumber.length)
+                    } else {
+                        etNewPhone.error = "Invalid phone number!"
+                    }
+                } catch (e: NumberParseException) {
+                    Log.d("TAG", "Error parsing phone number: $e")
+                }
+            }
+        })
     }
 
     private fun afterInit() {
+        btnBack.setOnClickListener {
+            finish()
+        }
+
         saveBtn.setOnClickListener {
             loading.show()
             val password = etPassword.text.toString()
@@ -106,26 +159,16 @@ class ChangePhone : AppCompatActivity(), VerifyOtpCallback {
             loading.dismiss()
             if(isPasswordCorrect) {
                 val phone = etNewPhone.text.toString()
-                // Remove leading '0' if it exists
-                if (phone.startsWith("0")) {
-                    phone.substring(1)
-                }
 
-                val isValid = phone.matches(Regex("^\\d{10}$"))
-
-                if(isValid) {
-                    Utility.showAlertDialog(
-                        this,
-                        layoutInflater,
-                        "Verify Phone Number",
-                        "Please verify phone number",
-                        "Verify"
-                    ) {
-                        loading.show()
-                        profileSettingsViewModel.sendOtp(otpManager, BuildConfig.API_KEY, getPhoneWithCC(), MESSAGE, SENDER_NAME, null, tvOtpSec)
-                    }
-                } else {
-                    showCustomDialog("Phone number is not valid! try again.")
+                Utility.showAlertDialog(
+                    this,
+                    layoutInflater,
+                    "Verify Phone Number",
+                    "Please verify phone number",
+                    "Verify"
+                ) {
+                    loading.show()
+                    profileSettingsViewModel.sendOtp(otpManager, BuildConfig.API_KEY, phone, MESSAGE, SENDER_NAME, null, tvOtpSec)
                 }
 
             } else {
@@ -221,7 +264,7 @@ class ChangePhone : AppCompatActivity(), VerifyOtpCallback {
                         null
                     ) {
                         loading.show()
-                        profileSettingsViewModel.sendOtp(otpManager, BuildConfig.API_KEY, getPhoneWithCC(), MESSAGE, SENDER_NAME, null, tvOtpSec)
+                        profileSettingsViewModel.sendOtp(otpManager, BuildConfig.API_KEY, etNewPhone.text.toString(), MESSAGE, SENDER_NAME, null, tvOtpSec)
                     }
                 }
             }
@@ -258,15 +301,6 @@ class ChangePhone : AppCompatActivity(), VerifyOtpCallback {
         }
     }
 
-    private fun getPhoneWithCC(): String {
-        val ccpValue = ccp.selectedCountryCodeWithPlus
-        val phoneNumber = etNewPhone.text.toString()
-        if(phoneNumber.isNotEmpty()) {
-            return ccpValue + phoneNumber
-        }
-        return ""
-    }
-
     @SuppressLint("SetTextI18n")
     override fun onOtpVerified(message: String) {
         loading.dismiss()
@@ -278,7 +312,7 @@ class ChangePhone : AppCompatActivity(), VerifyOtpCallback {
             "Save Phone"
         ) {
             loading.show()
-            profileSettingsViewModel.updatePhone(myId!!, getPhoneWithCC())
+            profileSettingsViewModel.updatePhone(myId!!, etNewPhone.text.toString())
         }
     }
 

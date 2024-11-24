@@ -11,6 +11,12 @@ class StaffViewModel: ViewModel() {
     private val _getStaff = MutableLiveData<Result<List<StaffModel>?>>()
     val getStaff: LiveData<Result<List<StaffModel>?>> get() = _getStaff
 
+    private val _isPasswordUpdate = MutableLiveData<Boolean>()
+    val isPasswordUpdate: LiveData<Boolean> get() = _isPasswordUpdate
+
+    private val _isUpdate = MutableLiveData<Boolean>()
+    val isUpdate: LiveData<Boolean> get() = _isUpdate
+
     fun retrieveStaff(adminUid: String) {
         Utils.getStaff(adminUid, object: IStaff {
             override fun onGetStaff(staffList: List<StaffModel>?) {
@@ -25,5 +31,25 @@ class StaffViewModel: ViewModel() {
                 _getStaff.postValue(Result.failure(Exception(error)))
             }
         })
+    }
+
+    fun getStaff(staffId: String, callback: IStaff.Staff) {
+        Utils.getStaff(staffId, callback)
+    }
+
+    fun deleteStaff(staffId: String, callback: IStaff.DeleteStaff) {
+        Utils.deleteStaff(staffId, callback)
+    }
+
+    fun updateStaff(id: String, staff: Map<String, String>) {
+        Utils.updateStaff(id, staff) { isSuccess ->
+            _isUpdate.postValue(isSuccess)
+        }
+    }
+
+    fun updatePassword(id: String, newPassword: String) {
+        Utils.updatePassword(id, newPassword) { isSuccess ->
+            _isPasswordUpdate.postValue(isSuccess)
+        }
     }
 }

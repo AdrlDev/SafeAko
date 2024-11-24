@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         >
 
         <ImageButton
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:text="Add Staff"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa_bold"
             android:textSize="18sp"
             android:textColor="@color/_dark"
             />
@@ -56,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="Add Staff"
                 android:textSize="26sp"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa_bold"
                 android:textColor="@color/_dark"/>
 
             <TextView
@@ -68,7 +69,7 @@
                 android:text="Your staff handle request if you are not active."
                 android:gravity="center"
                 android:textSize="16sp"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa_bold"
                 android:textColor="@color/_dark"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -88,7 +89,7 @@
                 app:iconGravity="textStart"
                 android:text="@string/select"
                 android:textStyle="bold"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa"
                 android:letterSpacing=".1"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:textSize="12sp"
@@ -111,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/et_name"
-                    android:fontFamily="@font/modern_antiqua"
+                    android:fontFamily="@font/comfortaa"
                     android:textColor="@color/_dark"
                     android:inputType="text"
                     />
@@ -133,7 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/et_job_desc"
-                    android:fontFamily="@font/modern_antiqua"
+                    android:fontFamily="@font/comfortaa"
                     android:textColor="@color/_dark"
                     android:inputType="text"
                     />
@@ -146,7 +147,7 @@
                 android:layout_marginTop="30dp"
                 android:hint="Phone Number"
                 app:endIconMode="clear_text"
-                app:helperText="Required*"
+                app:helperText="Add country code +63"
                 app:helperTextTextColor="@color/_red"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 >
@@ -155,7 +156,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/et_phone"
-                    android:fontFamily="@font/modern_antiqua"
+                    android:fontFamily="@font/comfortaa"
                     android:textColor="@color/_dark"
                     android:inputType="phone"
                     />
@@ -177,7 +178,7 @@
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/modern_antiqua"
+                    android:fontFamily="@font/comfortaa"
                     android:inputType="textPassword"
                     android:textColor="@color/_dark" />
 
@@ -198,7 +199,7 @@
                 android:textColor="@color/g3"
                 app:iconTint="@color/g3"
                 app:strokeColor="@color/g3"
-                android:fontFamily="@font/modern_antiqua"
+                android:fontFamily="@font/comfortaa"
                 android:letterSpacing=".1"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:textSize="12sp"

@@ -122,6 +122,13 @@ class ViewSchedule : AppCompatActivity(), IAppointment.GetSingle {
 
                         tvRemarks.text = "Remarks: ${appointment.type} mark as ${appointment.status}"
                     }
+                    "Positive", "Negative" -> {
+                        cardRemark.visibility = View.GONE
+                        tvRemarks.visibility = View.VISIBLE
+                        buttonContainer.visibility = View.GONE
+
+                        tvRemarks.text = "Remarks: ${appointment.type} mark as ${appointment.status}"
+                    }
                 }
             }
         }
@@ -134,6 +141,19 @@ class ViewSchedule : AppCompatActivity(), IAppointment.GetSingle {
                 .putExtra("SENDER_ID", senderId)
                 .putExtra("APPOINTMENT_TYPE", appointmentType))
         }
+
+        if(appointmentType == Constants.TESTING_TAG) {
+            setMark("Positive", "Negative")
+        } else if(appointmentType == Constants.COUNSELING_TAG) {
+            setMark("Done", "Cancel")
+        }
+
+        observer()
+    }
+
+    private fun setMark(mark1: String, mark2: String) {
+        btnDone.text = mark1
+        btnCancel.text = mark2
 
         btnDone.setOnClickListener {
             val done = btnDone.text.toString()
@@ -167,8 +187,6 @@ class ViewSchedule : AppCompatActivity(), IAppointment.GetSingle {
 
             appointmentViewModel.updateAppointmentRemark(appointmentId!!, notActive)
         }
-
-        observer()
     }
 
     private fun sendNotification(remark: String) {

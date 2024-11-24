@@ -25,10 +25,19 @@
         android:theme="@style/Theme.SafeAko"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".admin.staff.StaffActivity"
+            android:exported="false" />
+        <activity
+            android:name=".authentication.forgot.ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name=".user.activity.guide.UserGuide"
+            android:exported="false" />
+        <activity
             android:name=".user.activity.about.AboutUs"
             android:exported="false" />
         <activity
-            android:name=".user.activity.Acknowledgement"
+            android:name=".user.activity.acknowledgement.Acknowledgement"
             android:exported="false" />
         <activity
             android:name=".user.activity.user_appointment.ViewUserAppointment"
@@ -137,7 +146,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/light_logo" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

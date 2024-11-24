@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         >
 
         <ImageButton
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:text="My Staff"
-            android:fontFamily="@font/modern_antiqua"
+            android:fontFamily="@font/comfortaa_bold"
             android:textSize="18sp"
             android:textColor="@color/_dark"
             />

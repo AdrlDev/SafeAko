@@ -13,12 +13,14 @@ import com.sprtcoding.safeako.R
 import com.sprtcoding.safeako.user.fragment.AssessmentFragment
 import com.sprtcoding.safeako.user.fragment.HomeFragment
 import com.sprtcoding.safeako.user.fragment.MessageFragment
+import com.sprtcoding.safeako.user.fragment.NewAssessmentFragment
+import com.sprtcoding.safeako.utils.Utility.replaceFragment
 
 class UserHomeDashboard : AppCompatActivity() {
     private lateinit var frameLayout: FrameLayout
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var homeFragment: HomeFragment
-    private lateinit var assessmentFragment: AssessmentFragment
+    private lateinit var assessmentFragment: NewAssessmentFragment
     private lateinit var messageFragment: MessageFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,31 +50,24 @@ class UserHomeDashboard : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString("userId", userId)
 
-        assessmentFragment = AssessmentFragment()
+        assessmentFragment = NewAssessmentFragment()
         messageFragment = MessageFragment()
         homeFragment = HomeFragment()
         homeFragment.arguments = bundle
         messageFragment.arguments = bundle
         assessmentFragment.arguments = bundle
 
-        replaceFragment(homeFragment)
+        replaceFragment(homeFragment, supportFragmentManager)
     }
 
     private fun afterInit() {
         bottomNav.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.home -> replaceFragment(homeFragment)
-                R.id.assessment -> replaceFragment(assessmentFragment)
-                R.id.message -> replaceFragment(messageFragment)
+                R.id.home -> replaceFragment(homeFragment, supportFragmentManager)
+                R.id.assessment -> replaceFragment(assessmentFragment, supportFragmentManager)
+                R.id.message -> replaceFragment(messageFragment, supportFragmentManager)
             }
             true
         }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, fragment)
-        fragmentTransaction.commit()
     }
 }

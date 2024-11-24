@@ -29,11 +29,11 @@ import com.sprtcoding.safeako.api.google_docs_api.AuthTokenManager
 import com.sprtcoding.safeako.api.google_docs_api.MetadataCallback
 import com.sprtcoding.safeako.authentication.login.LoginActivity
 import com.sprtcoding.safeako.firebase.firebaseUtils.Utils
-import com.sprtcoding.safeako.user.activity.Acknowledgement
+import com.sprtcoding.safeako.user.activity.acknowledgement.Acknowledgement
 import com.sprtcoding.safeako.user.activity.VideoPlayerActivity
 import com.sprtcoding.safeako.user.activity.about.AboutUs
-import com.sprtcoding.safeako.user.activity.all_vid.ViewAllVideo
 import com.sprtcoding.safeako.user.activity.contact.ContactFacility
+import com.sprtcoding.safeako.user.activity.guide.UserGuide
 import com.sprtcoding.safeako.user.activity.impact_awareness.ImpactAwareness
 import com.sprtcoding.safeako.user.activity.notification.NotificationActivity
 import com.sprtcoding.safeako.user.activity.notification.viewmodel.UserAppointmentViewModel
@@ -63,11 +63,11 @@ class HomeFragment : Fragment() {
     private lateinit var avatar: CircleImageView
     private lateinit var loading: ProgressDialog
     private lateinit var userId: String
-    private lateinit var tvViewAll: TextView
     private lateinit var profileSettingCard: CardView
     private lateinit var btnLogOut: RelativeLayout
     private lateinit var btnProfileSetting: RelativeLayout
     private lateinit var btnAcknowledgement: RelativeLayout
+    private lateinit var btnUserGuide: RelativeLayout
     private lateinit var btnAbout: RelativeLayout
     private lateinit var tvNameSetting: TextView
     private lateinit var shimmerContainer: ShimmerFrameLayout
@@ -96,7 +96,6 @@ class HomeFragment : Fragment() {
         avatar = view.findViewById(R.id.avatar)
         videoThumbnail = view.findViewById(R.id.videoThumbnail)
         stiBtn = view.findViewById(R.id.sti_card)
-        tvViewAll = view.findViewById(R.id.tv_view_all_vid)
         profileSettingCard = view.findViewById(R.id.profile_settings_card)
         btnLogOut = view.findViewById(R.id.btn_log_out)
         tvNameSetting = view.findViewById(R.id.tv_name_settings)
@@ -109,6 +108,7 @@ class HomeFragment : Fragment() {
         mainFrameL = view.findViewById(R.id.main_frame)
         btnAcknowledgement = view.findViewById(R.id.btn_acknowledge)
         btnAbout = view.findViewById(R.id.btn_about_us)
+        btnUserGuide = view.findViewById(R.id.btn_user_guide)
     }
 
     @OptIn(ExperimentalBadgeUtils::class)
@@ -166,7 +166,7 @@ class HomeFragment : Fragment() {
         var fileNames = ""
 
         lifecycleScope.launch {
-            assessmentViewModel.getDriveFileMetadata(requireContext(), Constants.allVideoId[0], object :
+            assessmentViewModel.getDriveFileMetadata(requireContext(), Constants.allVideoId[7], object :
                 MetadataCallback {
                 override fun onSuccess(thumbnailLink: String?, fileName: String?) {
                     // Check if thumbnailLink is not null before proceeding
@@ -198,7 +198,7 @@ class HomeFragment : Fragment() {
                         }
                     } else {
                         // Handle the case where the thumbnail link is null or empty
-                        println("Failed to retrieve a valid thumbnail link for video: ${Constants.allVideoId[0]}")
+                        println("Failed to retrieve a valid thumbnail link for video: ${Constants.allVideoId[7]}")
                         // Optionally set a default image or handle it accordingly
                         // Optionally set a default image or handle it accordingly
                         lifecycleScope.launch {
@@ -217,13 +217,9 @@ class HomeFragment : Fragment() {
 
         videoThumbnail.setOnClickListener {
             val intent = Intent(requireContext(), VideoPlayerActivity::class.java)
-            intent.putExtra("VIDEO_RES_ID", Constants.allVideoId[0])
+            intent.putExtra("VIDEO_RES_ID", Constants.allVideoId[7])
             intent.putExtra("FILENAME", fileNames)
             startActivity(intent)
-        }
-
-        tvViewAll.setOnClickListener {
-            startActivity(Intent(requireContext(), ViewAllVideo::class.java))
         }
 
         stiBtn.setOnClickListener {
@@ -254,6 +250,10 @@ class HomeFragment : Fragment() {
 
         btnAbout.setOnClickListener {
             startActivity(Intent(requireContext(), AboutUs::class.java))
+        }
+
+        btnUserGuide.setOnClickListener {
+            startActivity(Intent(requireContext(), UserGuide::class.java))
         }
 
         btnLogOut.setOnClickListener { signOut() }

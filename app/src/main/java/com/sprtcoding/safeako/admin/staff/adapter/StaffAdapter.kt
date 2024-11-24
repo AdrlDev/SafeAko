@@ -1,6 +1,7 @@
 package com.sprtcoding.safeako.admin.staff.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,15 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.sprtcoding.safeako.R
+import com.sprtcoding.safeako.admin.staff.StaffActivity
+import com.sprtcoding.safeako.admin.staff.contract.IStaff
 import com.sprtcoding.safeako.model.StaffModel
 import com.sprtcoding.safeako.utils.Utility
 import de.hdodenhof.circleimageview.CircleImageView
 
-class StaffAdapter(private val staffList: List<StaffModel>, private val context: Context) :
+class StaffAdapter(private val staffList: List<StaffModel>,
+                   private val context: Context,
+                   private val callback: IStaff.Remove) :
     RecyclerView.Adapter<StaffAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -52,6 +57,18 @@ class StaffAdapter(private val staffList: List<StaffModel>, private val context:
             holder.statusImg.imageTintList = ColorStateList.valueOf(redColor)
         } else {
             holder.statusImg.imageTintList = ColorStateList.valueOf(greenColor)
+        }
+
+        holder.btnDelete.setOnClickListener {
+            callback.onRemoveClick(staff.staffId)
+        }
+
+        holder.itemView.setOnClickListener {
+            context.startActivity(Intent(context, StaffActivity::class.java)
+                .putExtra("STAFF_ID", staff.staffId)
+                .putExtra("STAFF_NAME", staff.fullName)
+                .putExtra("STAFF_JOB", staff.jobDesc)
+                .putExtra("STAFF_PHONE", staff.phone))
         }
 
     }

@@ -13,6 +13,7 @@ object RetrofitClient {
     }
 
     private val client = OkHttpClient.Builder()
+        .retryOnConnectionFailure(true)
         .addInterceptor(loggingInterceptor)
         .build()
 
